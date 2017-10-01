@@ -105,8 +105,12 @@ client.on('message', function(message) {
     case "purge" :
       if (args[1]){
       var channel = message.channel
-      channel.fetchMessages({limit: args[1]}).forEach(function(msg){
-        msg.delete();
+      var found = 1
+      channel.messages.forEach(function(msg){
+        if (found < args[1]){
+          msg.delete();
+          found=found+1;
+        }
       })
       }
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.");
