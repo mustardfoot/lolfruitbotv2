@@ -74,9 +74,6 @@ client.on('message', function(message) {
       message.channel.send("FUCK YOU TOO, <@"+message.author.id+">");
     }
   })
-  if(word.indexOf("hecc") != -1 || word.indexOf("heck") != -1 || word.indexOf("fricc") != -1 || word.indexOf("frick") != -1 || word.indexOf("darn") != -1 || word.indexOf("dang") != -1 ){
-    message.channel.send('https://pics.me.me/sorry-thus-us-a-swearing-christian-server-16131497.png');
-  }
   if (!message.content.startsWith(pref)) return;
   switch(args[0].toLowerCase()) {
     case "test" :
@@ -153,10 +150,10 @@ client.on('message', function(message) {
                   log('Automatic Unmute | '+time,"knife Bot","<@"+user.id+">",message.channel.guild)
                 }
               })
-            }, parseInt(args[nub])*1000);
+            }, parseInt(args[nub])*60000);
           }
           var time = "Forever"
-          if (args && parseInt(args[nub])) time = parseInt(args[nub])+" Seconds";
+          if (args && parseInt(args[nub])) time = parseInt(args[nub])+" Minutes";
           cmdoutput("Mute | "+time,"<@"+user.id+"> has been muted.",message.channel)
           log('Mute | '+time,"<@"+message.author.id+">","<@"+user.id+">",message.channel.guild)
             } else {
