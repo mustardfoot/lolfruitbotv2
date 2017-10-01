@@ -137,8 +137,13 @@ client.on('message', function(message) {
       var userlist = message.mentions.members; // Saving userlist to a variable
       userlist.forEach(function(user){
         if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderator")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+          if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
           if (message.member.guild.roles.find("name","Muted")) {
-          user.addRole(message.member.guild.roles.find("name","Muted"))
+           user.addRole(message.member.guild.roles.find("name","Muted"))
+          }
+          if (message.member.guild.roles.find("name","muted")) {
+           user.addRole(message.member.guild.roles.find("name","muted"))
+          }
           if (parseInt(args[nub])) {
             setTimeout(function(){
               var roles = user.roles
