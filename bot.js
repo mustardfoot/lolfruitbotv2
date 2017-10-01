@@ -105,7 +105,7 @@ client.on('message', function(message) {
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
       break;
     case "purge" :
-      if (args[1] && parseInt(args[1])){
+      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderator")) >= 0){
       var ree = parseInt(args[1]);
       var channel = message.channel;
       for(x = 0; x < Math.ceil((ree-1)/200); x = x + 1) {
