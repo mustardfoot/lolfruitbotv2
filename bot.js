@@ -113,7 +113,7 @@ client.on('message', function(message) {
         }
       })
       }
-      cmdoutput("Purge","Successfully purged "+args[1]+" messags.");
+      cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
       break;
     case "say" :
       if (message.author.id === "135743153427709953"){
