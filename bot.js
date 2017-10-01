@@ -117,7 +117,7 @@ client.on('message', function(message) {
           }
         }
       lookingfor = channel.id;
-      log('Purge',"<@"+message.author.id+">","<#"+channel.id+">",channel.guild)
+      log('Purge | Amount: '+args[1],"<@"+message.author.id+">","<#"+channel.id+">",channel.guild)
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
       }
       break;
