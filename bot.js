@@ -70,7 +70,7 @@ client.on('message', function(message) {
   if (message.content.indexOf('TROLL') !== -1 && message.author.equals(client.user)){
     message.delete(100)
   }
-  if (message.author.equals(client.user) && lookingfor === true){
+  if (message.author.equals(client.user) && lookingfor !== false && lookingfor === message.channel.id){
     lookingfor = false;
     message.delete(1000);
   }
@@ -116,8 +116,8 @@ client.on('message', function(message) {
           ree = ree-100
           }
         }
-      lookingfor = true;
-      log('Purge',"<@"+message.author.id+">","#"+channel.name,channel.guild)
+      lookingfor = channel.id;
+      log('Purge',"<@"+message.author.id+">","<#"+channel.id+">",channel.guild)
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
       }
       break;
