@@ -107,7 +107,7 @@ client.on('message', function(message) {
     case "purge" :
       if (args[1]){
       var channel = message.channel
-      channel.bulkDelete(args[1])
+      channel.bulkDelete(args[1]+2)
       lookingfor = true;
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
       }
