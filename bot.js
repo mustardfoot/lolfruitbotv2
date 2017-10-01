@@ -20,7 +20,7 @@ function sleep(ms) {
 
 function log(title,mod,user,server){
   server.channels.forEach(function(channel){
-    if (channel.name.indexOf('logs') !== -1){
+    if (channel.name === 'logs' || channel.name === 'Logs'){
       channel.send({"embed": {
     "title": "Action Info:",
     "color": 14680064,
@@ -105,10 +105,17 @@ client.on('message', function(message) {
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
       break;
     case "purge" :
-      if (args[1]){
-      var channel = message.channel
-      channel.bulkDelete(args[1]+1)
-      console.log(args[1]+1);
+      if (args[1] && parseInt(args[1])){
+      var ree = parseInt(args[1]);
+      var channel = message.channel;
+      for(x = 0; x < Math.ceil((ree-1)/200); x = x + 1) {
+          if (ree <= 99){
+          channel.bulkDelete(parseInt(args[1])+1);
+          }else{
+          channel.bulkDelete(100);
+          ree = ree-100
+          }
+        }
       lookingfor = true;
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
       }
