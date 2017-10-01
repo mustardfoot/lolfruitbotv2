@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var pref = "!!";
+var pref = "!";
+var lookingfor = false;
 var offservers = {
 
 };
@@ -69,8 +70,9 @@ client.on('message', function(message) {
   if (message.content.indexOf('TROLL') !== -1 && message.author.equals(client.user)){
     message.delete(100)
   }
-  if (message.content.indexOf('Successfully Purged') !== -1 && message.author.equals(client.user)){
-    message.delete(1000)
+  if (message.author.equals(client.user) && lookingfor === true){
+    lookingfor = false;
+    message.delete(1000);
   }
   if (message.author.equals(client.user)) return;
   var args = message.content.substring(pref.length).split(" ");
@@ -105,15 +107,16 @@ client.on('message', function(message) {
     case "purge" :
       if (args[1]){
       var channel = message.channel
-      var found = 1
+      var found = 0
       channel.messages.forEach(function(msg){
         if (found < args[1]){
           msg.delete();
           found=found+1;
         }
       })
-      }
+      lookingfor = true;
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
+      }
       break;
     case "say" :
       if (message.author.id === "135743153427709953"){
