@@ -13,6 +13,10 @@ var fortunes = [
   "Ask me Again Later"
 ];
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function log(title,mod,user,server){
   server.channels.forEach(function(channel){
     if (channel.name.indexOf('logs') !== -1){
@@ -65,6 +69,9 @@ client.on('message', function(message) {
   if (message.content.indexOf('TROLL') !== -1 && message.author.equals(client.user)){
     message.delete(100)
   }
+  if (message.content.indexOf('Successfully Purged') !== -1 && message.author.equals(client.user)){
+    message.delete(1000)
+  }
   if (message.author.equals(client.user)) return;
   var args = message.content.substring(pref.length).split(" ");
   var word = message.content.toLowerCase()
@@ -95,6 +102,15 @@ client.on('message', function(message) {
       if (args[1]) outcum = fortunes[Math.floor(Math.random()*fortunes.length)];
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
       break;
+    case "purge" :
+      if (args[1]){
+      var channel = message.channel
+      channel.fetchMessages({limit: args[1]}).forEach(function(msg){
+        msg.delete();
+      })
+      }
+      cmdoutput("Purge","Successfully purged "+args[1]+" messags.");
+      break;
     case "say" :
       if (message.author.id === "135743153427709953"){
         var streing = "";
@@ -108,6 +124,7 @@ client.on('message', function(message) {
         })
         message.channel.send(streing);
         message.delete()
+        break;
       }
     case "freshprince" :
       if (message.channel.name === "bot_chat" || message.channel.name === "bot-chat") {
