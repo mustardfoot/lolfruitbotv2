@@ -109,7 +109,8 @@ client.on('message', function(message) {
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
-          cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password.",message.channel)
+          cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password.",message.channel);
+          cmdoutput('You have been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password.",user.dmChannel)
         })
       }
       break;
