@@ -75,6 +75,12 @@ client.on('message', function(message) {
     message.delete(1000);
   }
   if (message.author.equals(client.user)) return;
+  if (word.indexOf('http') !== -1){
+    if !(message.member.guild.roles.find("name","permit") || message.member.guild.roles.find("name","moderators")){
+      message.delete()
+    }
+  //}else if(){
+  }
   var args = message.content.substring(pref.length).split(" ");
   var word = message.content.toLowerCase()
   var userlist = message.mentions.users;
@@ -103,6 +109,15 @@ client.on('message', function(message) {
       var outcum = "There has been an error, Sorry! Please try again"
       if (args[1]) outcum = fortunes[Math.floor(Math.random()*fortunes.length)];
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
+      break;
+    case "permit" :
+      if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0){
+        var userlist = message.mentions.members;
+        userlist.forEach(function(user){
+          user.addRole(message.member.guild.roles.find("name","permit"));
+          cmdoutput('Whitelist',"<@"+user.id+"> has been permitted to post a link, image, or file.",message.channel);
+        })
+      }
       break;
     case "whitelist" :
       if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
