@@ -87,7 +87,8 @@ client.on('message', function(message) {
      }
     })
   }
-  message.attachments.forEach(function(role){
+  message.attachments.forEach(function(att){
+    if (att.id){
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
@@ -97,6 +98,7 @@ client.on('message', function(message) {
       }
      }
     })
+    }
   })
   if (okay !== true){
     message.delete()
