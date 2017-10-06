@@ -76,7 +76,7 @@ client.on('message', function(message) {
   }
   if (message.author.equals(client.user)) return;
   if (word.indexOf('http') !== -1){
-    if !(message.member.guild.roles.find("name","permit") || message.member.guild.roles.find("name","moderators")){
+    if (!message.member.guild.roles.find("name","permit") && !message.member.guild.roles.find("name","moderators")){
       message.delete()
     }
   //}else if(){
