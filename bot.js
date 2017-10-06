@@ -117,7 +117,7 @@ client.on('message', function(message) {
       }
       break;
     case "purge" :
-      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creator")) >= 0){
+      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0){
       var ree = parseInt(args[1]);
       var channel = message.channel;
       for(x = 0; x < Math.ceil((ree-1)/200); x = x + 1) {
@@ -172,7 +172,7 @@ client.on('message', function(message) {
       })
       var userlist = message.mentions.members; // Saving userlist to a variable
       userlist.forEach(function(user){
-        if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderator")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+        if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
           if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
           if (message.member.guild.roles.find("name","Muted")) {
            user.addRole(message.member.guild.roles.find("name","Muted"))
@@ -203,7 +203,7 @@ client.on('message', function(message) {
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
-          if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderator")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+          if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
           var roles = user.roles
           roles.forEach(function(role){
             if (role.name === "muted" || role.name === "Muted") {
