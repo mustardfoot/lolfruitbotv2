@@ -76,7 +76,7 @@ client.on('message', function(message) {
   }
   if (message.author.equals(client.user)) return;
   if (message.content.indexOf('http') !== -1){
-    if (typeof message.member.guild.roles.find("name","permit") != "undefined") {
+    if (!message.member.guild.roles.find("name","permit")) {
      console.log("no permit nigg");
     }
     if (message.member.guild.roles.find("name","permit") && !message.member.guild.roles.find("name","moderators")){
