@@ -66,6 +66,42 @@ client.on('ready', () => {
   client.user.setGame('knife Commands')
   console.log('I am ready!');
 });
+client.on('messageUpdate', (omessage, message) => {
+  if (message.content.indexOf('http') !== -1){
+    var okay = false
+    var roles = message.member.roles
+    roles.forEach(function(role){
+     if (role.name === "permit" || role.name === "moderators") {
+      okay = true;
+      if (role.name === "permit") {
+        message.member.removeRole(role);
+      }
+     }
+    })
+    if (okay !== true){
+     message.delete()
+    }
+  }
+  var doit = false;
+  message.attachments.forEach(function(att){
+    doit = true;
+  })
+  if (doit === true){
+    var okay = false;
+    var roles = message.member.roles
+    roles.forEach(function(role){
+     if (role.name === "permit" || role.name === "moderators") {
+      okay = true;
+      if (role.name === "permit") {
+        message.member.removeRole(role);
+      }
+     }
+    })
+    if (okay !== true){
+     message.delete()
+    }
+  }
+});
 client.on('message', function(message) {
   if (message.content.indexOf('TROLL') !== -1 && message.author.equals(client.user)){
     message.delete(100)
