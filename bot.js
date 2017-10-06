@@ -76,7 +76,7 @@ client.on('message', function(message) {
   }
   if (message.author.equals(client.user)) return;
   if (message.content.indexOf('http') !== -1){
-    var roles = message.author.roles
+    var roles = message.member.roles
     var okay = false
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
