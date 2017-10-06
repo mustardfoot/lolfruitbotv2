@@ -104,8 +104,18 @@ client.on('message', function(message) {
       if (args[1]) outcum = fortunes[Math.floor(Math.random()*fortunes.length)];
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
       break;
+    case "whitelist" :
+      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
+        var userlist = message.mentions.members; // Saving userlist to a variable
+        userlist.forEach(function(user){
+          if (message.member.guild.roles.find("name","buyers")) {
+           user.addRole(message.member.guild.roles.find("name","buyers"));
+          }
+        }
+      }
+      break;
     case "purge" :
-      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderator")) >= 0){
+      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creator")) >= 0){
       var ree = parseInt(args[1]);
       var channel = message.channel;
       for(x = 0; x < Math.ceil((ree-1)/200); x = x + 1) {
