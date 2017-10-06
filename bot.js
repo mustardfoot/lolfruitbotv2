@@ -76,14 +76,16 @@ client.on('message', function(message) {
   }
   if (message.author.equals(client.user)) return;
   if (message.content.indexOf('http') !== -1){
-    console.log(typeof message.member.guild.roles.find("name","permit"))
-    if (!message.member.guild.roles.find("name","permit")) {
-     console.log("no permit nigg");
-    }
-    if (message.member.guild.roles.find("name","permit") && !message.member.guild.roles.find("name","moderators")){
+    var roles = message.author.roles
+    var okay = false
+    roles.forEach(function(role){
+     if (role.name === "permit" || role.name === "moderators") {
+      okay = true;
+     }
+    })
+    if (okay !== true){
       message.delete()
     }
-  //}else if(){
   }
   var args = message.content.substring(pref.length).split(" ");
   var word = message.content.toLowerCase()
