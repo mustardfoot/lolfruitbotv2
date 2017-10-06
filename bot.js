@@ -105,8 +105,7 @@ client.on('message', function(message) {
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
       break;
     case "whitelist" :
-      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
-        console.log('why');
+      if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
