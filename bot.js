@@ -81,6 +81,9 @@ client.on('message', function(message) {
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
       okay = true;
+      if (role.name === "permit") {
+        message.member.removeRole(role);
+      }
      }
     })
     if (okay !== true){
