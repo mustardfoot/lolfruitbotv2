@@ -111,7 +111,7 @@ client.on('message', function(message) {
           if (message.member.guild.roles.find("name","buyers")) {
            user.addRole(message.member.guild.roles.find("name","buyers"));
           }
-        }
+        })
       }
       break;
     case "purge" :
