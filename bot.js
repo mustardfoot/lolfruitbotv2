@@ -95,7 +95,7 @@ client.on('message', function(message) {
     doit = true;
   })
   if (doit === true){
-    var okay = true;
+    var okay = false;
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
