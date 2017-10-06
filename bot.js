@@ -75,8 +75,8 @@ client.on('message', function(message) {
     message.delete(1000);
   }
   if (message.author.equals(client.user)) return;
-  var okay = false
   if (message.content.indexOf('http') !== -1){
+    var okay = false
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
@@ -86,23 +86,28 @@ client.on('message', function(message) {
       }
      }
     })
-  }
-  message.attachments.forEach(function(att){
-    if (att.id){
-    console.log(att.id)
-    var roles = message.member.roles
-    roles.forEach(function(role){
-     if (role.name === "permit" || role.name === "moderators") {
-      okay = true;
-      if (role.name === "permit") {
-        message.member.removeRole(role);
-      }
-     }
-    })
+    if (okay !== true){
+     message.delete()
     }
+  }
+  var doit = false;
+  message.attachments.forEach(function(att){
+    doit = true;
   })
-  if (okay !== true){
-    message.delete()
+  if (doit === true){
+    var okay = true;
+    var roles = message.member.roles
+    roles.forEach(function(role){
+     if (role.name === "permit" || role.name === "moderators") {
+      okay = true;
+      if (role.name === "permit") {
+        message.member.removeRole(role);
+      }
+     }
+    })
+    if (okay !== true){
+     message.delete()
+    }
   }
   var args = message.content.substring(pref.length).split(" ");
   var word = message.content.toLowerCase()
