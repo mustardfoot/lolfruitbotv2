@@ -110,8 +110,7 @@ client.on('message', function(message) {
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
           cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
-          user.user.createDM();
-          cmdoutput("You have been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password.",user.user.dmChannel);
+          cmdoutput("You have been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password.",user.user.createDM());
         })
       }
       break;
