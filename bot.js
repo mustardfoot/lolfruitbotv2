@@ -75,9 +75,9 @@ client.on('message', function(message) {
     message.delete(1000);
   }
   if (message.author.equals(client.user)) return;
+  var okay = false
   if (message.content.indexOf('http') !== -1){
     var roles = message.member.roles
-    var okay = false
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
       okay = true;
@@ -86,9 +86,20 @@ client.on('message', function(message) {
       }
      }
     })
-    if (okay !== true){
-      message.delete()
-    }
+  }
+  message.attachments.forEach(function(role){
+    var roles = message.member.roles
+    roles.forEach(function(role){
+     if (role.name === "permit" || role.name === "moderators") {
+      okay = true;
+      if (role.name === "permit") {
+        message.member.removeRole(role);
+      }
+     }
+    })
+  })
+  if (okay !== true){
+    message.delete()
   }
   var args = message.content.substring(pref.length).split(" ");
   var word = message.content.toLowerCase()
