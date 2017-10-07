@@ -67,12 +67,14 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 client.on('messageUpdate', (omessage, message) => {
+  var dothedo = false;
   if (message.content.indexOf('http') !== -1){
     var okay = false
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
       okay = true;
+      dothedo = true;
       if (role.name === "permit") {
         message.member.removeRole(role);
       }
@@ -86,7 +88,7 @@ client.on('messageUpdate', (omessage, message) => {
   message.attachments.forEach(function(att){
     doit = true;
   })
-  if (doit === true){
+  if (doit === true && dothedo === false){
     var okay = false;
     var roles = message.member.roles
     roles.forEach(function(role){
@@ -111,12 +113,14 @@ client.on('message', function(message) {
     message.delete(1000);
   }
   if (message.author.equals(client.user)) return;
+  var dothedo = false;
   if (message.content.indexOf('http') !== -1){
     var okay = false
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "moderators") {
       okay = true;
+      dothedo = true;
       if (role.name === "permit") {
         message.member.removeRole(role);
       }
@@ -130,7 +134,7 @@ client.on('message', function(message) {
   message.attachments.forEach(function(att){
     doit = true;
   })
-  if (doit === true){
+  if (doit === true && dothedo === false){
     var okay = false;
     var roles = message.member.roles
     roles.forEach(function(role){
