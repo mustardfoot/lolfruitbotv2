@@ -183,6 +183,17 @@ client.on('message', function(message) {
         })
       }
       break;
+    case "revokepermit" :
+      if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0){
+        var userlist = message.mentions.members;
+        userlist.forEach(function(user){
+        var roles = user.roles
+        roles.forEach(function(role){
+          if (role.name === "permit") {
+            user.removeRole(role)
+          }
+        })
+      break;
     case "whitelist" :
       if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
         var userlist = message.mentions.members; // Saving userlist to a variable
