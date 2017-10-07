@@ -193,6 +193,8 @@ client.on('message', function(message) {
             user.removeRole(role)
           }
         })
+        })
+      }
       break;
     case "whitelist" :
       if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
