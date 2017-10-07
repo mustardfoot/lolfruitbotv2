@@ -179,7 +179,7 @@ client.on('message', function(message) {
         var userlist = message.mentions.members;
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","permit"));
-          cmdoutput('Whitelist',"<@"+user.id+"> has been permitted to post a link, image, or file.",message.channel);
+          cmdoutput('Permit',"<@"+user.id+"> has been permitted to post a link, image, or file.",message.channel);
         })
       }
       break;
@@ -190,6 +190,7 @@ client.on('message', function(message) {
         var roles = user.roles
         roles.forEach(function(role){
           if (role.name === "permit") {
+            cmdoutput('RevokePermit',"<@"+user.id+">'s permit has been removed.",message.channel);
             user.removeRole(role)
           }
         })
