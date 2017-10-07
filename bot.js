@@ -190,7 +190,7 @@ client.on('message', function(message) {
         var roles = user.roles
         roles.forEach(function(role){
           if (role.name === "permit") {
-            cmdoutput('RevokePermit',"<@"+user.id+">'s permit has been removed.",message.channel);
+            cmdoutput('Revokepermit',"<@"+user.id+">'s permit has been removed.",message.channel);
             user.removeRole(role)
           }
         })
