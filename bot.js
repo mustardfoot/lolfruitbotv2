@@ -68,7 +68,7 @@ client.on('ready', () => {
 });
 client.on('messageUpdate', (omessage, message) => {
   var dothedo = false;
-  if (message.content.indexOf('http') !== -1){
+  if (message.content.indexOf('http') !== -1 || message.content.indexOf('discord.gg') !== -1){
     var okay = false
     var roles = message.member.roles
     roles.forEach(function(role){
@@ -114,7 +114,7 @@ client.on('message', function(message) {
   }
   if (message.author.equals(client.user)) return;
   var dothedo = false;
-  if (message.content.indexOf('http') !== -1){
+  if (message.content.indexOf('http') !== -1 || message.content.indexOf('discord.gg') !== -1){
     var okay = false
     var roles = message.member.roles
     roles.forEach(function(role){
