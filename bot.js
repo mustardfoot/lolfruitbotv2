@@ -68,6 +68,10 @@ client.on('ready', () => {
 });
 client.on('messageUpdate', (omessage, message) => {
   var dothedo = false;
+  omessage.attachments.forEach(function(att){
+    dothedo = true;
+  })
+  if (omessage.content.toLowerCase().indexOf('http') === -1 && omessage.content.toLowerCase().indexOf('discord.gg') === -1){
   if (message.content.toLowerCase().indexOf('http') !== -1 || message.content.toLowerCase().indexOf('discord.gg') !== -1){
     var okay = false
     var roles = message.member.roles
@@ -83,6 +87,7 @@ client.on('messageUpdate', (omessage, message) => {
     if (okay !== true){
      message.delete()
     }
+  }
   }
   var doit = false;
   message.attachments.forEach(function(att){
@@ -135,7 +140,6 @@ client.on('message', function(message) {
     doit = true;
   })
   if (doit === true && dothedo === false){
-    console.log('?')
     var okay = false;
     var roles = message.member.roles
     roles.forEach(function(role){
