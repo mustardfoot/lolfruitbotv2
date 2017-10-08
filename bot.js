@@ -270,6 +270,7 @@ client.on('message', function(message) {
     case "mute" :
       var nub = -1
       args.forEach(function(role){
+        console.log(role);
         nub=nub+1
       })
       var userlist = message.mentions.members; // Saving userlist to a variable
