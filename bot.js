@@ -277,7 +277,7 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-      console.log(args[2].substring(2,args[2].length))
+      console.log(args[2])
       var muser = client.fetchUser(args[2].substring(2,args[2].length-1));
       var reason = "No Reason Provided";
       var curnum = 1;
