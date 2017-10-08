@@ -18,8 +18,12 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function log(title,mod,user,server){
+function log(title,mod,user,server,reason){
   server.channels.forEach(function(channel){
+    if (reason){
+    }else{
+      reason = "No Reason Given"
+    }
     if (channel.name === 'logs' || channel.name === 'Logs'){
       channel.send({"embed": {
     "title": "Action Info:",
@@ -38,6 +42,11 @@ function log(title,mod,user,server){
       {
         "name": "User",
         "value": user,
+        "inline": true
+      },
+      {
+        "name": "Reason",
+        "value": mod,
         "inline": true
       }
     ]
@@ -268,40 +277,47 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-      var nub = -1
+      var muser = client.fetchUser(args[2].substring(2,args[2].length-1));
+      var reason = "No Reason Provided";
+      var curnum = 1;
       args.forEach(function(role){
-        console.log(role);
-        nub=nub+1
+        if(curnum > 3){
+          if(curnum === 4){
+            reason = role;
+          }else{
+            reason = reason+" "+role;
+          }
+        }
+        curnum = curnum+1;
       })
-      var userlist = message.mentions.members; // Saving userlist to a variable
-      userlist.forEach(function(user){
-        if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+      if (muser){
+        if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0 && message.member.highestRole.comparePositionTo(muser.highestRole) > 0 ) {
           if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
           if (message.member.guild.roles.find("name","Muted")) {
-           user.addRole(message.member.guild.roles.find("name","Muted"))
+           muser.addRole(message.member.guild.roles.find("name","Muted"))
           }
           if (message.member.guild.roles.find("name","muted")) {
-           user.addRole(message.member.guild.roles.find("name","muted"))
+           muser.addRole(message.member.guild.roles.find("name","muted"))
           }
-          if (parseInt(args[nub])) {
+          if (parseInt(args[3])) {
             setTimeout(function(){
-              var roles = user.roles
+              var roles = muser.roles
               roles.forEach(function(role){
                 if (role.name === "muted" || role.name === "Muted") {
-                  user.removeRole(role)
-                  log('Automatic Unmute | '+time,"knife Bot","<@"+user.id+">",message.channel.guild)
+                  muser.removeRole(role)
+                  log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
                 }
               })
-            }, parseInt(args[nub])*60000);
+            }, parseInt(args[3])*60000);
           }
           var time = "Forever"
-          if (args && parseInt(args[nub])) time = parseInt(args[nub])+" Minutes";
-          cmdoutput("Mute | "+time,"<@"+user.id+"> has been muted.",message.channel)
-          log('Mute | '+time,"<@"+message.author.id+">","<@"+user.id+">",message.channel.guild)
+          if (args && parseInt(args[3])) time = parseInt(args[3])+" Minutes";
+          cmdoutput("Mute | "+time,"<@"+muser.id+"> has been muted for \""+reason+"\"",message.channel)
+          log('Mute | '+time,"<@"+message.author.id+">","<@"+muser.id+">",message.channel.guild,reason)
             } else {
             cmdoutput("Error","Failed to find muted role.",message.channel)
           }
-        }})
+        }
       break;
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
