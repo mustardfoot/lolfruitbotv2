@@ -324,6 +324,7 @@ client.on('message', function(message) {
           }
         }
       }
+        });
       break;
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
@@ -339,7 +340,6 @@ client.on('message', function(message) {
           })
           }
           });
-      });
         break;
   }
 });
