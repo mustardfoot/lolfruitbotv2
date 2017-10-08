@@ -277,13 +277,13 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-      console.log(args[2])
-      var muser = client.fetchUser(args[2].substring(2,args[2].length-1));
+      console.log(args[1])
+      var muser = client.fetchUser(args[1].substring(1,args[1].length-1));
       var reason = "No Reason Provided";
       var curnum = 1;
       args.forEach(function(role){
-        if(curnum > 3){
-          if(curnum === 4){
+        if(curnum > 2){
+          if(curnum === 3){
             reason = role;
           }else{
             reason = reason+" "+role;
@@ -301,7 +301,7 @@ client.on('message', function(message) {
           if (message.member.guild.roles.find("name","muted")) {
            muser.addRole(message.member.guild.roles.find("name","muted"))
           }
-          if (parseInt(args[3])) {
+          if (parseInt(args[2])) {
             setTimeout(function(){
               var roles = muser.roles
               roles.forEach(function(role){
@@ -310,11 +310,11 @@ client.on('message', function(message) {
                   log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
                 }
               })
-            }, parseInt(args[3])*60000);
+            }, parseInt(args[2])*60000);
           }
           var time = "Forever"
-          if (args && parseInt(args[3])){
-          time = parseInt(args[3])+" Minutes";
+          if (args && parseInt(args[2])){
+          time = parseInt(args[2])+" Minutes";
           }
           cmdoutput("Mute | "+time,"<@"+muser.id+"> has been muted for \""+reason+"\"",message.channel)
           log('Mute | '+time,"<@"+message.author.id+">","<@"+muser.id+">",message.channel.guild,reason)
