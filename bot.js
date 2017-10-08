@@ -135,6 +135,7 @@ client.on('message', function(message) {
     doit = true;
   })
   if (doit === true && dothedo === false){
+    console.log('?')
     var okay = false;
     var roles = message.member.roles
     roles.forEach(function(role){
