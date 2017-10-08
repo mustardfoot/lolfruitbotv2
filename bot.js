@@ -311,7 +311,8 @@ client.on('message', function(message) {
             }, parseInt(args[3])*60000);
           }
           var time = "Forever"
-          if (args && parseInt(args[3])) time = parseInt(args[3])+" Minutes";
+          if (args && parseInt(args[3])){
+          time = parseInt(args[3])+" Minutes";
           cmdoutput("Mute | "+time,"<@"+muser.id+"> has been muted for \""+reason+"\"",message.channel)
           log('Mute | '+time,"<@"+message.author.id+">","<@"+muser.id+">",message.channel.guild,reason)
             } else {
