@@ -277,7 +277,6 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-      console.log(args[1].substring(2,args[1].length-1))
       client.fetchUser(args[1].substring(2,args[1].length-1),true).then((boi) => {
       var muser = message.guild.fetchMember(boi);
         var reason = "No Reason Provided";
@@ -293,6 +292,7 @@ client.on('message', function(message) {
         curnum = curnum+1;
       })
       if (muser){
+        console.log(muser.highestRole);
         if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0 && message.member.highestRole.comparePositionTo(muser.highestRole) > 0 ) {
           if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
           if (message.member.guild.roles.find("name","Muted")) {
