@@ -46,8 +46,8 @@ function log(title,mod,user,server,reason){
       },
       {
         "name": "Reason",
-        "value": mod,
-        "inline": true
+        "value": reason,
+        "inline": false
       }
     ]
   }})
@@ -282,8 +282,8 @@ client.on('message', function(message) {
         var reason = "No Reason Provided";
       var curnum = 1;
       args.forEach(function(role){
-        if(curnum > 2){
-          if(curnum === 3){
+        if(curnum > 3){
+          if(curnum === 4){
             reason = role;
           }else{
             reason = reason+" "+role;
@@ -292,7 +292,6 @@ client.on('message', function(message) {
         curnum = curnum+1;
       })
       if (muser){
-        console.log(muser.highestRole);
         if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","moderators")) >= 0 && message.member.highestRole.comparePositionTo(muser.highestRole) > 0 ) {
           if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
           if (message.member.guild.roles.find("name","Muted")) {
