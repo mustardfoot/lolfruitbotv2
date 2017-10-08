@@ -277,8 +277,9 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-      console.log(args[1])
+      console.log(args[1].substring(1,args[1].length-1))
       var muser = client.fetchUser(args[1].substring(1,args[1].length-1));
+      muser = message.guild.fetchMember(muser);
       var reason = "No Reason Provided";
       var curnum = 1;
       args.forEach(function(role){
