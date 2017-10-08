@@ -320,6 +320,7 @@ client.on('message', function(message) {
             cmdoutput("Error","Failed to find muted role.",message.channel)
           }
         }
+      }
       break;
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
