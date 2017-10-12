@@ -3,7 +3,7 @@ const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
 var offservers = {
-
+ 
 };
 var fortunes = [
   "Yes",
