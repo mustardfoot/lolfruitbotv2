@@ -394,7 +394,6 @@ client.on('message', function(message) {
   }
  }
  finally {
-  console.log('lol something broke but probably not too bad');
  }
 });
 
