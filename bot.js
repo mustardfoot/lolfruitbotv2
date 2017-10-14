@@ -5,10 +5,10 @@ var lookingfor = false;
 var offservers = {
  
 };
-var thatid = "Nobody";
-var giveawayers = {
+var thatid = 364125929624174603;
+var giveawayers = [
  thatid
-};
+];
 var giving = false;
 var fortunes = [
   "Yes",
@@ -202,9 +202,9 @@ client.on('message', function(message) {
       break;
     case "giveaway" :
       if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
-      giveawayers = {
+      giveawayers = [
        thatid
-      };
+      ];
       giving = true;
       cmdoutput('Giveaway',"@everyone Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
       }
@@ -226,10 +226,7 @@ client.on('message', function(message) {
     case "closegiveaway" :
      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === true){
       giving = false;
-      var amnt = 5;
-      giveawayers.forEach(function(aaa){
-         amnt = amnt+1;
-       })
+      var amnt = giveawayers.length
       var cur = 1;
       var hmm = randomnum(1,amnt)
       giveawayers.forEach(function(aaa){
@@ -242,10 +239,7 @@ client.on('message', function(message) {
      break;
     case "redraw" :
     if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0) {
-      var amnt = 5;
-      giveawayers.forEach(function(aaa){
-         amnt = amnt+1;
-       })
+      var amnt = giveawayers.length
       var cur = 1;
       var hmm = randomnum(1,amnt)
       giveawayers.forEach(function(aaa){
