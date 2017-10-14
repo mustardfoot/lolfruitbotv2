@@ -213,7 +213,7 @@ client.on('message', function(message) {
       }
       break;
     case "entergiveaway" :
-      if (giving === true && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","buyers")) < 0){
+      if (giving === true){
        var noe = false;
        giveawayers.forEach(function(aaa){
         if (aaa === message.author.id) {
