@@ -227,27 +227,17 @@ client.on('message', function(message) {
      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === true){
       giving = false;
       var amnt = giveawayers.length
-      var cur = 1;
       var hmm = randomnum(1,amnt)
-      giveawayers.forEach(function(aaa){
-       if (cur === hmm){
-        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!",message.channel)
-       }
-       cur = cur+1
-      })
+      var ree = giveawayers[hmm];
+      cmdoutput('Giveaway',"Congratulations, <@"+ree+">, you have won the giveaway!",message.channel)
      }
      break;
     case "redraw" :
     if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0) {
       var amnt = giveawayers.length
-      var cur = 1;
       var hmm = randomnum(1,amnt)
-      giveawayers.forEach(function(aaa){
-       if (cur === hmm){
-        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!",message.channel)
-       }
-       cur = cur+1
-      })
+      var ree = giveawayers[hmm];
+      cmdoutput('Giveaway',"Congratulations, <@"+ree+">, you have won the giveaway!",message.channel)
      }
      break;
     case "permit" :
