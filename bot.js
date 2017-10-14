@@ -392,9 +392,10 @@ client.on('message', function(message) {
           });
         break;
   }
- }[finally {
+ }
+ finally {
   console.log('lol something broke but probably not too bad');
- }]
+ }
 });
 
 client.login(process.env.BOT_TOKEN);
