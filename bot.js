@@ -5,6 +5,11 @@ var lookingfor = false;
 var offservers = {
  
 };
+
+var giveawayers = {
+ 
+};
+var giving = false;
 var fortunes = [
   "Yes",
   "No",
@@ -16,6 +21,9 @@ var fortunes = [
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+function randomnum(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 function log(title,mod,user,server,reason){
@@ -192,6 +200,61 @@ client.on('message', function(message) {
       if (args[1]) outcum = fortunes[Math.floor(Math.random()*fortunes.length)];
       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
       break;
+    case "giveaway" :
+      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
+      giveawayers = {
+      };
+      giving = true;
+      cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!")
+      }
+      break;
+    case "entergiveaway" :
+      if (giving === true && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","buyers")) < 0){
+       var noe = false;
+       giveawayers.forEach(function(aaa){
+        if (aaa === message.author.id) {
+         noe = true;
+        };
+       })
+       if (noe === true){
+        giveawayers.push(message.author.id);
+        cmdoutput('Giveaway',"Congratulations, <@"+message.author.id+">, you have entered the giveaway!")
+       };
+      }
+      break;
+    case "closegiveaway" :
+     if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === true){
+      giving = false;
+      var amnt = 5;
+      giveawayers.forEach(function(aaa){
+         amnt = amnt+1;
+       })
+      var cur = 1;
+      var hmm = randomnum(1,amnt)
+      giveawayers.forEach(function(aaa){
+       if (cur === hmm){
+        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!")
+       }
+       cur = cur+1
+      })
+     }
+     break;
+    case "redraw" :
+    if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0) {
+      var amnt = 5;
+      giveawayers.forEach(function(aaa){
+         amnt = amnt+1;
+       })
+      var cur = 1;
+      var hmm = randomnum(1,amnt)
+      giveawayers.forEach(function(aaa){
+       if (cur === hmm){
+        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!")
+       }
+       cur = cur+1
+      })
+     }
+     break;
     case "permit" :
       if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
         var userlist = message.mentions.members;
