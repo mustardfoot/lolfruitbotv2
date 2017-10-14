@@ -227,7 +227,7 @@ client.on('message', function(message) {
      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === true){
       giving = false;
       var amnt = giveawayers.length
-      var hmm = randomnum(1,amnt)
+      var hmm = randomnum(0,amnt)
       var ree = giveawayers[hmm];
       cmdoutput('Giveaway',"Congratulations, <@"+ree+">, you have won the giveaway!",message.channel)
      }
@@ -235,7 +235,7 @@ client.on('message', function(message) {
     case "redraw" :
     if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0) {
       var amnt = giveawayers.length
-      var hmm = randomnum(1,amnt)
+      var hmm = randomnum(0,amnt)
       var ree = giveawayers[hmm];
       cmdoutput('Giveaway',"Congratulations, <@"+ree+">, you have won the giveaway!",message.channel)
      }
