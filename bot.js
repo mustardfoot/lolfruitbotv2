@@ -5,7 +5,7 @@ var lookingfor = false;
 var offservers = {
  
 };
-var thatid = client.user.id;
+var thatid = "Nobody";
 var giveawayers = {
  thatid
 };
