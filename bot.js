@@ -217,7 +217,7 @@ client.on('message', function(message) {
          noe = true;
         };
        })
-       if (noe === true){
+       if (noe === false){
         giveawayers.push(message.author.id);
         cmdoutput('Giveaway',"Congratulations, <@"+message.author.id+">, you have entered the giveaway!",message.channel)
        };
