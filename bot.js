@@ -205,7 +205,7 @@ client.on('message', function(message) {
       giveawayers = {
       };
       giving = true;
-      cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!")
+      cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
       }
       break;
     case "entergiveaway" :
@@ -218,7 +218,7 @@ client.on('message', function(message) {
        })
        if (noe === true){
         giveawayers.push(message.author.id);
-        cmdoutput('Giveaway',"Congratulations, <@"+message.author.id+">, you have entered the giveaway!")
+        cmdoutput('Giveaway',"Congratulations, <@"+message.author.id+">, you have entered the giveaway!",message.channel)
        };
       }
       break;
@@ -233,7 +233,7 @@ client.on('message', function(message) {
       var hmm = randomnum(1,amnt)
       giveawayers.forEach(function(aaa){
        if (cur === hmm){
-        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!")
+        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!",message.channel)
        }
        cur = cur+1
       })
@@ -249,7 +249,7 @@ client.on('message', function(message) {
       var hmm = randomnum(1,amnt)
       giveawayers.forEach(function(aaa){
        if (cur === hmm){
-        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!")
+        cmdoutput('Giveaway',"Congratulations, <@"+aaa+">, you have won the giveaway!",message.channel)
        }
        cur = cur+1
       })
