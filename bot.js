@@ -129,6 +129,7 @@ client.on('messageUpdate', (omessage, message) => {
   }
 });
 client.on('message', function(message) {
+ try{
   if (message.content.indexOf('TROLL') !== -1 && message.author.equals(client.user)){
     message.delete(100)
   }
@@ -391,6 +392,7 @@ client.on('message', function(message) {
           });
         break;
   }
+ }
 });
 
 client.login(process.env.BOT_TOKEN);
