@@ -205,7 +205,7 @@ client.on('message', function(message) {
       giveawayers = {
       };
       giving = true;
-      cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
+      cmdoutput('Giveaway',"@everyone Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
       }
       break;
     case "entergiveaway" :
