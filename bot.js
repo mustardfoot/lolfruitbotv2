@@ -7,7 +7,7 @@ var offservers = {
 };
 
 var giveawayers = {
- 
+ client.user.id
 };
 var giving = false;
 var fortunes = [
@@ -203,6 +203,7 @@ client.on('message', function(message) {
     case "giveaway" :
       if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
       giveawayers = {
+       client.user.id
       };
       giving = true;
       cmdoutput('Giveaway',"@everyone Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
