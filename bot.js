@@ -214,7 +214,7 @@ client.on('message', function(message) {
   if(message.channel === jokerchannel){
    if(jokering === true){
     console.log(message.content);
-   var count1 = occurrences(message.content,":punch:");
+   var count1 = occurrences(message.content,"👊");
    jokerhp = jokerhp - count1;
    }else{
     message.delete();
