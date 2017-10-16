@@ -437,11 +437,7 @@ client.on('message', function(message) {
  }
 });
 
-client.login(process.env.BOT_TOKEN);
-
-
-while (true) {
-  sleep(5000);
+var myInterval = setInterval(function() {
     if(jokering === true){
      if(jokerhp <= 0){
       jokering = false
@@ -455,4 +451,6 @@ while (true) {
       updatejoker()
      }
     }
-}
+}, 5000);
+
+client.login(process.env.BOT_TOKEN);
