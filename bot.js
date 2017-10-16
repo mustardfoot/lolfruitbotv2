@@ -192,7 +192,7 @@ client.on('message', function(message) {
   }
   if(message.channel === jokerchannel){
    if(jokering === true){
-   var count1 = (message.content.match(/is/g) || []).length;
+   var count1 = (message.content.match(/:punch:/g) || []).length;
    jokerhp = jokerhp - count1;
    }else{
     message.delete();
