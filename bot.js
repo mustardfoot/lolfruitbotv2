@@ -8,6 +8,8 @@ var offservers = {
 var thatid = 364125929624174603;
 var jokering = false;
 var jokermax = 2500;
+var jokerbattlers = [
+];
 var jokerhp = 2500;
 var jokerchannel = null;
 var giveawayers = [
@@ -216,9 +218,20 @@ client.on('message', function(message) {
   if(message.channel === jokerchannel){
    if(jokering === true){
    var count1 = occurrences(message.content,"👊");
-   jokerhp = jokerhp - count1;
-   }else{
+   if (count1 > 0){
     message.delete();
+   };
+    var wewie = false;
+   jokerbattlers.forEach(function(boom){
+    if (boom.id === message.author.id){
+     wewie = true;
+     boom.punch = boom.punch+count1;
+    };
+   });
+    if(wewie === false){
+     jokerbattlers.push({id:message.author.id,punch:count1});
+    }
+   jokerhp = jokerhp - count1;
    }
   };
   var args = message.content.substring(pref.length).split(" ");
