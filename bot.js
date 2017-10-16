@@ -32,6 +32,26 @@ function randomnum(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function occurrences(string, subString, allowOverlapping) {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+        pos = 0,
+        step = allowOverlapping ? 1 : subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+}
+
 function updatejoker(){
  jokerchannel.send({embed: {
        color: 14680064,
@@ -193,7 +213,7 @@ client.on('message', function(message) {
   }
   if(message.channel === jokerchannel){
    if(jokering === true){
-   var count1 = (message.content.match(/:punch:/g) || []).length;
+   var count1 = occurrences(message.content,":punch:");
    jokerhp = jokerhp - count1;
    }else{
     message.delete();
