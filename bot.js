@@ -280,6 +280,8 @@ client.on('message', function(message) {
         }
        })
        jokermax = 2500;
+       jokerbattlers = [
+       ];
        if (args[1] && parseInt(args[1])){
         jokermax = parseInt(args[1])
        }
