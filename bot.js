@@ -213,6 +213,7 @@ client.on('message', function(message) {
   }
   if(message.channel === jokerchannel){
    if(jokering === true){
+    console.log(message.content);
    var count1 = occurrences(message.content,":punch:");
    jokerhp = jokerhp - count1;
    }else{
