@@ -441,7 +441,7 @@ client.login(process.env.BOT_TOKEN);
 
 
 while (true) {
-  setTimeout(function(){
+  sleep(5000);
     if(jokering === true){
      if(jokerhp <= 0){
       jokering = false
@@ -455,5 +455,4 @@ while (true) {
       updatejoker()
      }
     }
-  }, 5000);
 }
