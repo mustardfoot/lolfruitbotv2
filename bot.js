@@ -6,6 +6,10 @@ var offservers = {
  
 };
 var thatid = 364125929624174603;
+var jokering = false;
+var jokermax = 2500;
+var jokerhp = 2500;
+var jokerchannel = null;
 var giveawayers = [
  
 ];
@@ -28,6 +32,18 @@ function randomnum(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function updatejoker(){
+ jokerchannel.send({embed: {
+       color: 14680064,
+       title: "Joker Battle!",
+       description: "Spam :punch: in this channel to stop him!!",
+       timestamp: new Date(),
+       fields: [{
+        name: "Joker HP:",
+        value: jokerhp+"/"+jokermax
+       }]
+      }});
+}
 function log(title,mod,user,server,reason){
   server.channels.forEach(function(channel){
     if (reason){
@@ -174,6 +190,14 @@ client.on('message', function(message) {
      message.delete()
     }
   }
+  if(message.channel === jokerchannel){
+   if(jokering === true){
+   var count1 = (message.content.match(/is/g) || []).length;
+   jokerhp = jokerhp - count1;
+   }else{
+    message.delete();
+   }
+  };
   var args = message.content.substring(pref.length).split(" ");
   var word = message.content.toLowerCase()
   var userlist = message.mentions.users;
@@ -210,6 +234,22 @@ client.on('message', function(message) {
       ];
       giving = true;
       cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
+      }
+      break;
+    case "joker" :
+      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && jokering === false){
+       message.guild.channels.forEach(function(channel){
+        if(channel.name === "joker-stopping-zone"){
+         jokerchannel = channel;
+        }
+       })
+       jokermax = 2500;
+       if (args[1] && parseInt(args[1])){
+        jokermax = parseInt(args[1])
+       }
+       jokerhp = jokermax;
+       jokering = true;
+       updatejoker()
       }
       break;
     case "entergiveaway" :
@@ -398,3 +438,22 @@ client.on('message', function(message) {
 });
 
 client.login(process.env.BOT_TOKEN);
+
+
+while (true) {
+  setTimeout(function(){
+    if(jokering === true){
+     if(jokerhp <= 0){
+      jokering = false
+      jokerchannel.send({embed: {
+       color: 14680064,
+       title: "Joker Battle!",
+       description: "The joker has been defeated!",
+       timestamp: new Date()
+      }});
+     }else{
+      updatejoker()
+     }
+    }
+  }, 5000);
+}
