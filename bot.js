@@ -38,6 +38,7 @@ function updatejoker(){
        title: "Joker Battle!",
        description: "Spam :punch: in this channel to stop him!!",
        timestamp: new Date(),
+       icon: "https://static.comicvine.com/uploads/original/11125/111253442/5004137-joker.jpg",
        fields: [{
         name: "Joker HP:",
         value: jokerhp+"/"+jokermax
@@ -445,6 +446,7 @@ var myInterval = setInterval(function() {
        color: 14680064,
        title: "Joker Battle!",
        description: "The joker has been defeated!",
+       icon: "https://i.pinimg.com/736x/86/22/ae/8622ae3e39fbb2b2ebf9afa6b12befa5--dc-comic-comic-art.jpg",
        timestamp: new Date()
       }});
      }else{
