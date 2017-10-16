@@ -451,6 +451,6 @@ var myInterval = setInterval(function() {
       updatejoker()
      }
     }
-}, 5000);
+}, 10000);
 
 client.login(process.env.BOT_TOKEN);
