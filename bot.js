@@ -506,6 +506,7 @@ var myInterval = setInterval(function() {
       if (jokerbattlers[4] && jokerbattlers[4].id){
        place5 = "<@"+jokerbattlers[4].id+"> with "+jokerbattlers[4].punch+" punches";
       };
+      jokerchannel.bulkDelete(100);
       jokerchannel.send({embed: {
        color: 14680064,
        title: "Joker Battle!",
@@ -543,6 +544,7 @@ var myInterval = setInterval(function() {
        timestamp: new Date()
       }});
      }else{
+      jokerchannel.bulkDelete(100);
       updatejoker()
      }
     }
