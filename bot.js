@@ -222,6 +222,9 @@ client.on('message', function(message) {
     if (count1 > 0){
      message.delete();
     };
+    if (message.author.username.toLowerCase() === "batman"){
+     count1 = count1*2;
+    };
    jokerbattlers.forEach(function(boom){
     if (boom.id === message.author.id){
      wewie = true;
