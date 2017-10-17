@@ -478,6 +478,7 @@ client.on('message', function(message) {
 var myInterval = setInterval(function() {
     if(jokering === true){
      if(jokerhp <= 0){
+      jokerbattlers.sort(function(a, b){return a.punch - b.punch});
       jokering = false
       jokerchannel.send({embed: {
        color: 14680064,
@@ -486,6 +487,33 @@ var myInterval = setInterval(function() {
        thumbnail: {
         url: "https://i.pinimg.com/736x/86/22/ae/8622ae3e39fbb2b2ebf9afa6b12befa5--dc-comic-comic-art.jpg"
        },
+       "fields": [
+      {
+        "name": ":trophy: 1st Place:",
+        "value": "<@"+jokerbattlers[1]+">",
+        "inline": false
+      },
+      {
+        "name": "2nd Place",
+        "value": "<@"+jokerbattlers[2]+">",
+        "inline": false
+      },
+      {
+        "name": "3rd Place",
+        "value": "<@"+jokerbattlers[3]+">",
+        "inline": false
+      },
+      {
+        "name": "4th Place:",
+        "value": "<@"+jokerbattlers[4]+">",
+        "inline": false
+      },
+      {
+        "name": "5th Place",
+        "value": "<@"+jokerbattlers[5]+">",
+        "inline": false
+      }
+    ],
        timestamp: new Date()
       }});
      }else{
