@@ -480,6 +480,26 @@ var myInterval = setInterval(function() {
      if(jokerhp <= 0){
       jokerbattlers.sort(function(a, b){return a.punch - b.punch});
       jokering = false
+      var place = "Nobody";
+      var place2 = "Nobody";
+      var place3 = "Nobody";
+      var place4 = "Nobody";
+      var place5 = "Nobody";
+      if (jokerbattlers[1].id){
+       place = "<@"+jokerbattlers[1].id+">";
+      };
+      if (jokerbattlers[2].id){
+       place = "<@"+jokerbattlers[2].id+">";
+      };
+      if (jokerbattlers[3].id){
+       place = "<@"+jokerbattlers[3].id+">";
+      };
+      if (jokerbattlers[4].id){
+       place = "<@"+jokerbattlers[4].id+">";
+      };
+      if (jokerbattlers[5].id){
+       place = "<@"+jokerbattlers[5].id+">";
+      };
       jokerchannel.send({embed: {
        color: 14680064,
        title: "Joker Battle!",
@@ -490,27 +510,27 @@ var myInterval = setInterval(function() {
        "fields": [
       {
         "name": ":trophy: 1st Place:",
-        "value": "<@"+jokerbattlers[1]+">",
+        "value": place,
         "inline": false
       },
       {
         "name": "2nd Place",
-        "value": "<@"+jokerbattlers[2]+">",
+        "value": place2,
         "inline": false
       },
       {
         "name": "3rd Place",
-        "value": "<@"+jokerbattlers[3]+">",
+        "value": place3,
         "inline": false
       },
       {
         "name": "4th Place:",
-        "value": "<@"+jokerbattlers[4]+">",
+        "value": place4,
         "inline": false
       },
       {
         "name": "5th Place",
-        "value": "<@"+jokerbattlers[5]+">",
+        "value": place5,
         "inline": false
       }
     ],
