@@ -480,7 +480,7 @@ client.on('message', function(message) {
 var myInterval = setInterval(function() {
     if(jokering === true){
      if(jokerhp <= 0){
-      jokerbattlers.sort(function(a, b){return a.punch - b.punch});
+      jokerbattlers.sort(function(a, b){return b.punch - a.punch});
       jokering = false
       var place = "Nobody";
       var place2 = "Nobody";
