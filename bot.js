@@ -487,7 +487,7 @@ var myInterval = setInterval(function() {
       var place5 = "Nobody";
       jokerbattlers.forEach(function(ree){
        console.log(ree);
-      };
+      });
       if (jokerbattlers[1] && jokerbattlers[1].id){
        place = "<@"+jokerbattlers[1].id+">";
       };
