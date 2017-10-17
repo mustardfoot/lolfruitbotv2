@@ -273,7 +273,7 @@ client.on('message', function(message) {
       }
       break;
     case "joker" :
-      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && jokering === false){
+      if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && jokering === false){
        message.guild.channels.forEach(function(channel){
         if(channel.name === "joker-stopping-zone"){
          jokerchannel = channel;
