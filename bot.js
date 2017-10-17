@@ -232,7 +232,8 @@ client.on('message', function(message) {
      jokerbattlers.push({id:message.author.id,punch:count1});
     }
    jokerhp = jokerhp - count1;
-   }else{
+   };
+   if (jokering === false){
     message.delete();
    }
   };
