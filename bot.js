@@ -229,7 +229,6 @@ client.on('message', function(message) {
     };
    });
     if(wewie === false){
-     console.log({id:message.author.id,punch:count1})
      jokerbattlers.push({id:message.author.id,punch:count1});
     }
    jokerhp = jokerhp - count1;
@@ -486,6 +485,9 @@ var myInterval = setInterval(function() {
       var place3 = "Nobody";
       var place4 = "Nobody";
       var place5 = "Nobody";
+      jokerbattlers.forEach(function(ree){
+       console.log(ree);
+      };
       if (jokerbattlers[1] && jokerbattlers[1].id){
        place = "<@"+jokerbattlers[1].id+">";
       };
