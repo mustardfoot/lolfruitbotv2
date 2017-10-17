@@ -531,7 +531,7 @@ var myInterval = setInterval(function() {
         "inline": false
       },
       {
-        "name": "5th Place",
+        "name": "5th Place:",
         "value": place5,
         "inline": false
       }
