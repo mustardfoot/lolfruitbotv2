@@ -489,16 +489,16 @@ var myInterval = setInterval(function() {
        place = "<@"+jokerbattlers[1].id+">";
       };
       if (jokerbattlers[2].id){
-       place = "<@"+jokerbattlers[2].id+">";
+       place2 = "<@"+jokerbattlers[2].id+">";
       };
       if (jokerbattlers[3].id){
-       place = "<@"+jokerbattlers[3].id+">";
+       place3 = "<@"+jokerbattlers[3].id+">";
       };
       if (jokerbattlers[4].id){
-       place = "<@"+jokerbattlers[4].id+">";
+       place4 = "<@"+jokerbattlers[4].id+">";
       };
       if (jokerbattlers[5].id){
-       place = "<@"+jokerbattlers[5].id+">";
+       place5 = "<@"+jokerbattlers[5].id+">";
       };
       jokerchannel.send({embed: {
        color: 14680064,
