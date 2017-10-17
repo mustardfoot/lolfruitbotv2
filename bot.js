@@ -485,19 +485,19 @@ var myInterval = setInterval(function() {
       var place3 = "Nobody";
       var place4 = "Nobody";
       var place5 = "Nobody";
-      if (jokerbattlers[1].id){
+      if (jokerbattlers[1] && jokerbattlers[1].id){
        place = "<@"+jokerbattlers[1].id+">";
       };
-      if (jokerbattlers[2].id){
+      if (jokerbattlers[2] && jokerbattlers[2].id){
        place2 = "<@"+jokerbattlers[2].id+">";
       };
-      if (jokerbattlers[3].id){
+      if (jokerbattlers[3] && jokerbattlers[3].id){
        place3 = "<@"+jokerbattlers[3].id+">";
       };
-      if (jokerbattlers[4].id){
+      if (jokerbattlers[4] && jokerbattlers[4].id){
        place4 = "<@"+jokerbattlers[4].id+">";
       };
-      if (jokerbattlers[5].id){
+      if (jokerbattlers[5] && jokerbattlers[5].id){
        place5 = "<@"+jokerbattlers[5].id+">";
       };
       jokerchannel.send({embed: {
