@@ -485,23 +485,20 @@ var myInterval = setInterval(function() {
       var place3 = "Nobody";
       var place4 = "Nobody";
       var place5 = "Nobody";
-      jokerbattlers.forEach(function(ree){
-       console.log(ree);
-      });
+      if (jokerbattlers[1] && jokerbattlers[0].id){
+       place = "<@"+jokerbattlers[0].id+">";
+      };
       if (jokerbattlers[1] && jokerbattlers[1].id){
-       place = "<@"+jokerbattlers[1].id+">";
+       place2 = "<@"+jokerbattlers[1].id+">";
       };
       if (jokerbattlers[2] && jokerbattlers[2].id){
-       place2 = "<@"+jokerbattlers[2].id+">";
+       place3 = "<@"+jokerbattlers[2].id+">";
       };
       if (jokerbattlers[3] && jokerbattlers[3].id){
-       place3 = "<@"+jokerbattlers[3].id+">";
+       place4 = "<@"+jokerbattlers[3].id+">";
       };
       if (jokerbattlers[4] && jokerbattlers[4].id){
-       place4 = "<@"+jokerbattlers[4].id+">";
-      };
-      if (jokerbattlers[5] && jokerbattlers[5].id){
-       place5 = "<@"+jokerbattlers[5].id+">";
+       place5 = "<@"+jokerbattlers[4].id+">";
       };
       jokerchannel.send({embed: {
        color: 14680064,
