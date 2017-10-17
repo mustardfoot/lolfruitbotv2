@@ -215,7 +215,7 @@ client.on('message', function(message) {
      message.delete()
     }
   }
-  if(message.channel === jokerchannel){
+  if(message.channel.name === "joker-stopping-zone"){
    if(jokering === true){
    var count1 = occurrences(message.content,"👊");
     var wewie = false;
