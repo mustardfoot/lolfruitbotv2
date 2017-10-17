@@ -265,9 +265,11 @@ client.on('message', function(message) {
       }
       break;
     case "8ball" :
-      var outcum = "There has been an error, Sorry! Please try again"
-      if (args[1]) outcum = fortunes[Math.floor(Math.random()*fortunes.length)];
-      cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
+      if(message.channel.name === "bot-chat"){
+       var outcum = "There has been an error, Sorry! Please try again"
+       if (args[1]) outcum = fortunes[Math.floor(Math.random()*fortunes.length)];
+       cmdoutput('8Ball',outcum + ", <@" + message.author.id + ">",message.channel)
+      };
       break;
     case "giveaway" :
       if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
