@@ -218,10 +218,10 @@ client.on('message', function(message) {
   if(message.channel === jokerchannel){
    if(jokering === true){
    var count1 = occurrences(message.content,"👊");
-   if (count1 > 0){
-    message.delete();
-   };
     var wewie = false;
+    if (count1 > 0){
+     message.delete();
+    };
    jokerbattlers.forEach(function(boom){
     if (boom.id === message.author.id){
      wewie = true;
@@ -232,6 +232,8 @@ client.on('message', function(message) {
      jokerbattlers.push({id:message.author.id,punch:count1});
     }
    jokerhp = jokerhp - count1;
+   }else{
+    message.delete();
    }
   };
   var args = message.content.substring(pref.length).split(" ");
@@ -486,19 +488,19 @@ var myInterval = setInterval(function() {
       var place4 = "Nobody";
       var place5 = "Nobody";
       if (jokerbattlers[1] && jokerbattlers[0].id){
-       place = "<@"+jokerbattlers[0].id+">";
+       place = "<@"+jokerbattlers[0].id+"> with "+jokerbattlers[0].punch+" punches";
       };
       if (jokerbattlers[1] && jokerbattlers[1].id){
-       place2 = "<@"+jokerbattlers[1].id+">";
+       place2 = "<@"+jokerbattlers[1].id+"> with "+jokerbattlers[1].punch+" punches";
       };
       if (jokerbattlers[2] && jokerbattlers[2].id){
-       place3 = "<@"+jokerbattlers[2].id+">";
+       place3 = "<@"+jokerbattlers[2].id+"> with "+jokerbattlers[2].punch+" punches";
       };
       if (jokerbattlers[3] && jokerbattlers[3].id){
-       place4 = "<@"+jokerbattlers[3].id+">";
+       place4 = "<@"+jokerbattlers[3].id+"> with "+jokerbattlers[3].punch+" punches";
       };
       if (jokerbattlers[4] && jokerbattlers[4].id){
-       place5 = "<@"+jokerbattlers[4].id+">";
+       place5 = "<@"+jokerbattlers[4].id+"> with "+jokerbattlers[4].punch+" punches";
       };
       jokerchannel.send({embed: {
        color: 14680064,
