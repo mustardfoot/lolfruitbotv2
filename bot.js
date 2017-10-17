@@ -229,6 +229,7 @@ client.on('message', function(message) {
     };
    });
     if(wewie === false){
+     console.log({id:message.author.id,punch:count1})
      jokerbattlers.push({id:message.author.id,punch:count1});
     }
    jokerhp = jokerhp - count1;
