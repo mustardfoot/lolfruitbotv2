@@ -8,6 +8,7 @@ var offservers = {
 var thatid = 364125929624174603;
 var jokering = false;
 var jokermax = 2500;
+var customname = "Joker";
 var jokerbattlers = [
 ];
 var jokerhp = 2500;
@@ -57,14 +58,14 @@ function occurrences(string, subString, allowOverlapping) {
 function updatejoker(){
  jokerchannel.send({embed: {
        color: 14680064,
-       title: "Joker Battle!",
+       title: customname+" Battle!",
        description: "Spam :punch: in this channel to stop him!!",
        timestamp: new Date(),
        thumbnail: {
         url: "https://static.comicvine.com/uploads/original/11125/111253442/5004137-joker.jpg"
        },
        fields: [{
-        name: "Joker HP:",
+        name: customname+" HP:",
         value: jokerhp+"/"+jokermax
        }]
       }});
@@ -290,6 +291,10 @@ client.on('message', function(message) {
        jokermax = 2500;
        jokerbattlers = [
        ];
+       customname = "Joker";
+       if (args[2]){
+        customname = args[2];
+       };
        if (args[1] && parseInt(args[1])){
         jokermax = parseInt(args[1])
        }
@@ -511,8 +516,8 @@ var myInterval = setInterval(function() {
       jokerchannel.bulkDelete(100);
       jokerchannel.send({embed: {
        color: 14680064,
-       title: "Joker Battle!",
-       description: "The joker has been defeated!",
+       title: customname+" Battle!",
+       description: "The "+customname+" has been defeated!",
        thumbnail: {
         url: "https://i.pinimg.com/736x/86/22/ae/8622ae3e39fbb2b2ebf9afa6b12befa5--dc-comic-comic-art.jpg"
        },
