@@ -216,7 +216,7 @@ client.on('message', function(message) {
      message.delete()
     }
   }
-  if(message.channel.name === "joker-stopping-zone"){
+  if(message.channel.name === "crime-fighting-zone"){
    if(jokering === true){
    var count1 = occurrences(message.content,"👊");
     var wewie = false;
@@ -284,7 +284,7 @@ client.on('message', function(message) {
     case "joker" :
       if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && jokering === false){
        message.guild.channels.forEach(function(channel){
-        if(channel.name === "joker-stopping-zone"){
+        if(channel.name === "crime-fighting-zone"){
          jokerchannel = channel;
         }
        })
