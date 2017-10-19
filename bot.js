@@ -281,7 +281,7 @@ client.on('message', function(message) {
       cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
       }
       break;
-    case "joker" :
+    case "crime" :
       if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && jokering === false){
        message.guild.channels.forEach(function(channel){
         if(channel.name === "crime-fighting-zone"){
