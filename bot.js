@@ -291,10 +291,18 @@ client.on('message', function(message) {
        jokermax = 2500;
        jokerbattlers = [
        ];
-       customname = "Joker";
-       if (args[2]){
-        customname = args[2];
-       };
+      customname = "Joker";
+      var curnum = 1;
+      args.forEach(function(role){
+        if(curnum > 2){
+          if(curnum === 3){
+            customname = role;
+          }else{
+            customname = customname+" "+role;
+          }
+        }
+        curnum = curnum+1;
+      })
        if (args[1] && parseInt(args[1])){
         jokermax = parseInt(args[1])
        }
