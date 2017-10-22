@@ -372,7 +372,7 @@ client.on('message', function(message) {
           user.addRole(message.member.guild.roles.find("name","buyers"));
           cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
           user.user.createDM().then((boi) => {
-          cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password to get started.",boi);
+          cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password to get started. The file can be found in <#363446643393167361>.",boi);
           });
         })
       }
