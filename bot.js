@@ -279,10 +279,10 @@ client.on('message', function(message) {
             })
             if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
               var authid = message.author.id;
-              var hwids;
+              var hwids = null;
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
                 datas.forEach(function(data){
-                  console.log(data);
+                  console.log(data.name);
                   if (data.name === "HWIDs"){
                     hwids = data.id;
                   }
