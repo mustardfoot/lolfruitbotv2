@@ -278,34 +278,33 @@ client.on('message', function(message) {
                 isabuyer = true;
               }
             })
+            if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
+              console.log('hm');
+              var authid = message.author.id;
+              var hwids;
+              t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, data) {
+                if (data.name === "HWIDs"){
+                  hwids = data.id
+                }
+              });
+              if(hwids){
+                var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
+                var found = false;
+                cards.forEach(function(card){
+                  if (card.desc === authid){
+                    message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
+                  }
+                })
+                if(found === false){
+                  t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids, success, error);
+                }
+              }else{
+                message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
+              }
+            }
           });
           }
         });
-        console.log(message.author.dmChannel !== null,message.channel === message.author.dmChannel,isabuyer === true,args[1] !== null);
-      if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
-        console.log('hm');
-        var authid = message.author.id;
-        var hwids;
-        t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, data) {
-          if (data.name === "HWIDs"){
-            hwids = data.id
-          }
-        });
-        if(hwids){
-          var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
-          var found = false;
-          cards.forEach(function(card){
-            if (card.desc === authid){
-              message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
-            }
-          })
-          if(found === false){
-            t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids, success, error);
-          }
-        }else{
-          message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
-        }
-      }
       break;
     case "8ball" :
       if(message.channel.name === "bot-chat"){
