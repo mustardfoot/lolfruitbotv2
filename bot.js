@@ -220,7 +220,7 @@ client.on('message', function(message) {
   }
   if(message.channel.name === "crime-fighting-zone"){
    if(jokering === true){
-   var count1 = occurrences(message.content,"👊");
+   var count1 = occurrences(message.content,"??");
     var wewie = false;
     if (count1 > 0){
      message.delete();
@@ -283,8 +283,9 @@ client.on('message', function(message) {
               var authid = message.author.id;
               var hwids;
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, data) {
+                console.log(data);
                 if (data.name === "HWIDs"){
-                  hwids = data.id
+                  hwids = data.id;
                 }
               });
               if(hwids){
