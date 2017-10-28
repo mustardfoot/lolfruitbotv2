@@ -283,26 +283,24 @@ client.on('message', function(message) {
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
                 datas.forEach(function(data){
                   if (data.name === "HWIDs"){
-                    console.log('why the fuck are u so gay like this');
                     hwids = data.id;
                   }
                 })
-              });
-              console.log(hwids);
-              if(hwids){
-                var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
-                var found = false;
-                cards.forEach(function(card){
-                  if (card.desc === authid){
-                    message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
+                if(hwids){
+                  var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
+                  var found = false;
+                  cards.forEach(function(card){
+                    if (card.desc === authid){
+                      message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
+                    }
+                  })
+                  if(found === false){
+                    t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids, success, error);
                   }
-                })
-                if(found === false){
-                  t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids, success, error);
+                }else{
+                  message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
                 }
-              }else{
-                message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
-              }
+              });
             }
           });
           }
