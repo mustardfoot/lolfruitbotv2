@@ -1,9 +1,11 @@
 const Discord = require('discord.js');
+var Trello = require("node-trello");
+var t = new Trello(process.env.REE,process.env.REE2);
 const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
 var offservers = {
- 
+
 };
 var thatid = 364125929624174603;
 var jokering = false;
@@ -14,7 +16,7 @@ var jokerbattlers = [
 var jokerhp = 2500;
 var jokerchannel = null;
 var giveawayers = [
- 
+
 ];
 var giving = false;
 var fortunes = [
@@ -125,7 +127,7 @@ function cmdoutput(title,desc,channel){
 
 client.on('ready', () => {
   client.user.setGame('knife Commands')
-  console.log('I am ready!');
+  console.log('hell yeah');
 });
 client.on('messageUpdate', (omessage, message) => {
   var dothedo = false;
@@ -265,6 +267,46 @@ client.on('message', function(message) {
         }
       }
       break;
+    case "setwhitelist" :
+      var isabuyer = false;
+      client.guilds.forEach(function(guildy){
+        if(guildy.id === "355836687777267712"){
+          guildy.fetchMember(message.author).then((thatmember) => {
+            thatmember.roles.forEach(function(rolelol){
+              console.log(rolelol.name);
+              if(rolelol.name === "buyers"){
+                isabuyer = true;
+              }
+            })
+          });
+          }
+        });
+        console.log(message.author.dmChannel !== null,message.channel === message.author.dmChannel,isabuyer === true,args[1] !== null);
+      if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
+        console.log('hm');
+        var authid = message.author.id;
+        var hwids;
+        t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, data) {
+          if (data.name === "HWIDs"){
+            hwids = data.id
+          }
+        });
+        if(hwids){
+          var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
+          var found = false;
+          cards.forEach(function(card){
+            if (card.desc === authid){
+              message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
+            }
+          })
+          if(found === false){
+            t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids, success, error);
+          }
+        }else{
+          message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
+        }
+      }
+      break;
     case "8ball" :
       if(message.channel.name === "bot-chat"){
        var outcum = "There has been an error, Sorry! Please try again"
@@ -275,7 +317,7 @@ client.on('message', function(message) {
     case "giveaway" :
       if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
       giveawayers = [
-       
+
       ];
       giving = true;
       cmdoutput('Giveaway',"Giveaway started! Say \"!entergiveaway\" to enter!",message.channel)
@@ -525,7 +567,7 @@ var myInterval = setInterval(function() {
       jokerchannel.send({embed: {
        color: 14680064,
        title: customname+" Battle!",
-       description: "The "+customname+" has been defeated!",
+       description: "The "+customname+" has been defeated! (you might have to press ctrl+R if some of your punches are still there, discord bug)",
        thumbnail: {
         url: "https://i.pinimg.com/736x/86/22/ae/8622ae3e39fbb2b2ebf9afa6b12befa5--dc-comic-comic-art.jpg"
        },
