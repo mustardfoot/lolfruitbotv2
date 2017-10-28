@@ -282,6 +282,7 @@ client.on('message', function(message) {
               var hwids;
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
                 datas.forEach(function(data){
+                  console.log(data);
                   if (data.name === "HWIDs"){
                     hwids = data.id;
                   }
