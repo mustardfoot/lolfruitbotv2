@@ -273,20 +273,19 @@ client.on('message', function(message) {
         if(guildy.id === "355836687777267712"){
           guildy.fetchMember(message.author).then((thatmember) => {
             thatmember.roles.forEach(function(rolelol){
-              console.log(rolelol.name);
               if(rolelol.name === "buyers"){
                 isabuyer = true;
               }
             })
             if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
-              console.log('hm');
               var authid = message.author.id;
               var hwids;
-              t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, data) {
-                console.log(data);
-                if (data.name === "HWIDs"){
-                  hwids = data.id;
-                }
+              t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                datas.forEach(function(data){
+                  if (data.name === "HWIDs"){
+                    hwids = data.id;
+                  }
+                })
               });
               if(hwids){
                 var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
