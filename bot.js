@@ -282,12 +282,13 @@ client.on('message', function(message) {
               var hwids = null;
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
                 datas.forEach(function(data){
-                  console.log(data.name);
                   if (data.name === "HWIDs"){
+                    console.log('why the fuck are u so gay like this');
                     hwids = data.id;
                   }
                 })
               });
+              console.log(hwids);
               if(hwids){
                 var cards = t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc");
                 var found = false;
