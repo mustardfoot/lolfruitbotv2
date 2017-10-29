@@ -464,7 +464,6 @@ client.on('message', function(message) {
     if (args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
       var userlist = message.mentions.members; // Saving userlist to a variable
       userlist.forEach(function(user){
-        user.addRole(message.member.guild.roles.find("name","buyers"));
         var hwids = null;
         var authid = user.id;
         t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
