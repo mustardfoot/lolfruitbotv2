@@ -274,11 +274,13 @@ client.on('message', function(message) {
     case "subscribe" :
       if(message.member){
         message.member.addRole(message.member.guild.roles.find("name","subscribed"));
+        cmdoutput('Success',"You have been subscrbed to announcements.",message.channel);
       }
       break;
-    case "subscribe" :
+    case "unsubscribe" :
       if(message.member){
         message.member.removeRole(message.member.guild.roles.find("name","subscribed"));
+        cmdoutput('Success',"You have been unsubscrbed from announcements.",message.channel);
       }
       break;
     case "setwhitelist" :
