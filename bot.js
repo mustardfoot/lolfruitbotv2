@@ -292,11 +292,11 @@ client.on('message', function(message) {
                     cards.forEach(function(card){
                       if (card.desc === authid){
                         found = true;
-                        message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
+                        cmdoutput('Error',"You're already whitelisted! Please run the command !removewhitelist if you want to change it.",message.channel);
                       }
                     })
                     if(found === false){
-                      message.channel.send("You have been whitelisted for Grab Knife V4!");
+                      cmdoutput("Success","You have been whitelisted for Grab Knife V4!",message.channel);
                       t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids,function(err,returns){
                         if(err){
                           console.log(err);
@@ -305,7 +305,7 @@ client.on('message', function(message) {
                     }
                   });
                 }else{
-                  message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.")
+                  message.channel.send("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
                 }
               });
             }
@@ -313,7 +313,7 @@ client.on('message', function(message) {
           }
         });
       break;
-      case "removewhitelist" :
+    case "removewhitelist" :
         var isabuyer = false;
         client.guilds.forEach(function(guildy){
           if(guildy.id === "355836687777267712"){
@@ -341,18 +341,18 @@ client.on('message', function(message) {
                         }
                       })
                       if(found !== false){
-                        message.channel.send("Your HWID has been removed, please go on your main account and use the script to get your new one.");
+                        cmdoutput("Success","Your HWID has been removed, please go on your main account and use the script to get your new one.",message.channel);
                         t.del('1/cards/'+found,function(err,returns){
                           if(err){
                             console.log(err);
                           }
                         });
                       }else{
-                        message.channel.send("You're not whitelisted! Please run the command !setwhitelist [HWID] to set one up.")
+                        cmdoutput("Error","You're not whitelisted! Please run the command !setwhitelist [HWID] to set one up.",message.channel)
                       }
                     });
                   }else{
-                    message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
+                    cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!",message.channel)
                   }
                 });
               }
@@ -360,6 +360,99 @@ client.on('message', function(message) {
             }
           });
         break;
+        case "setmain" :
+          var isabuyer = false;
+          client.guilds.forEach(function(guildy){
+            if(guildy.id === "355836687777267712"){
+              guildy.fetchMember(message.author).then((thatmember) => {
+                thatmember.roles.forEach(function(rolelol){
+                  if(rolelol.name === "buyers"){
+                    isabuyer = true;
+                  }
+                })
+                if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
+                  var authid = message.author.id;
+                  var hwids = null;
+                  t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                    datas.forEach(function(data){
+                      if (data.name === "mains"){
+                        hwids = data.id;
+                      }
+                    })
+                    if(hwids){
+                      t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                        var found = false;
+                        cards.forEach(function(card){
+                          if (card.name === authid){
+                            found = true;
+                            cmdoutput('Error',"You've already set up your main account! Please run the command !removemain if you want to change it.",message.channel);
+                          }
+                        })
+                        if(found === false){
+                          cmdoutput("Success","Your main account has been linked!",message.channel);
+                          t.post('/1/cards?desc='+args[1]+'&name='+authid+'&pos=top&idList='+hwids,function(err,returns){
+                            if(err){
+                              console.log(err);
+                            }
+                          });
+                        }
+                      });
+                    }else{
+                      message.channel.send("Error","Something seems to be wrong with the user list! Please contact mustardfoot and tell him.",message.channel);
+                    }
+                  });
+                }
+              });
+              }
+            });
+          break;
+          case "removemain" :
+              var isabuyer = false;
+              client.guilds.forEach(function(guildy){
+                if(guildy.id === "355836687777267712"){
+                  guildy.fetchMember(message.author).then((thatmember) => {
+                    thatmember.roles.forEach(function(rolelol){
+                      if(rolelol.name === "buyers"){
+                        isabuyer = true;
+                      }
+                    })
+                    if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true){
+                      var authid = message.author.id;
+                      var hwids = null;
+                      t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                        datas.forEach(function(data){
+                          if (data.name === "mains"){
+                            hwids = data.id;
+                          }
+                        })
+                        if(hwids){
+                          t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                            var found = false;
+                            cards.forEach(function(card){
+                              if (card.name === authid){
+                                found = card.id;
+                              }
+                            })
+                            if(found !== false){
+                              cmdoutput("Success","Your main account has been unlinked, you may now set a new one.",message.channel);
+                              t.del('1/cards/'+found,function(err,returns){
+                                if(err){
+                                  console.log(err);
+                                }
+                              });
+                            }else{
+                              cmdoutput("Error","You have not set up your main account! Please run the command !setmain [main account username] to set one up.",message.channel)
+                            }
+                          });
+                        }else{
+                          cmdoutput("Error","Something seems to be wrong with the user list! Please contact mustardfoot and tell him!",message.channel)
+                        }
+                      });
+                    }
+                  });
+                  }
+                });
+              break;
     case "8ball" :
       if(message.channel.name === "bot-chat"){
        var outcum = "There has been an error, Sorry! Please try again"
@@ -467,7 +560,7 @@ client.on('message', function(message) {
           user.addRole(message.member.guild.roles.find("name","buyers"));
           cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
           user.user.createDM().then((boi) => {
-          cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, please DM <@"+message.author.id+"> with your desired username and password to get started. The file can be found in <#363446643393167361>.",boi);
+          cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, run the command \"!setmain [main ROBLOX account name].\" The file can be found in <#363446643393167361>.",boi);
           });
         })
       }
