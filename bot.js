@@ -460,6 +460,36 @@ client.on('message', function(message) {
         })
       }
       break;
+    case "rerole" :
+    if (args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
+      var userlist = message.mentions.members; // Saving userlist to a variable
+      userlist.forEach(function(user){
+        user.addRole(message.member.guild.roles.find("name","buyers"));
+        var hwids = null;
+        var authid = user.id;
+        t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+          datas.forEach(function(data){
+            if (data.name === "mains"){
+              hwids = data.id;
+            }
+          })
+          if(hwids){
+            t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+              var found = false;
+              cards.forEach(function(card){
+                if (card.name === authid){
+                  cmdoutput('Whitelist',"<@"+user.id+"> has been re-roled for Grab Knife V4.",message.channel);
+                  user.addRole(message.member.guild.roles.find("name","buyers"));
+                }
+              })
+            });
+          }else{
+            cmdoutput("Error","Something seems to be wrong with the buyers list! Please contact mustardfoot and tell him.",message.channel);
+          }
+        });
+      })
+    }
+    break;
     case "whitelist" :
       if (args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
         var userlist = message.mentions.members; // Saving userlist to a variable
