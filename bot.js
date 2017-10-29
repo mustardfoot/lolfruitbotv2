@@ -461,7 +461,7 @@ client.on('message', function(message) {
       }
       break;
     case "whitelist" :
-      if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
+      if (args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
