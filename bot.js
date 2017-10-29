@@ -295,6 +295,7 @@ client.on('message', function(message) {
                       }
                     })
                     if(found === false){
+                      message.channel.send("You have been whitelisted for Grab Knife V4!");
                       t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids, success, error);
                     }
                   });
