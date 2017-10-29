@@ -305,7 +305,7 @@ client.on('message', function(message) {
                     }
                   });
                 }else{
-                  message.channel.send("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
+                  cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
                 }
               });
             }
@@ -360,99 +360,6 @@ client.on('message', function(message) {
             }
           });
         break;
-        case "setmain" :
-          var isabuyer = false;
-          client.guilds.forEach(function(guildy){
-            if(guildy.id === "355836687777267712"){
-              guildy.fetchMember(message.author).then((thatmember) => {
-                thatmember.roles.forEach(function(rolelol){
-                  if(rolelol.name === "buyers"){
-                    isabuyer = true;
-                  }
-                })
-                if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
-                  var authid = message.author.id;
-                  var hwids = null;
-                  t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
-                    datas.forEach(function(data){
-                      if (data.name === "mains"){
-                        hwids = data.id;
-                      }
-                    })
-                    if(hwids){
-                      t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
-                        var found = false;
-                        cards.forEach(function(card){
-                          if (card.name === authid){
-                            found = true;
-                            cmdoutput('Error',"You've already set up your main account! Please run the command !removemain if you want to change it.",message.channel);
-                          }
-                        })
-                        if(found === false){
-                          cmdoutput("Success","Your main account has been linked!",message.channel);
-                          t.post('/1/cards?desc='+args[1]+'&name='+authid+'&pos=top&idList='+hwids,function(err,returns){
-                            if(err){
-                              console.log(err);
-                            }
-                          });
-                        }
-                      });
-                    }else{
-                      message.channel.send("Error","Something seems to be wrong with the user list! Please contact mustardfoot and tell him.",message.channel);
-                    }
-                  });
-                }
-              });
-              }
-            });
-          break;
-          case "removemain" :
-              var isabuyer = false;
-              client.guilds.forEach(function(guildy){
-                if(guildy.id === "355836687777267712"){
-                  guildy.fetchMember(message.author).then((thatmember) => {
-                    thatmember.roles.forEach(function(rolelol){
-                      if(rolelol.name === "buyers"){
-                        isabuyer = true;
-                      }
-                    })
-                    if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true){
-                      var authid = message.author.id;
-                      var hwids = null;
-                      t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
-                        datas.forEach(function(data){
-                          if (data.name === "mains"){
-                            hwids = data.id;
-                          }
-                        })
-                        if(hwids){
-                          t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
-                            var found = false;
-                            cards.forEach(function(card){
-                              if (card.name === authid){
-                                found = card.id;
-                              }
-                            })
-                            if(found !== false){
-                              cmdoutput("Success","Your main account has been unlinked, you may now set a new one.",message.channel);
-                              t.del('1/cards/'+found,function(err,returns){
-                                if(err){
-                                  console.log(err);
-                                }
-                              });
-                            }else{
-                              cmdoutput("Error","You have not set up your main account! Please run the command !setmain [main account username] to set one up.",message.channel)
-                            }
-                          });
-                        }else{
-                          cmdoutput("Error","Something seems to be wrong with the user list! Please contact mustardfoot and tell him!",message.channel)
-                        }
-                      });
-                    }
-                  });
-                  }
-                });
-              break;
     case "8ball" :
       if(message.channel.name === "bot-chat"){
        var outcum = "There has been an error, Sorry! Please try again"
@@ -558,9 +465,37 @@ client.on('message', function(message) {
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
-          cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
-          user.user.createDM().then((boi) => {
-          cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, run the command \"!setmain [main ROBLOX account name].\" The file can be found in <#363446643393167361>.",boi);
+          var hwids = null;
+          t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+            datas.forEach(function(data){
+              if (data.name === "mains"){
+                hwids = data.id;
+              }
+            })
+            if(hwids){
+              t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                var found = false;
+                cards.forEach(function(card){
+                  if (card.desc === authid){
+                    found = true;
+                    cmdoutput('Error',"This user is already whitelisted.",message.channel);
+                  }
+                })
+                if(found === false){
+                  cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
+                  user.user.createDM().then((boi) => {
+                  cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, you may now use the script found in <#363446643393167361>.",boi);
+                  });
+                  t.post('/1/cards?name='+authid+'&pos=top&idList='+hwids,function(err,returns){
+                    if(err){
+                      console.log(err);
+                    }
+                  });
+                }
+              });
+            }else{
+              cmdoutput("Error","Something seems to be wrong with the buyers list! Please contact mustardfoot and tell him.",message.channel);
+            }
           });
         })
       }
