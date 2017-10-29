@@ -185,6 +185,7 @@ client.on('message', function(message) {
   var dothedo = false;
   if (message.content.toLowerCase().indexOf('http') !== -1 || message.content.toLowerCase().indexOf('discord.gg') !== -1){
     var okay = false
+    if(message.member){
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "helpers") {
@@ -195,6 +196,7 @@ client.on('message', function(message) {
       }
      }
     })
+    }
     if (okay !== true){
      message.delete()
     }
@@ -205,6 +207,7 @@ client.on('message', function(message) {
   })
   if (doit === true && dothedo === false){
     var okay = false;
+    if(message.member){
     var roles = message.member.roles
     roles.forEach(function(role){
      if (role.name === "permit" || role.name === "helpers") {
@@ -214,6 +217,7 @@ client.on('message', function(message) {
       }
      }
     })
+    }
     if (okay !== true){
      message.delete()
     }
@@ -368,7 +372,7 @@ client.on('message', function(message) {
       };
       break;
     case "giveaway" :
-      if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
+      if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === false){
       giveawayers = [
 
       ];
@@ -421,7 +425,7 @@ client.on('message', function(message) {
       }
       break;
     case "closegiveaway" :
-     if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === true){
+     if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0 && giving === true){
       giving = false;
       var amnt = giveawayers.length
       var hmm = randomnum(0,amnt)
@@ -430,7 +434,7 @@ client.on('message', function(message) {
      }
      break;
     case "redraw" :
-    if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0) {
+    if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0) {
       var amnt = giveawayers.length
       var hmm = randomnum(0,amnt)
       var ree = giveawayers[hmm];
@@ -438,7 +442,7 @@ client.on('message', function(message) {
      }
      break;
     case "permit" :
-      if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
+      if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
         var userlist = message.mentions.members;
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","permit"));
@@ -447,7 +451,7 @@ client.on('message', function(message) {
       }
       break;
     case "revokepermit" :
-      if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
+      if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
         var userlist = message.mentions.members;
         userlist.forEach(function(user){
         var roles = user.roles
@@ -461,7 +465,7 @@ client.on('message', function(message) {
       }
       break;
     case "rerole" :
-    if (args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
+    if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
       var userlist = message.mentions.members; // Saving userlist to a variable
       userlist.forEach(function(user){
         var hwids = null;
@@ -494,7 +498,7 @@ client.on('message', function(message) {
     }
     break;
     case "whitelist" :
-      if (args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
+      if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
@@ -535,7 +539,7 @@ client.on('message', function(message) {
       }
       break;
     case "blacklist" :
-        if (args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
+        if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
           var userlist = message.mentions.members; // Saving userlist to a variable
           userlist.forEach(function(user){
             user.removeRole(message.member.guild.roles.find("name","buyers"));
@@ -600,7 +604,7 @@ client.on('message', function(message) {
         }
         break;
     case "purge" :
-      if (args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
+      if (message.member && args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
       var ree = parseInt(args[1]);
       var channel = message.channel;
       for(x = 0; x < Math.ceil((ree-1)/200); x = x + 1) {
@@ -664,7 +668,7 @@ client.on('message', function(message) {
         curnum = curnum+1;
       })
       if (muser){
-        if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0 && message.member.highestRole.comparePositionTo(muser.highestRole) > 0 ) {
+        if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0 && message.member.highestRole.comparePositionTo(muser.highestRole) > 0 ) {
           if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
           if (message.member.guild.roles.find("name","Muted")) {
            muser.addRole(message.member.guild.roles.find("name","Muted"))
@@ -700,7 +704,7 @@ client.on('message', function(message) {
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
-          if (message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+          if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
           var roles = user.roles
           roles.forEach(function(role){
             if (role.name === "muted" || role.name === "Muted") {
