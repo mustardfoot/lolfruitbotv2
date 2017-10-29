@@ -342,7 +342,7 @@ client.on('message', function(message) {
                       })
                       if(found !== false){
                         message.channel.send("Your HWID has been removed, please go on your main account and use the script to get your new one.");
-                        t.del('1/cards/'+found(function(err,returns){
+                        t.del('1/cards/'+found,function(err,returns){
                           if(err){
                             console.log(err);
                           }
