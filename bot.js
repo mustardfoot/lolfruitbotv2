@@ -271,6 +271,16 @@ client.on('message', function(message) {
         }
       }
       break;
+    case "subscribe" :
+      if(message.member){
+        message.member.addRole(message.member.guild.roles.find("name","subscribed"));
+      }
+      break;
+    case "subscribe" :
+      if(message.member){
+        message.member.removeRole(message.member.guild.roles.find("name","subscribed"));
+      }
+      break;
     case "setwhitelist" :
       var isabuyer = false;
       client.guilds.forEach(function(guildy){
