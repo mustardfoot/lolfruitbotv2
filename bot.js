@@ -291,6 +291,7 @@ client.on('message', function(message) {
                     var found = false;
                     cards.forEach(function(card){
                       if (card.desc === authid){
+                        found = true;
                         message.channel.send("You're already whitelisted! Please run the command !removewhitelist if you want to change it.")
                       }
                     })
