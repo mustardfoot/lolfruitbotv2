@@ -478,10 +478,14 @@ client.on('message', function(message) {
               var found = false;
               cards.forEach(function(card){
                 if (card.name === authid){
+                  found = true;
                   cmdoutput('Whitelist',"<@"+user.id+"> has been re-roled for Grab Knife V4.",message.channel);
                   user.addRole(message.member.guild.roles.find("name","buyers"));
                 }
               })
+              if(found === false){
+                cmdoutput('Error',"<@"+user.id+"> is not whitelisted for Grab Knife V4.",message.channel);
+              }
             });
           }else{
             cmdoutput("Error","Something seems to be wrong with the buyers list! Please contact mustardfoot and tell him.",message.channel);
