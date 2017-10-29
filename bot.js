@@ -466,6 +466,7 @@ client.on('message', function(message) {
         userlist.forEach(function(user){
           user.addRole(message.member.guild.roles.find("name","buyers"));
           var hwids = null;
+          var authid = user.id;
           t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
             datas.forEach(function(data){
               if (data.name === "mains"){
