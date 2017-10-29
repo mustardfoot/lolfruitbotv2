@@ -305,7 +305,7 @@ client.on('message', function(message) {
                     }
                   });
                 }else{
-                  message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
+                  message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.")
                 }
               });
             }
@@ -313,6 +313,53 @@ client.on('message', function(message) {
           }
         });
       break;
+      case "removewhitelist" :
+        var isabuyer = false;
+        client.guilds.forEach(function(guildy){
+          if(guildy.id === "355836687777267712"){
+            guildy.fetchMember(message.author).then((thatmember) => {
+              thatmember.roles.forEach(function(rolelol){
+                if(rolelol.name === "buyers"){
+                  isabuyer = true;
+                }
+              })
+              if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true){
+                var authid = message.author.id;
+                var hwids = null;
+                t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                  datas.forEach(function(data){
+                    if (data.name === "HWIDs"){
+                      hwids = data.id;
+                    }
+                  })
+                  if(hwids){
+                    t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                      var found = false;
+                      cards.forEach(function(card){
+                        if (card.desc === authid){
+                          found = card.id;
+                        }
+                      })
+                      if(found !== false){
+                        message.channel.send("Your HWID has been removed, please go on your main account and use the script to get your new one.");
+                        t.delete('1/cards/'+found,function(err,returns){
+                          if(err){
+                            console.log(err);
+                          }
+                        });
+                      }else{
+                        message.channel.send("You're not whitelisted! Please run the command !setwhitelist [HWID] to set one up.")
+                      }
+                    });
+                  }else{
+                    message.channel.send("Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him!")
+                  }
+                });
+              }
+            });
+            }
+          });
+        break;
     case "8ball" :
       if(message.channel.name === "bot-chat"){
        var outcum = "There has been an error, Sorry! Please try again"
