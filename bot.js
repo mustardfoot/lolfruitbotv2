@@ -477,7 +477,7 @@ client.on('message', function(message) {
               t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
                 var found = false;
                 cards.forEach(function(card){
-                  if (card.desc === authid){
+                  if (card.name === authid){
                     found = true;
                     cmdoutput('Error',"This user is already whitelisted.",message.channel);
                   }
