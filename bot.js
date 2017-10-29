@@ -571,6 +571,8 @@ client.on('message', function(message) {
           userlist.forEach(function(user){
             user.removeRole(message.member.guild.roles.find("name","buyers"));
             user.addRole(message.member.guild.roles.find("name","blacklisted"));
+            var authid = user.id;
+            var hwids = null;
             t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
               datas.forEach(function(data){
                 if (data.name === "HWIDs"){
@@ -596,32 +598,33 @@ client.on('message', function(message) {
               }else{
                 cmdoutput("Error","Something seems to be wrong with the user list!",message.channel)
               }
-            });
-            t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
-              datas.forEach(function(data){
-                if (data.name === "mains"){
-                  hwids = data.id;
-                }
-              })
-              if(hwids){
-                t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
-                  var found = false;
-                  cards.forEach(function(card){
-                    if (card.name === authid){
-                      found = card.id;
-                    }
-                  })
-                  if(found !== false){
-                    t.del('1/cards/'+found,function(err,returns){
-                      if(err){
-                        console.log(err);
-                      }
-                    });
+              hwids = null;
+              t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                datas.forEach(function(data){
+                  if (data.name === "mains"){
+                    hwids = data.id;
                   }
-                });
-              }else{
-                cmdoutput("Error","Something seems to be wrong with the user list!",message.channel)
-              }
+                })
+                if(hwids){
+                  t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                    var found = false;
+                    cards.forEach(function(card){
+                      if (card.name === authid){
+                        found = card.id;
+                      }
+                    })
+                    if(found !== false){
+                      t.del('1/cards/'+found,function(err,returns){
+                        if(err){
+                          console.log(err);
+                        }
+                      });
+                    }
+                  });
+                }else{
+                  cmdoutput("Error","Something seems to be wrong with the user list!",message.channel)
+                }
+              });
             });
             cmdoutput('Blacklist',"<@"+user.id+"> has been blacklisted from Grab Knife V4.",message.channel);
           })
