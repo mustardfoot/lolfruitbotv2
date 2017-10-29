@@ -224,7 +224,7 @@ client.on('message', function(message) {
   }
   if(message.channel.name === "crime-fighting-zone"){
    if(jokering === true){
-   var count1 = occurrences(message.content,"??");
+   var count1 = occurrences(message.content,"👊");
     var wewie = false;
     if (count1 > 0){
      message.delete();
@@ -269,18 +269,6 @@ client.on('message', function(message) {
             setTimeout(function() {message.channel.send("TROLL <@"+user.id+">");},100*x);
           })
         }
-      }
-      break;
-    case "subscribe" :
-      if(message.member){
-        message.member.addRole(message.member.guild.roles.find("name","subscribed"));
-        cmdoutput('Success',"You have been subscribed to announcements.",message.channel);
-      }
-      break;
-    case "unsubscribe" :
-      if(message.member){
-        message.member.removeRole(message.member.guild.roles.find("name","subscribed"));
-        cmdoutput('Success',"You have been unsubscribed from announcements.",message.channel);
       }
       break;
     case "setwhitelist" :
