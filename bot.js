@@ -674,8 +674,8 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-      client.fetchUser(args[1].substring(2,args[1].length-1),true).then((boi) => {
-      message.guild.fetchMember(boi).then((muser) => {
+    var userlist = message.mentions.users;
+    var muser = userlist[0];
         var reason = "No Reason Provided";
       var curnum = 1;
       args.forEach(function(role){
@@ -719,8 +719,6 @@ client.on('message', function(message) {
           }
         }
       }
-      });
-        });
       break;
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
