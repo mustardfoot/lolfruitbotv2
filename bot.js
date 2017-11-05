@@ -676,6 +676,7 @@ client.on('message', function(message) {
     case "mute" :
       var userlist = message.mentions.members;
       var muser = null;
+      var curnum = 0;
       userlist.forEach(function(thatoneguythatgotmentioned){
         if(muser === null){
           muser = thatoneguythatgotmentioned;
