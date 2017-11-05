@@ -684,8 +684,8 @@ client.on('message', function(message) {
       });
       var reason = "No Reason Provided";
       args.forEach(function(role){
-        if(curnum > 3){
-          if(curnum === 4){
+        if(curnum > 2){
+          if(curnum === 3){
             reason = role;
           }else{
             reason = reason+" "+role;
