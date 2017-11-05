@@ -271,6 +271,12 @@ client.on('message', function(message) {
         }
       }
       break;
+    case "verify" :
+      if(message.member){
+        message.member.addRole(message.member.guild.roles.find("name","verified"));
+      }else{
+        cmdoutput('Error',"The bot can't see you're in the server. Please rejoin. (This is a Discord glitch)",message.channel);
+      }
     case "setwhitelist" :
       client.guilds.forEach(function(guildy){
         if(guildy.id === "355836687777267712"){
