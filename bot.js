@@ -293,6 +293,9 @@ client.on('message', function(message) {
                 var isabuyer = false;
                 t.get("/1/lists/"+mains+"/cards?fields=id,name,desc",function(err,cards){
                   cards.forEach(function(card){
+                    console.log(card.name)
+                    console.log(message.author.id)
+                    console.log('======')
                     if (card.name === message.author.id){
                       isabuyer = true;
                     }
