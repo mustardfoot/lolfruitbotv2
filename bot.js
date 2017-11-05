@@ -291,7 +291,7 @@ client.on('message', function(message) {
                   }
                 })
                 var isabuyer = false;
-                t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                t.get("/1/lists/"+mains+"/cards?fields=id,name,desc",function(err,cards){
                   cards.forEach(function(card){
                     if (card.name === message.author.id){
                       isabuyer = true;
