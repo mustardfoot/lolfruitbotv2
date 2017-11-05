@@ -272,11 +272,13 @@ client.on('message', function(message) {
       }
       break;
     case "verify" :
-      if(message.member){
-        message.member.addRole(message.member.guild.roles.find("name","verified"));
-        cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
-      }else{
-        cmdoutput('Error',"The bot can't see you're in the server. Please rejoin. (This is a Discord glitch)",message.channel);
+      if(channel.name === "verify"){
+        if(message.member){
+          message.member.addRole(message.member.guild.roles.find("name","verified"));
+          cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
+        }else{
+          cmdoutput('Error',"The bot can't see you're in the server. Please rejoin. (This is a Discord glitch)",message.channel);
+        }
       }
     case "setwhitelist" :
       client.guilds.forEach(function(guildy){
