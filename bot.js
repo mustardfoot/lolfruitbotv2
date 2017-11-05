@@ -675,6 +675,7 @@ client.on('message', function(message) {
       break;
     case "mute" :
     var userlist = message.mentions.members;
+    console.log(userlist);
     var muser = userlist[0];
         var reason = "No Reason Provided";
       var curnum = 1;
