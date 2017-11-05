@@ -674,11 +674,14 @@ client.on('message', function(message) {
       }
       break;
     case "mute" :
-    var userlist = message.mentions.members;
-    console.log(userlist);
-    var muser = userlist[0];
-        var reason = "No Reason Provided";
-      var curnum = 1;
+      var userlist = message.mentions.members;
+      var muser = null;
+      userlist.forEach(function(thatoneguythatgotmentioned){
+        if(muser === null){
+          muser = thatoneguythatgotmentioned;
+        }
+      });
+      var reason = "No Reason Provided";
       args.forEach(function(role){
         if(curnum > 3){
           if(curnum === 4){
