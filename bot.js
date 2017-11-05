@@ -272,7 +272,7 @@ client.on('message', function(message) {
       }
       break;
     case "verify" :
-      if(channel.name === "verify"){
+      if(message.channel.name === "verify"){
         if(message.member){
           message.member.addRole(message.member.guild.roles.find("name","verified"));
           cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
