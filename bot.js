@@ -278,10 +278,16 @@ client.on('message', function(message) {
             if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
               var authid = message.author.id;
               var hwids = null;
+              var mains = null;
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
                 datas.forEach(function(data){
                   if (data.name === "HWIDs"){
                     hwids = data.id;
+                  }
+                })
+                datas.forEach(function(data){
+                  if (data.name === "mains"){
+                    mains = data.id;
                   }
                 })
                 var isabuyer = false;
@@ -292,7 +298,8 @@ client.on('message', function(message) {
                     }
                   })
                 })
-                if(hwids && isabuyer === true){
+                if(hwids){
+                  if(isabuyer === true){
                   t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
                     var found = false;
                     cards.forEach(function(card){
@@ -310,6 +317,9 @@ client.on('message', function(message) {
                       });
                     }
                   });
+                }else{
+                  cmdoutput("Error","You aren't a buyer.",message.channel);
+                }
                 }else{
                   cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
                 }
