@@ -272,16 +272,10 @@ client.on('message', function(message) {
       }
       break;
     case "setwhitelist" :
-      var isabuyer = false;
       client.guilds.forEach(function(guildy){
         if(guildy.id === "355836687777267712"){
           guildy.fetchMember(message.author).then((thatmember) => {
-            thatmember.roles.forEach(function(rolelol){
-              if(rolelol.name === "buyers"){
-                isabuyer = true;
-              }
-            })
-            if (message.author.dmChannel && message.channel === message.author.dmChannel && isabuyer === true && args[1]){
+            if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
               var authid = message.author.id;
               var hwids = null;
               t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
@@ -290,7 +284,15 @@ client.on('message', function(message) {
                     hwids = data.id;
                   }
                 })
-                if(hwids){
+                var isabuyer = false;
+                t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                  cards.forEach(function(card){
+                    if (card.name === message.author.id){
+                      isabuyer = true;
+                    }
+                  })
+                })
+                if(hwids && isabuyer === true){
                   t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
                     var found = false;
                     cards.forEach(function(card){
