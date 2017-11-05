@@ -294,36 +294,35 @@ client.on('message', function(message) {
                 t.get("/1/lists/"+mains+"/cards?fields=id,name,desc",function(err,cards){
                   cards.forEach(function(card){
                     if (card.name === message.author.id){
-                      console.log('um.')
                       isabuyer = true;
                     }
                   })
-                })
-                if(hwids){
-                  if(isabuyer === true){
-                  t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
-                    var found = false;
-                    cards.forEach(function(card){
-                      if (card.desc === authid){
-                        found = true;
-                        cmdoutput('Error',"You're already whitelisted! Please run the command !removewhitelist if you want to change it.",message.channel);
-                      }
-                    })
-                    if(found === false){
-                      cmdoutput("Success","You have been whitelisted for Grab Knife V4!",message.channel);
-                      t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids,function(err,returns){
-                        if(err){
-                          console.log(err);
+                  if(hwids){
+                    if(isabuyer === true){
+                    t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                      var found = false;
+                      cards.forEach(function(card){
+                        if (card.desc === authid){
+                          found = true;
+                          cmdoutput('Error',"You're already whitelisted! Please run the command !removewhitelist if you want to change it.",message.channel);
                         }
-                      });
-                    }
-                  });
-                }else{
-                  cmdoutput("Error","You aren't a buyer.",message.channel);
-                }
-                }else{
-                  cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
-                }
+                      })
+                      if(found === false){
+                        cmdoutput("Success","You have been whitelisted for Grab Knife V4!",message.channel);
+                        t.post('/1/cards?name='+args[1]+'&desc='+authid+'&pos=top&idList='+hwids,function(err,returns){
+                          if(err){
+                            console.log(err);
+                          }
+                        });
+                      }
+                    });
+                  }else{
+                    cmdoutput("Error","You aren't a buyer.",message.channel);
+                  }
+                  }else{
+                    cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
+                  }
+                })
               });
             }
           });
