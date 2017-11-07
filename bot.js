@@ -566,6 +566,7 @@ client.on('message', function(message) {
           var user = null;
           if(args[1]){
             authid = args[1].substring(2,args[1].length - 1);
+            console.log(authid);
           }
           userlist.forEach(function(usereck){
             user = usereck;
@@ -625,7 +626,7 @@ client.on('message', function(message) {
                 }
               });
             });
-            cmdoutput('Blacklist',"<@"+user.id+"> has been blacklisted from Grab Knife V4.",message.channel);
+            cmdoutput('Blacklist',"<@"+authid+"> has been blacklisted from Grab Knife V4.",message.channel);
             if(user){
             message.channel.guild.fetchMember(user).then((useree) => {
               useree.removeRole(message.member.guild.roles.find("name","buyers"));
