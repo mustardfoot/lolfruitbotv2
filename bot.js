@@ -561,8 +561,10 @@ client.on('message', function(message) {
       break;
     case "blacklist" :
         if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
+          console.log('UM?') 
           var userlist = message.mentions.users; // Saving userlist to a variable
           userlist.forEach(function(user){
+            console.log(user.id)
             var authid = user.id;
             var hwids = null;
             t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
@@ -618,11 +620,11 @@ client.on('message', function(message) {
                 }
               });
             });
+            cmdoutput('Blacklist',"<@"+user.id+"> has been blacklisted from Grab Knife V4.",message.channel);
             message.channel.guild.fetchMember(user).then((useree) => {
               useree.removeRole(message.member.guild.roles.find("name","buyers"));
               useree.addRole(message.member.guild.roles.find("name","blacklisted"));
             });
-            cmdoutput('Blacklist',"<@"+user.id+"> has been blacklisted from Grab Knife V4.",message.channel);
           })
         }
         break;
