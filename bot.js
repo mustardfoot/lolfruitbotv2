@@ -621,7 +621,7 @@ client.on('message', function(message) {
             message.channel.guild.fetchMember(user).then((useree) => {
               useree.removeRole(message.member.guild.roles.find("name","buyers"));
               useree.addRole(message.member.guild.roles.find("name","blacklisted"));
-            })
+            });
             cmdoutput('Blacklist',"<@"+user.id+"> has been blacklisted from Grab Knife V4.",message.channel);
           })
         }
