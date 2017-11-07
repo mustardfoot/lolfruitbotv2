@@ -561,10 +561,9 @@ client.on('message', function(message) {
       break;
     case "blacklist" :
         if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
-          console.log('UM?') 
           var userlist = message.mentions.users; // Saving userlist to a variable
+          console.log(message.mentions);
           userlist.forEach(function(user){
-            console.log(user.id)
             var authid = user.id;
             var hwids = null;
             t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
