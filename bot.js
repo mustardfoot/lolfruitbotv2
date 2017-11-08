@@ -556,17 +556,18 @@ client.on('message', function(message) {
               cmdoutput("Error","Something seems to be wrong with the buyers list! Please contact mustardfoot and tell him.",message.channel);
             }
           });
+          var hwids2 = null;
           t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
             datas.forEach(function(data){
               if (data.name === "blacklists"){
-                hwids = data.id;
+                hwids2 = data.id;
               }
             })
-            if(hwids){
-              t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+            if(hwids2){
+              t.get("/1/lists/"+hwids2+"/cards?fields=id,name,desc",function(err,cards){
                 var found = false;
                 cards.forEach(function(card){
-                  if (card.name === authid){
+                  if (card.desc === authid){
                     found = card.id;
                   }
                 })
