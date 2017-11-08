@@ -582,13 +582,22 @@ client.on('message', function(message) {
               if(hwids){
                 t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
                   var found = false;
+                  var thatname = null;
+                  var thatdesc = null;
                   cards.forEach(function(card){
                     if (card.desc === authid){
                       found = card.id;
+                      thatname = card.name;
+                      thatdesc = card.desc;
                     }
                   })
                   if(found !== false){
                     t.del('1/cards/'+found,function(err,returns){
+                      if(err){
+                        console.log(err);
+                      }
+                    });
+                    t.post('/1/cards?name='+thatname+'&desc='+thatdesc+'&pos=top&idList=5a0249f89ccaa94b672df1f5',function(err,returns){
                       if(err){
                         console.log(err);
                       }
