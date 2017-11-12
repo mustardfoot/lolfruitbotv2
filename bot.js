@@ -749,16 +749,36 @@ client.on('message', function(message) {
           if (message.member.guild.roles.find("name","muted")) {
            muser.addRole(message.member.guild.roles.find("name","muted"))
           }
-          if (parseInt(args[2])) {
-            setTimeout(function(){
-              var roles = muser.roles
-              roles.forEach(function(role){
-                if (role.name === "muted" || role.name === "Muted") {
-                  muser.removeRole(role)
-                  log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
+          var today = new Date();
+          var m = today.getMinutes();
+          if (parseInt(args[2]) && parseInt(args[2]) !== 0) {
+            t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+              datas.forEach(function(data){
+                if (data.name === "mutes"){
+                  hwids = data.id;
                 }
               })
-            }, parseInt(args[2])*60000);
+              if(hwids){
+                t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                  cards.forEach(function(card){
+                    if(card.name === muser.id){
+                      t.del('1/cards/'+card.id,function(err,returns){
+                        if(err){
+                          console.log(err);
+                        }
+                      });
+                    }
+                  })
+                  t.post('/1/cards?name='+muser.id+'&desc='+args[2]+'&pos=top&idList='+hwids,function(err,returns){
+                    if(err){
+                      console.log(err);
+                    }
+                  });
+                });
+              }else{
+                cmdoutput("Error","Something seems to be wrong with the mute database, automatic unmute will not work.",message.channel)
+              }
+          });
           }
           var time = "Forever"
           if (args && parseInt(args[2])){
@@ -794,6 +814,38 @@ client.on('message', function(message) {
 });
 
 var myInterval = setInterval(function() {
+  var today = new Date();
+  var m = today.getMinutes();
+  t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+    datas.forEach(function(data){
+      if (data.name === "mutes"){
+        hwids = data.id;
+      }
+    })
+    if(hwids){
+      t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+        cards.forEach(function(card){
+          t.get('1/cards/'+card.id+'/dateLastActivity',function(err,date){
+            var todaymin = date.getMinutes()+parseInt(card.desc);
+            if(todaymin <= m){
+              console.log(card.name);
+            }
+          });
+        })
+      });
+    }else{
+      cmdoutput("Error","Something seems to be wrong with the mute database, automatic unmute will not work.",message.channel)
+    }
+});
+  /*
+  var roles = muser.roles
+  roles.forEach(function(role){
+    if (role.name === "muted" || role.name === "Muted") {
+      muser.removeRole(role)
+      log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
+    }
+  })
+  */
     if(jokering === true){
      if(jokerhp <= 0){
       jokerbattlers.sort(function(a, b){return b.punch - a.punch});
