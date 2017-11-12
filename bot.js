@@ -37,6 +37,15 @@ function randomnum(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function diff_minutes(dt2, dt1, add)
+ {
+
+  var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= 60;
+  return Math.round(diff-add);
+
+ }
+
 function occurrences(string, subString, allowOverlapping) {
 
     string += "";
@@ -825,8 +834,8 @@ var myInterval = setInterval(function() {
         cards.forEach(function(card){
           t.get('1/cards/'+card.id+'/dateLastActivity',function(err,date){
             var goaltime = new Date(date._value);
-            var todaymin = goaltime.getMinutes()-parseInt(card.desc);
-            console.log(todaymin);
+            var todaytime = new Date();
+            var todaymin = diff_minutes(todaytime,goaltime,card.desc);
             if(todaymin >= 0){
               client.fetchUser(card.name).then((thatuser) => {
                 client.guilds.forEach(function(guildy){
