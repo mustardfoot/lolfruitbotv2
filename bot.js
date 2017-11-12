@@ -840,7 +840,7 @@ var myInterval = setInterval(function() {
                       })
                     })
                   }
-                )}
+                })
               })
             }
           });
