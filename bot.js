@@ -836,12 +836,13 @@ var myInterval = setInterval(function() {
             var goaltime = new Date(date._value);
             var todaytime = new Date();
             var todaymin = diff_minutes(todaytime,goaltime,card.desc);
-            console.log(todaymin);
-            if(todaymin >= 0){
+            if (todaymin >= 0){
               client.fetchUser(card.name).then((thatuser) => {
+                console.log(thatuser);
                 client.guilds.forEach(function(guildy){
                   if(guildy.id === "355836687777267712"){
                     guildy.fetchMember(thatuser).then((muser) => {
+                      console.log(muser);
                       var roles = muser.roles
                       roles.forEach(function(role){
                         if (role.name === "muted" || role.name === "Muted") {
