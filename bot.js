@@ -602,7 +602,6 @@ client.on('message', function(message) {
           var user = null;
           if(args[1]){
             authid = args[1].substring(2,args[1].length - 1);
-            console.log(authid);
           }
           userlist.forEach(function(usereck){
             user = usereck;
@@ -841,11 +840,9 @@ var myInterval = setInterval(function() {
               var carddesc = card.desc;
               t.del('1/cards/'+card.id,function(err,returns){
                 if(err){
-                  console.log(err);
                 }
               });
               client.fetchUser(cardname).then((thatuser) => {
-                console.log(thatuser);
                 client.guilds.forEach(function(guildy){
                   if(guildy.id === "355836687777267712"){
                     guildy.fetchMember(thatuser).then((muser) => {
