@@ -826,6 +826,7 @@ var myInterval = setInterval(function() {
           t.get('1/cards/'+card.id+'/dateLastActivity',function(err,date){
             var goaltime = new Date(date._value);
             var todaymin = goaltime.getMinutes()-parseInt(card.desc);
+            console.log(todaymin);
             if(todaymin >= 0){
               client.fetchUser(card.name).then((thatuser) => {
                 client.guilds.forEach(function(guildy){
