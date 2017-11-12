@@ -804,6 +804,28 @@ client.on('message', function(message) {
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+            t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+              datas.forEach(function(data){
+                if (data.name === "mutes"){
+                  hwids = data.id;
+                }
+              })
+              if(hwids){
+                t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                  cards.forEach(function(card){
+                    if (card.name === user.id){
+                      t.del('1/cards/'+card.id,function(err,returns){
+                        if(err){
+                          console.log(err);
+                        }
+                      });
+                    }
+                  })
+                });
+              }else{
+                cmdoutput("Error","Something seems to be wrong with the mutes list! Please contact mustardfoot and tell him!",message.channel)
+              }
+            });
           var roles = user.roles
           roles.forEach(function(role){
             if (role.name === "muted" || role.name === "Muted") {
