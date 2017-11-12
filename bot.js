@@ -804,6 +804,9 @@ client.on('message', function(message) {
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
           if (message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0 && message.member.highestRole.comparePositionTo(user.highestRole) > 0 ) {
+            user.user.createDM().then((boi) => {
+              cmdoutput('Unmute',"You have been unmuted in the Grab Knife V4 server.",boi);
+            });
             t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
               datas.forEach(function(data){
                 if (data.name === "mutes"){
@@ -872,6 +875,9 @@ var myInterval = setInterval(function() {
                       roles.forEach(function(role){
                         if (role.name === "muted" || role.name === "Muted") {
                           muser.removeRole(role)
+                          thatuser.createDM().then((boi) => {
+                            cmdoutput('Unmute',"You have been unmuted in the Grab Knife V4 server.",boi);
+                          });
                           log('Automatic Unmute | '+carddesc+" Minutes","knife Bot","<@"+muser.id+">",guildy)
                         }
                       })
