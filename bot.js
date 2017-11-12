@@ -826,6 +826,7 @@ var myInterval = setInterval(function() {
       t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
         cards.forEach(function(card){
           t.get('1/cards/'+card.id+'/dateLastActivity',function(err,date){
+            console.log(date);
             var todaymin = date.getMinutes()+parseInt(card.desc);
             if(todaymin <= m){
               console.log(card.name);
