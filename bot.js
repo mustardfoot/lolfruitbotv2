@@ -814,8 +814,6 @@ client.on('message', function(message) {
 });
 
 var myInterval = setInterval(function() {
-  var today = new Date();
-  var m = today.getMinutes();
   t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
     datas.forEach(function(data){
       if (data.name === "mutes"){
@@ -828,9 +826,8 @@ var myInterval = setInterval(function() {
           t.get('1/cards/'+card.id+'/dateLastActivity',function(err,date){
             var goaltime = new Date(date._value);
             console.log(goaltime.getMinutes());
-            var todaymin = goaltime.getMinutes()+parseInt(card.desc);
-            console.log(todaymin);
-            if(todaymin <= m){
+            var todaymin = goaltime.getMinutes()-parseInt(card.desc);
+            if(todaymin >= 0){
               console.log(card.name);
             }
           });
