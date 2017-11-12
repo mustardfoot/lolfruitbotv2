@@ -837,17 +837,23 @@ var myInterval = setInterval(function() {
             var todaytime = new Date();
             var todaymin = diff_minutes(todaytime,goaltime,card.desc);
             if (todaymin >= 0){
-              client.fetchUser(card.name).then((thatuser) => {
+              var cardname = card.name;
+              var carddesc = card.desc;
+              t.del('1/cards/'+card.id,function(err,returns){
+                if(err){
+                  console.log(err);
+                }
+              });
+              client.fetchUser(cardname).then((thatuser) => {
                 console.log(thatuser);
                 client.guilds.forEach(function(guildy){
                   if(guildy.id === "355836687777267712"){
                     guildy.fetchMember(thatuser).then((muser) => {
-                      console.log(muser);
                       var roles = muser.roles
                       roles.forEach(function(role){
                         if (role.name === "muted" || role.name === "Muted") {
                           muser.removeRole(role)
-                          log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
+                          log('Automatic Unmute | '+carddesc+" Minutes","knife Bot","<@"+muser.id+">",guildy)
                         }
                       })
                     })
