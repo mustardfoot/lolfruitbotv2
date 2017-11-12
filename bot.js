@@ -836,6 +836,7 @@ var myInterval = setInterval(function() {
             var goaltime = new Date(date._value);
             var todaytime = new Date();
             var todaymin = diff_minutes(todaytime,goaltime,card.desc);
+            console.log(todaymin);
             if(todaymin >= 0){
               client.fetchUser(card.name).then((thatuser) => {
                 client.guilds.forEach(function(guildy){
