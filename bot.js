@@ -825,10 +825,23 @@ var myInterval = setInterval(function() {
         cards.forEach(function(card){
           t.get('1/cards/'+card.id+'/dateLastActivity',function(err,date){
             var goaltime = new Date(date._value);
-            console.log(goaltime.getMinutes());
             var todaymin = goaltime.getMinutes()-parseInt(card.desc);
             if(todaymin >= 0){
-              console.log(card.name);
+              client.fetchUser(card.name).then((thatuser) => {
+                client.guilds.forEach(function(guildy){
+                  if(guildy.id === "355836687777267712"){
+                    guildy.fetchMember(thatuser).then((muser) => {
+                      var roles = muser.roles
+                      roles.forEach(function(role){
+                        if (role.name === "muted" || role.name === "Muted") {
+                          muser.removeRole(role)
+                          log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
+                        }
+                      })
+                    })
+                  }
+                )}
+              })
             }
           });
         })
@@ -837,15 +850,6 @@ var myInterval = setInterval(function() {
       cmdoutput("Error","Something seems to be wrong with the mute database, automatic unmute will not work.",message.channel)
     }
 });
-  /*
-  var roles = muser.roles
-  roles.forEach(function(role){
-    if (role.name === "muted" || role.name === "Muted") {
-      muser.removeRole(role)
-      log('Automatic Unmute | '+time,"knife Bot","<@"+muser.id+">",message.channel.guild)
-    }
-  })
-  */
     if(jokering === true){
      if(jokerhp <= 0){
       jokerbattlers.sort(function(a, b){return b.punch - a.punch});
