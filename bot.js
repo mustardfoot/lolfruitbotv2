@@ -301,6 +301,7 @@ client.on('message', function(message) {
             }
           }
           message.member.setNickname(curname).then(() => {
+            resolve("Success!");
           });
           message.member.addRole(message.member.guild.roles.find("name","verified"));
           cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
