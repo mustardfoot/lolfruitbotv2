@@ -4,6 +4,7 @@ var t = new Trello(process.env.REE,process.env.REE2);
 const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
+var gucciletters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
 var offservers = {
 
 };
@@ -283,6 +284,24 @@ client.on('message', function(message) {
     case "verify" :
       if(message.channel.name === "verify"){
         if(message.member){
+          var curname = "";
+          var theirname = message.user.name;
+          for (var i = 0, len = str.length; i < len; i++) {
+            var curletter = str[i]
+            var acceptable =false;
+            gucciletters.forEach(function(acceptableletter){
+              if (curletter === acceptableletter){
+                acceptable = true;
+              }
+            });
+            if(acceptable){
+              curname = curname+curletter
+            }else{
+              curname = curname+"?"
+            }
+          }
+          message.member.setNickname(curname).then(() => {
+          });
           message.member.addRole(message.member.guild.roles.find("name","verified"));
           cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
         }else{
