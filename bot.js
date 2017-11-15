@@ -4,7 +4,7 @@ var t = new Trello(process.env.REE,process.env.REE2);
 const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
-var gucciletters = [" ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
+var gucciletters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
 var offservers = {
 
 };
@@ -491,6 +491,33 @@ client.on('message', function(message) {
       cmdoutput('Giveaway',"Congratulations, <@"+ree+">, you have won the giveaway!",message.channel)
      }
      break;
+     case "fixname" :
+       if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
+         var userlist = message.mentions.members;
+         userlist.forEach(function(user){
+           var curname = "";
+           var theirname = user.user.username;
+           for (var i = 0, len = theirname.length; i < len; i++) {
+             var curletter = theirname[i]
+             var acceptable =false;
+             gucciletters.forEach(function(acceptableletter){
+               if (curletter === acceptableletter){
+                 acceptable = true;
+               }
+             });
+             if(acceptable){
+               curname = curname+curletter
+             }else{
+               curname = curname+"?"
+             }
+           }
+           user.setNickname(curname).then(() => {
+             cmdoutput('FixName',"<@"+user.id+">'s name has been fixed to exclude special characters.",message.channel);
+             resolve("Success!");
+           });
+         })
+       }
+       break;
     case "permit" :
       if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
         var userlist = message.mentions.members;
