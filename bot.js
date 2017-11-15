@@ -286,8 +286,8 @@ client.on('message', function(message) {
         if(message.member){
           var curname = "";
           var theirname = message.author.name;
-          for (var i = 0, len = str.length; i < len; i++) {
-            var curletter = str[i]
+          for (var i = 0, len = theirname.length; i < len; i++) {
+            var curletter = theirname[i]
             var acceptable =false;
             gucciletters.forEach(function(acceptableletter){
               if (curletter === acceptableletter){
