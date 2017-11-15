@@ -4,7 +4,7 @@ var t = new Trello(process.env.REE,process.env.REE2);
 const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
-var gucciletters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
+var gucciletters = [" ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
 var offservers = {
 
 };
@@ -290,7 +290,7 @@ client.on('message', function(message) {
             var curletter = theirname[i]
             var acceptable =false;
             gucciletters.forEach(function(acceptableletter){
-              if (curletter === acceptableletter){
+              if (curletter.toLowerCase() === acceptableletter){
                 acceptable = true;
               }
             });
@@ -501,7 +501,7 @@ client.on('message', function(message) {
              var curletter = theirname[i]
              var acceptable =false;
              gucciletters.forEach(function(acceptableletter){
-               if (curletter === acceptableletter){
+               if (curletter.toLowerCase() === acceptableletter){
                  acceptable = true;
                }
              });
