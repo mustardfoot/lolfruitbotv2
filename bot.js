@@ -285,7 +285,7 @@ client.on('message', function(message) {
       if(message.channel.name === "verify"){
         if(message.member){
           var curname = "";
-          var theirname = message.user.name;
+          var theirname = message.author.name;
           for (var i = 0, len = str.length; i < len; i++) {
             var curletter = str[i]
             var acceptable =false;
