@@ -464,7 +464,7 @@ client.on('message', function(message) {
     client.guilds.forEach(function(guildy){
       if(guildy.id === "355836687777267712"){
         guildy.fetchMember(message.author).then((thatmember) => {
-          if (message.author.dmChannel && message.channel === message.author.dmChannel %% args[1]){
+          if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
             var authid = message.author.id;
             var hwids = null;
             var mains = null;
