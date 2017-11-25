@@ -1,13 +1,12 @@
 const Discord = require('discord.js');
 var Trello = require("node-trello");
+var algebra = require('algebra.js');
 var t = new Trello(process.env.REE,process.env.REE2);
 const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
 var gucciletters = [" ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
-var offservers = {
-
-};
+var childlockers = {};
 var thatid = 364125929624174603;
 var jokering = false;
 var jokermax = 2500;
@@ -32,6 +31,33 @@ var fortunes = [
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+function decimalAdjust(type, value, exp) {
+    // If the exp is undefined or zero...
+    if (typeof exp === 'undefined' || +exp === 0) {
+      return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    // If the value is not a number or the exp is not an integer...
+    if (value === null || isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+      return NaN;
+    }
+    // If the value is negative...
+    if (value < 0) {
+      return -decimalAdjust(type, -value, exp);
+    }
+    // Shift
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    // Shift back
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+  }
+if (!Math.round10) {
+    Math.round10 = function(value, exp) {
+      return decimalAdjust('round', value, exp);
+    };
+  }
 function randomnum(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -367,6 +393,86 @@ client.on('message', function(message) {
           }
         });
       break;
+      case "setchildlock" :
+        client.guilds.forEach(function(guildy){
+          if(guildy.id === "355836687777267712"){
+            guildy.fetchMember(message.author).then((thatmember) => {
+              if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
+                var authid = message.author.id;
+                var hwids = null;
+                var mains = null;
+                t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                  datas.forEach(function(data){
+                    if (data.name === "childlocks"){
+                      hwids = data.id;
+                    }
+                  })
+                  datas.forEach(function(data){
+                    if (data.name === "mains"){
+                      mains = data.id;
+                    }
+                  })
+                  var isabuyer = false;
+                  t.get("/1/lists/"+mains+"/cards?fields=id,name,desc",function(err,cards){
+                    cards.forEach(function(card){
+                      if (card.name === message.author.id){
+                        isabuyer = true;
+                      }
+                    })
+                    if(hwids){
+                      if(isabuyer === true){
+                      t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                        var found = false;
+                        cards.forEach(function(card){
+                          if (card.desc === authid){
+                            found = true;
+                            cmdoutput('Error',"You've already proven you're not in middle school!",message.channel);
+                          }
+                        })
+                        if(found === false){
+                          var num1 = randomnum(1,100);
+                          var num2 = randomnum(1,100);
+                          var num3 = randomnum(1,100);
+                          var num4 = randomnum(1,100);
+                          var num5 = randomnum(1,100);
+                          var hm = randomnum(1,2);
+                          var thing = " - ";
+                          if(hm === 2){
+                            thing = " + ";
+                          }
+                          var hm2 = randomnum(1,2);
+                          var thing2 = " - ";
+                          if(hm2 === 2){
+                            thing2 = " + ";
+                          }
+                          var maths = "x = "+num1.toString()+thing+num2.toString()+"y"
+                          var maths2 = num3.toString()+"x"+thing2+num4.toString()+" = "+num5.toString()
+                          var expr1 = algebra.parse(maths);
+                          var expr2 = algebra.parse(maths2);
+
+                          var eq = new Equation(expr1, expr2);
+
+                          console.log(eq.toString());
+
+                          var xAnswer = eq.solveFor("x");
+                          var yAnswer = eq.solveFor("y");
+
+                          console.log("("+xAnswer.toString()+","+yAnswer.toString()+")");
+                        }
+                      });
+                    }else{
+                      cmdoutput("Error","You aren't a buyer.",message.channel);
+                    }
+                    }else{
+                      cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
+                    }
+                  })
+                });
+              }
+            });
+            }
+          });
+        break;
     case "removewhitelist" :
         var isabuyer = false;
         client.guilds.forEach(function(guildy){
