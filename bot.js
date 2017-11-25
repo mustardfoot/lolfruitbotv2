@@ -440,10 +440,11 @@ client.on('message', function(message) {
                           var num5 = randomnum(1,100);
                           var x = new Expression("x");
                           var eq3 = new Equation(x.divide(num1).multiply(num2).subtract(num5), new Fraction(num3, num4));
-                          console.log(eq3.toString());
+                          cmdoutput(eq3.toString(),"To get rid of the childlock, please respond with !answer [answer to this equation rounded to the nearest tenth]\n[answer should have no spaces, be in the form of x=[num], and x is rounded to the nearest tenth.]",message.channel);
                           var answer = eq3.solveFor("x");
                           var rounded = Math.round10(answer,-1);
-                          console.log("x="+rounded.toString());
+                          var roundedanswer = "x="+rounded.toString();
+                          childlockers[authid] = roundedanswer;
                         }
                       });
                     }else{
@@ -459,6 +460,66 @@ client.on('message', function(message) {
             }
           });
         break;
+    case "answer" :
+    client.guilds.forEach(function(guildy){
+      if(guildy.id === "355836687777267712"){
+        guildy.fetchMember(message.author).then((thatmember) => {
+          if (message.author.dmChannel && message.channel === message.author.dmChannel %% args[1]){
+            var authid = message.author.id;
+            var hwids = null;
+            var mains = null;
+            t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+              datas.forEach(function(data){
+                if (data.name === "childlocks"){
+                  hwids = data.id;
+                }
+              })
+              datas.forEach(function(data){
+                if (data.name === "mains"){
+                  mains = data.id;
+                }
+              })
+              var isabuyer = false;
+              t.get("/1/lists/"+mains+"/cards?fields=id,name,desc",function(err,cards){
+                cards.forEach(function(card){
+                  if (card.name === message.author.id){
+                    isabuyer = true;
+                  }
+                })
+                if(hwids){
+                  if(isabuyer === true){
+                  t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                    var found = false;
+                    cards.forEach(function(card){
+                      if (card.name === authid){
+                        found = true;
+                        cmdoutput('Error',"You've already proven you're not in middle school!",message.channel);
+                      }
+                    })
+                    if(found === false){
+                      if (childlockers[authid] && childlockers[authid] === args[1]){
+                        cmdoutput('Success!','Congratulations! You have disabled childlock.',message.channel);
+                        t.post('/1/cards?name='+authid+'&pos=top&idList='+hwids,function(err,returns){
+                          if(err){
+                            console.log(err);
+                          }
+                        });
+                      }
+                    }
+                  });
+                }else{
+                  cmdoutput("Error","You aren't a buyer.",message.channel);
+                }
+                }else{
+                  cmdoutput("Error","Something seems to be wrong with the HWID list! Please contact mustardfoot and tell him.",message.channel);
+                }
+              })
+            });
+          }
+        });
+        }
+      });
+      break;
     case "removewhitelist" :
         var isabuyer = false;
         client.guilds.forEach(function(guildy){
