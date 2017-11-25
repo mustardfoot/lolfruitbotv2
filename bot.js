@@ -442,7 +442,7 @@ client.on('message', function(message) {
                           var eq3 = new Equation(x.divide(num1).multiply(num2).subtract(num5), new Fraction(num3, num4));
                           console.log(eq3.toString());
                           var answer = eq3.solveFor("x");
-                          var rounded = round10(answer,-1);
+                          var rounded = Math.round10(answer,-1);
                           console.log("x="+rounded.toString());
                         }
                       });
