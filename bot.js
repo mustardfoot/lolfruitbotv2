@@ -445,8 +445,8 @@ client.on('message', function(message) {
                           if(hm2 === 2){
                             thing2 = " + ";
                           }
-                          var maths = "x = "+num1.toString()+thing+num2.toString()+"y"
-                          var maths2 = num3.toString()+"x"+thing2+num4.toString()+" = "+num5.toString()
+                          var maths = "x = "+num1.toString()+thing+num2.toString()+"y";
+                          var maths2 = num3.toString()+"x"+thing2+num4.toString()+" = "+num5.toString();
                           var expr1 = algebra.parse(maths);
                           var expr2 = algebra.parse(maths2);
 
