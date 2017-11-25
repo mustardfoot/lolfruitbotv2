@@ -397,7 +397,7 @@ client.on('message', function(message) {
         client.guilds.forEach(function(guildy){
           if(guildy.id === "355836687777267712"){
             guildy.fetchMember(message.author).then((thatmember) => {
-              if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
+              if (message.author.dmChannel && message.channel === message.author.dmChannel){
                 var authid = message.author.id;
                 var hwids = null;
                 var mains = null;
@@ -424,7 +424,7 @@ client.on('message', function(message) {
                       t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
                         var found = false;
                         cards.forEach(function(card){
-                          if (card.desc === authid){
+                          if (card.name === authid){
                             found = true;
                             cmdoutput('Error',"You've already proven you're not in middle school!",message.channel);
                           }
