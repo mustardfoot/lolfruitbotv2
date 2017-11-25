@@ -438,29 +438,11 @@ client.on('message', function(message) {
                           var num3 = randomnum(1,100);
                           var num4 = randomnum(1,100);
                           var num5 = randomnum(1,100);
-                          var hm = randomnum(1,2);
-                          var thing = " - ";
-                          if(hm === 2){
-                            thing = " + ";
-                          }
-                          var hm2 = randomnum(1,2);
-                          var thing2 = " - ";
-                          if(hm2 === 2){
-                            thing2 = " + ";
-                          }
-                          var maths = "x = "+num1.toString()+thing+num2.toString()+"y";
-                          var maths2 = num3.toString()+"x"+thing2+num4.toString()+" = "+num5.toString();
-                          var expr1 = algebra.parse(maths);
-                          var expr2 = algebra.parse(maths2);
-
-                          var eq = new Equation(expr1, expr2);
-
-                          console.log(eq.toString());
-
-                          var xAnswer = eq.solveFor("x");
-                          var yAnswer = eq.solveFor("y");
-
-                          console.log("("+xAnswer.toString()+","+yAnswer.toString()+")");
+                          var x = new Expression("x");
+                          var eq3 = new Equation(x.divide(num1).multiply(num2).subtract(num5), new Fraction(num3, num4));
+                          console.log(eq3.toString());
+                          var answer = eq3.solveFor("x");
+                          console.log("x = " + answer.toString());
                         }
                       });
                     }else{
