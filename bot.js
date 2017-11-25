@@ -440,7 +440,7 @@ client.on('message', function(message) {
                           var num5 = randomnum(1,100);
                           var x = new Expression("x");
                           var eq3 = new Equation(x.divide(num1).multiply(num2).subtract(num5), new Fraction(num3, num4));
-                          cmdoutput(eq3.toString(),"To get rid of the childlock, please respond with !answer [answer to this equation rounded to the nearest tenth]\n[answer should have no spaces, be in the form of x=[num], and x is rounded to the nearest tenth.]",message.channel);
+                          cmdoutput(eq3.toString(),"To get rid of the childlock, please respond with !answer [answer to this equation rounded to the nearest tenth]\n\n[answer should have no spaces, be in the form of x=[num], and x is rounded to the nearest tenth.]",message.channel);
                           var answer = eq3.solveFor("x");
                           var rounded = Math.round10(answer,-1);
                           var roundedanswer = "x="+rounded.toString();
@@ -497,13 +497,19 @@ client.on('message', function(message) {
                       }
                     })
                     if(found === false){
-                      if (childlockers[authid] && childlockers[authid] === args[1]){
-                        cmdoutput('Success!','Congratulations! You have disabled childlock.',message.channel);
-                        t.post('/1/cards?name='+authid+'&pos=top&idList='+hwids,function(err,returns){
-                          if(err){
-                            console.log(err);
-                          }
-                        });
+                      if (childlockers[authid]){
+                        if(childlockers[authid] === args[1]){
+                          cmdoutput('Success!','Congratulations! You have disabled childlock.',message.channel);
+                          t.post('/1/cards?name='+authid+'&pos=top&idList='+hwids,function(err,returns){
+                            if(err){
+                              console.log(err);
+                            }
+                          });
+                        }else{
+                          cmdoutput('Error',"Incorrect answer. Are you sure you've rounded to the nearest tenth and put it in the form of \"x=9001\"?",message.channel);
+                        }
+                      }else{
+                        cmdoutput('Error','Please run the command \"!setchildlock\" to start.',message.channel);
                       }
                     }
                   });
