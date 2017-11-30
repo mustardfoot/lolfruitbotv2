@@ -340,7 +340,7 @@ client.on('message', function(message) {
       }
     case "setwhitelist" :
       client.guilds.forEach(function(guildy){
-        if(guildy.id === "355836687777267712"){
+        if(guildy.id === process.env.serverId){
           guildy.fetchMember(message.author).then((thatmember) => {
             if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
               var authid = message.author.id;
@@ -398,7 +398,7 @@ client.on('message', function(message) {
       break;
       case "setchildlock" :
         client.guilds.forEach(function(guildy){
-          if(guildy.id === "355836687777267712"){
+          if(guildy.id === process.env.serverId){
             guildy.fetchMember(message.author).then((thatmember) => {
               if (message.author.dmChannel && message.channel === message.author.dmChannel){
                 var authid = message.author.id;
@@ -462,7 +462,7 @@ client.on('message', function(message) {
         break;
     case "answer" :
     client.guilds.forEach(function(guildy){
-      if(guildy.id === "355836687777267712"){
+      if(guildy.id === process.env.serverId){
         guildy.fetchMember(message.author).then((thatmember) => {
           if (message.author.dmChannel && message.channel === message.author.dmChannel && args[1]){
             var authid = message.author.id;
@@ -529,7 +529,7 @@ client.on('message', function(message) {
     case "removewhitelist" :
         var isabuyer = false;
         client.guilds.forEach(function(guildy){
-          if(guildy.id === "355836687777267712"){
+          if(guildy.id === process.env.serverId){
             guildy.fetchMember(message.author).then((thatmember) => {
               thatmember.roles.forEach(function(rolelol){
                 if(rolelol.name === "buyers"){
@@ -1075,7 +1075,7 @@ var myInterval = setInterval(function() {
               });
               client.fetchUser(cardname).then((thatuser) => {
                 client.guilds.forEach(function(guildy){
-                  if(guildy.id === "355836687777267712"){
+                  if(guildy.id === process.env.serverId){
                     guildy.fetchMember(thatuser).then((muser) => {
                       var roles = muser.roles
                       roles.forEach(function(role){
