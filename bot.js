@@ -705,7 +705,7 @@ client.on('message', function(message) {
         var userlist = message.mentions.members;
         userlist.forEach(function(user){
           cmdoutput('Success',"<@"+user.id+"> has become a helper.",message.channel);
-          log('MakeHelper',"<@"+message.author.id+">","<@"+user.id+">",channel.guild)
+          log('MakeHelper',"<@"+message.author.id+">","<@"+user.id+">",message.channel.guild)
           user.addRole(message.member.guild.roles.find("name","helpers"));
         })
       }
@@ -715,7 +715,7 @@ client.on('message', function(message) {
         var userlist = message.mentions.members;
         userlist.forEach(function(user){
           cmdoutput('Success',"<@"+user.id+"> has been removed from the helper position.",message.channel);
-          log('RemoveHelper',"<@"+message.author.id+">","<@"+user.id+">",channel.guild)
+          log('RemoveHelper',"<@"+message.author.id+">","<@"+user.id+">",message.channel.guild)
           user.removeRole(message.member.guild.roles.find("name","helpers"));
         })
       }
