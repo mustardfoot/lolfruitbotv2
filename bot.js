@@ -700,6 +700,26 @@ client.on('message', function(message) {
         })
       }
       break;
+    case "makehelper" :
+      if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","administrators")) >= 0){
+        var userlist = message.mentions.members;
+        userlist.forEach(function(user){
+          cmdoutput('Success',"<@"+user.id+"> has become a helper.",message.channel);
+          log('MakeHelper',"<@"+message.author.id+">","<@"+user.id+">",channel.guild)
+          user.addRole(message.member.guild.roles.find("name","helpers"));
+        })
+      }
+      break;
+      case "removehelper" :
+      if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","administrators")) >= 0){
+        var userlist = message.mentions.members;
+        userlist.forEach(function(user){
+          cmdoutput('Success',"<@"+user.id+"> has been removed from the helper position.",message.channel);
+          log('RemoveHelper',"<@"+message.author.id+">","<@"+user.id+">",channel.guild)
+          user.removeRole(message.member.guild.roles.find("name","helpers"));
+        })
+      }
+      break;
     case "rerole" :
     if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
       var userlist = message.mentions.members; // Saving userlist to a variable
