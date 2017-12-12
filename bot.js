@@ -778,7 +778,7 @@ client.on('message', function(message) {
                 if(found === false){
                   cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
                   user.user.createDM().then((boi) => {
-                  cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, you may now use the script found in <#363446643393167361>.",boi);
+                  cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, you may now use the script found in <#385857421496811521>.",boi);
                   });
                   t.post('/1/cards?name='+authid+'&pos=top&idList='+hwids,function(err,returns){
                     if(err){
