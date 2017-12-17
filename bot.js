@@ -266,8 +266,9 @@ client.on('message', function(message) {
   var lang = "unknown"
    lang = res.lang;
    if(lang !== "unknown" && lang !== "en" && lang !== null && lang !== ""){
-     var translation = "ERROR"
-     translate.translate(message.content, { to: 'en' }, function(err, res) {
+     console.log(lang);
+     translate.translate(message.content, { to: 'en' }, function(err, res2) {
+       if(res2 && res2[0]){
        message.channel.send({embed: {
          color: 14680064,
          author: {
@@ -276,12 +277,13 @@ client.on('message', function(message) {
          },
          title: "Powered by Yandex.Translate",
          url: "http://translate.yandex.com/",
-         description: res.text[0],
+         description: res2.text[0],
          timestamp: new Date(),
          footer: {
            text: "knifebot"
          }
        }})
+      }
      });
    }
    if(err){
