@@ -262,19 +262,19 @@ client.on('message', function(message) {
      message.delete()
     }
   }
-  var lang = "unknown"
   translate.detect(message.content, function(err, res) {
+  var lang = "unknown"
    lang = res.lang;
+   if(lang !== "unknown" && lang !== "en"){
+     var translation = "ERROR"
+     translate.translate(message.content, { to: 'en' }, function(err, res) {
+       console.log(res.text);
+     });
+   }
    if(err){
      console.log(err);
    }
   });
-  if(lang !== "unknown" && lang !== "en"){
-    var translation = "ERROR"
-    translate.translate(message.content, { to: 'en' }, function(err, res) {
-      console.log(res.text);
-    });
-  }
   if(message.channel.name === "crime-fighting-zone"){
    if(jokering === true){
    var count1 = occurrences(message.content,"👊");
