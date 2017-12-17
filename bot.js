@@ -269,7 +269,7 @@ client.on('message', function(message) {
      console.log(lang);
      var translation = "ERROR"
      translate.translate(message.content, { to: 'en' }, function(err, res) {
-       channel.send({embed: {
+       message.channel.send({embed: {
          color: 14680064,
          author: {
            name: "Translation for <@"+message.author.id+">'s message'",
