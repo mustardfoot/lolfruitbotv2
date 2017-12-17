@@ -10,7 +10,6 @@ const client = new Discord.Client();
 var pref = "!";
 var lookingfor = false;
 var gucciletters = [" ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","~","`","1","!","2","@","3","#","4","$","5","%","6","^","7","&","8","*","9","(","0",")","-","_","=","+","[","{","]","}",";",":","\'","\"","\\","|",",","<",".",">","/","?"];
-var translatable = [" ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","!","2","3","#","4","$","5","%","6","7","&","8","9","(","0",")","-",";",":","\'","\"",",",".","/","?"];
 var childlockers = {};
 var thatid = 364125929624174603;
 var jokering = false;
@@ -266,7 +265,7 @@ client.on('message', function(message) {
   translate.detect(message.content, function(err, res) {
   var lang = "unknown"
    lang = res.lang;
-   if(lang !== "unknown" && lang !== "en"){
+   if(lang !== "unknown" && lang !== "en" && lang !== null && lang !== ""){
      console.log(lang);
      var translation = "ERROR"
      translate.translate(message.content, { to: 'en' }, function(err, res) {
