@@ -268,15 +268,15 @@ client.on('message', function(message) {
    if(lang !== "unknown" && lang !== "en" && lang !== null && lang !== ""){
      var translation = "ERROR"
      translate.translate(message.content, { to: 'en' }, function(err, res) {
-       console.log(res.Text);
+       console.log(res.text);
        message.channel.send({embed: {
          color: 14680064,
          author: {
-           name: "Translation for <@"+message.author.id+">'s message'",
+           name: "Translation for <@"+message.author.username+">'s message'",
            icon_url: client.user.avatarURL
          },
          title: "Powered by Yandex.Translate",
-         link: "http://translate.yandex.com/",
+         url: "http://translate.yandex.com/",
          //description: res.text,
          description: "testing",
          timestamp: new Date(),
