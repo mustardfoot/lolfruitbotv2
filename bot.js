@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 var Trello = require("node-trello");
 var algebra = require('algebra.js');
+var translate = require('yandex-translate')(process.env.translation);
 var t = new Trello(process.env.REE,process.env.REE2);
 var Fraction = algebra.Fraction;
 var Expression = algebra.Expression;
@@ -260,6 +261,19 @@ client.on('message', function(message) {
     if (okay !== true){
      message.delete()
     }
+  }
+  var lang = "unknown"
+  translate.detect(message.content, function(err, res) {
+   lang = res.lang;
+   if(err){
+     console.log(err);
+   }
+  });
+  if(lang !== "unknown" && lang !== "en"){
+    var translation = "ERROR"
+    translate.translate(message.content, { to: 'en' }, function(err, res) {
+      console.log(res.text);
+    });
   }
   if(message.channel.name === "crime-fighting-zone"){
    if(jokering === true){
