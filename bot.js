@@ -266,9 +266,9 @@ client.on('message', function(message) {
   var lang = "unknown"
    lang = res.lang;
    if(lang !== "unknown" && lang !== "en" && lang !== null && lang !== ""){
-     console.log(lang);
      var translation = "ERROR"
      translate.translate(message.content, { to: 'en' }, function(err, res) {
+       console.log(res.Text);
        message.channel.send({embed: {
          color: 14680064,
          author: {
@@ -276,7 +276,9 @@ client.on('message', function(message) {
            icon_url: client.user.avatarURL
          },
          title: "Powered by Yandex.Translate",
-         description: res.text,
+         link: "http://translate.yandex.com/",
+         //description: res.text,
+         description: "testing"
          timestamp: new Date(),
          footer: {
            text: "knifebot"
