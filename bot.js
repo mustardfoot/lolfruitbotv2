@@ -265,7 +265,7 @@ client.on('message', function(message) {
   translate.detect(message.content, function(err, res) {
   var lang = "unknown"
    lang = res.lang;
-   if(lang !== "unknown" && lang !== "en" && lang !== null && lang !== ""){
+   if(lang !== "unknown" && lang !== "en" && lang !== "tl" && lang !== null && lang !== ""){
      translate.translate(message.content, { to: 'en' }, function(err, res2) {
        if(res2 && res2.text && res2.text[0]){
        message.channel.send({embed: {
