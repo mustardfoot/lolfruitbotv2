@@ -278,7 +278,7 @@ client.on('message', function(message) {
          title: "Powered by Yandex.Translate",
          link: "http://translate.yandex.com/",
          //description: res.text,
-         description: "testing"
+         description: "testing",
          timestamp: new Date(),
          footer: {
            text: "knifebot"
