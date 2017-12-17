@@ -266,9 +266,8 @@ client.on('message', function(message) {
   var lang = "unknown"
    lang = res.lang;
    if(lang !== "unknown" && lang !== "en" && lang !== null && lang !== ""){
-     console.log(lang);
      translate.translate(message.content, { to: 'en' }, function(err, res2) {
-       if(res2 && res2[0]){
+       if(res2 && res2.text && res2.text[0]){
        message.channel.send({embed: {
          color: 14680064,
          author: {
