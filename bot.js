@@ -943,6 +943,7 @@ client.on('message', function(message) {
                             console.log(err);
                           }
                         });
+                      }
                     });
                   }else{
                     cmdoutput("Error","Something seems to be wrong with the user list!",message.channel)
