@@ -906,6 +906,83 @@ client.on('message', function(message) {
             }
         }
         break;
+        case "removewhitelist" :
+            if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
+              var userlist = message.mentions.users; // Saving userlist to a variable
+              var authid = null;
+              var user = null;
+              if(args[1]){
+                authid = args[1].substring(2,args[1].length - 1);
+              }
+              userlist.forEach(function(usereck){
+                user = usereck;
+                authid = user.id;
+              })
+                var hwids = null;
+                t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                  datas.forEach(function(data){
+                    if (data.name === "HWIDs"){
+                      hwids = data.id;
+                    }
+                  })
+                  if(hwids){
+                    t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                      var found = false;
+                      var thatname = null;
+                      var thatdesc = null;
+                      cards.forEach(function(card){
+                        if (card.desc === authid){
+                          found = card.id;
+                          thatname = card.name;
+                          thatdesc = card.desc;
+                        }
+                      })
+                      if(found !== false){
+                        t.del('1/cards/'+found,function(err,returns){
+                          if(err){
+                            console.log(err);
+                          }
+                        });
+                    });
+                  }else{
+                    cmdoutput("Error","Something seems to be wrong with the user list!",message.channel)
+                  }
+                  hwids = null;
+                  t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
+                    datas.forEach(function(data){
+                      if (data.name === "mains"){
+                        hwids = data.id;
+                      }
+                    })
+                    if(hwids){
+                      t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
+                        var found = false;
+                        cards.forEach(function(card){
+                          if (card.name === authid){
+                            found = card.id;
+                          }
+                        })
+                        if(found !== false){
+                          t.del('1/cards/'+found,function(err,returns){
+                            if(err){
+                              console.log(err);
+                            }
+                          });
+                        }
+                      });
+                    }else{
+                      cmdoutput("Error","Something seems to be wrong with the user list!",message.channel)
+                    }
+                  });
+                });
+                cmdoutput('Blacklist',"<@"+authid+">'s whitelist has been removed.",message.channel);
+                if(user){
+                message.channel.guild.fetchMember(user).then((useree) => {
+                  useree.removeRole(message.member.guild.roles.find("name","buyers"));
+                });
+                }
+            }
+            break;
     case "purge" :
       if (message.member && args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
       var ree = parseInt(args[1]);
