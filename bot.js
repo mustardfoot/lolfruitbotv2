@@ -1166,7 +1166,7 @@ var myInterval = setInterval(function() {
             var goaltime = new Date(date._value);
             var todaytime = new Date();
             var todaymin = diff_minutes(todaytime,goaltime,card.desc);
-            if (todaymin >= 0 && card.desc !== 0){
+            if (todaymin >= 0 && card.desc !== 0 && card.desc !== "0"){
               var cardname = card.name;
               var carddesc = card.desc;
               t.del('1/cards/'+card.id,function(err,returns){
