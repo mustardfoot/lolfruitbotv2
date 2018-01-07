@@ -1192,6 +1192,8 @@ var myInterval = setInterval(function() {
                 })
               })
             }else{
+              var cardname = card.name;
+              var carddesc = card.desc;
               client.fetchUser(cardname).then((thatuser) => {
                 client.guilds.forEach(function(guildy){
                   if(guildy && guildy.id && guildy.id === process.env.serverId){
