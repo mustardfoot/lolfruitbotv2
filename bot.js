@@ -333,7 +333,9 @@ client.on('message', function(message) {
           message.member.setNickname(curname).then(() => {
             resolve("Success!");
           });
-          message.member.addRole(message.member.guild.roles.find("name","verified"));
+          message.member.addRole(message.member.guild.roles.find("name","verified")).then(() => {
+            resolve("Success!");
+          });
           cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
         }else{
           cmdoutput('Error',"The bot can't see you're in the server. Please rejoin. (This is a Discord glitch)",message.channel);
@@ -928,13 +930,9 @@ client.on('message', function(message) {
                   if(hwids){
                     t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
                       var found = false;
-                      var thatname = null;
-                      var thatdesc = null;
                       cards.forEach(function(card){
                         if (card.desc === authid){
                           found = card.id;
-                          thatname = card.name;
-                          thatdesc = card.desc;
                         }
                       })
                       if(found !== false){
@@ -976,7 +974,7 @@ client.on('message', function(message) {
                     }
                   });
                 });
-                cmdoutput('Blacklist',"<@"+authid+">'s whitelist has been removed.",message.channel);
+                cmdoutput('Removed Whitelist',"<@"+authid+">'s whitelist has been removed.",message.channel);
                 if(user){
                 message.channel.guild.fetchMember(user).then((useree) => {
                   useree.removeRole(message.member.guild.roles.find("name","buyers"));
@@ -1186,6 +1184,23 @@ var myInterval = setInterval(function() {
                           log('Automatic Unmute | '+carddesc+" Minutes","knife Bot","<@"+muser.id+">",guildy)
                         }
                       })
+                    })
+                  }
+                })
+              })
+            }else{
+              client.fetchUser(cardname).then((thatuser) => {
+                client.guilds.forEach(function(guildy){
+                  if(guildy.id === process.env.serverId){
+                    guildy.fetchMember(thatuser).then((muser) => {
+                      if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
+                        if (message.member.guild.roles.find("name","Muted")) {
+                          muser.addRole(message.member.guild.roles.find("name","Muted"))
+                        }
+                        if (message.member.guild.roles.find("name","muted")) {
+                          muser.addRole(message.member.guild.roles.find("name","muted"))
+                        }
+                      }
                     })
                   }
                 })
