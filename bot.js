@@ -1194,7 +1194,7 @@ var myInterval = setInterval(function() {
             }else{
               client.fetchUser(cardname).then((thatuser) => {
                 client.guilds.forEach(function(guildy){
-                  if(guildy.id === process.env.serverId){
+                  if(guildy && guildy.id && guildy.id === process.env.serverId){
                     guildy.fetchMember(thatuser).then((muser) => {
                       if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
                         if (message.member.guild.roles.find("name","Muted")) {
