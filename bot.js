@@ -1062,7 +1062,10 @@ client.on('message', function(message) {
           }
           var today = new Date();
           var m = today.getMinutes();
-          if (parseInt(args[2])) {
+          if (args) {
+            if (!args[2] || !parseInt(args[2])){
+              args[2] = 0;
+            };
             t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
               datas.forEach(function(data){
                 if (data.name === "mutes"){
