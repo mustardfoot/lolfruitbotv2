@@ -1062,7 +1062,7 @@ client.on('message', function(message) {
           }
           var today = new Date();
           var m = today.getMinutes();
-          if (parseInt(args[2]) && parseInt(args[2])) {
+          if (parseInt(args[2])) {
             t.get("/1/boards/5979179aba4cd1de66a4ea5b/lists", function(err, datas) {
               datas.forEach(function(data){
                 if (data.name === "mutes"){
@@ -1093,7 +1093,7 @@ client.on('message', function(message) {
           }
           var time = "Forever"
           if (args && parseInt(args[2])){
-          time = parseInt(args[2])+" Minutes";
+            time = parseInt(args[2])+" Minutes";
           }
           cmdoutput("Mute | "+time,"<@"+muser.id+"> has been muted for \""+reason+"\"",message.channel)
           log('Mute | '+time,"<@"+message.author.id+">","<@"+muser.id+">",message.channel.guild,reason)
