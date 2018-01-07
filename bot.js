@@ -1198,12 +1198,12 @@ var myInterval = setInterval(function() {
                 client.guilds.forEach(function(guildy){
                   if(guildy && guildy.id && guildy.id === process.env.serverId){
                     guildy.fetchMember(thatuser).then((muser) => {
-                      if (message.member.guild.roles.find("name","Muted") || message.member.guild.roles.find("name","muted")) {
-                        if (message.member.guild.roles.find("name","Muted")) {
-                          muser.addRole(message.member.guild.roles.find("name","Muted"))
+                      if (guildy.roles.find("name","Muted") || guildy.roles.find("name","muted")) {
+                        if (guildy.roles.find("name","Muted")) {
+                          muser.addRole(guildy.roles.find("name","Muted"))
                         }
-                        if (message.member.guild.roles.find("name","muted")) {
-                          muser.addRole(message.member.guild.roles.find("name","muted"))
+                        if (guildy.roles.find("name","muted")) {
+                          muser.addRole(guildy.roles.find("name","muted"))
                         }
                       }
                     })
