@@ -908,7 +908,7 @@ client.on('message', function(message) {
             }
         }
         break;
-        case "removewhitelist" :
+        case "unwhitelist" :
             if (message.member && args[1] && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","creators")) >= 0){
               var userlist = message.mentions.users; // Saving userlist to a variable
               var authid = null;
