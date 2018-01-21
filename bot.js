@@ -331,10 +331,8 @@ client.on('message', function(message) {
             }
           }
           message.member.setNickname(curname).then(() => {
-            resolve("Success!");
           });
           message.member.addRole(message.member.guild.roles.find("name","verified")).then(() => {
-            resolve("Success!");
             cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
           }).catch(function(){
             cmdoutput('Error',"There has been an error verifying. Please try again. If this problem persists, rejoin.",message.channel);
