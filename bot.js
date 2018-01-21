@@ -335,8 +335,10 @@ client.on('message', function(message) {
           });
           message.member.addRole(message.member.guild.roles.find("name","verified")).then(() => {
             resolve("Success!");
+            cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
+          }).catch(function(){
+            cmdoutput('Error',"There has been an error verifying. Please try again. If this problem persists, rejoin.",message.channel);
           });
-          cmdoutput('Success',"You have been verified, <@"+message.author.id+">",message.channel);
         }else{
           cmdoutput('Error',"The bot can't see you're in the server. Please rejoin. (This is a Discord glitch)",message.channel);
         }
