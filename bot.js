@@ -989,7 +989,7 @@ client.on('message', function(message) {
       if(parseInt(args[1]) > 100){
         args[1] = 100;
       };
-      channel.bulkDelete(parseInt(args[1])+1);
+      channel.bulkDelete(parseInt(args[1]));
       lookingfor = channel.id;
       log('Purge | Amount: '+args[1],"<@"+message.author.id+">","<#"+channel.id+">",channel.guild)
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
