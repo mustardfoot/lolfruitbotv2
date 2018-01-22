@@ -986,14 +986,10 @@ client.on('message', function(message) {
       if (message.member && args[1] && parseInt(args[1]) && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","helpers")) >= 0){
       var ree = parseInt(args[1]);
       var channel = message.channel;
-      for(x = 0; x < Math.ceil((ree-1)/200); x = x + 1) {
-          if (ree <= 99){
-          channel.bulkDelete(parseInt(args[1])+1);
-          }else{
-          channel.bulkDelete(100);
-          ree = ree-100
-          }
-        }
+      if(parseInt(args[1]) > 100){
+        arg[1] = 100;
+      };
+      channel.bulkDelete(parseInt(args[1])+1);
       lookingfor = channel.id;
       log('Purge | Amount: '+args[1],"<@"+message.author.id+">","<#"+channel.id+">",channel.guild)
       cmdoutput("Purge","Successfully purged "+args[1]+" messags.",channel);
