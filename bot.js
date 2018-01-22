@@ -987,7 +987,7 @@ client.on('message', function(message) {
       var ree = parseInt(args[1]);
       var channel = message.channel;
       if(parseInt(args[1]) > 100){
-        arg[1] = 100;
+        args[1] = 100;
       };
       channel.bulkDelete(parseInt(args[1])+1);
       lookingfor = channel.id;
