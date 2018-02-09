@@ -1112,7 +1112,7 @@ client.on('message', function(message) {
                 }
               })
             }
-          }
+          })
         }
         break;
       case "unmute" :
