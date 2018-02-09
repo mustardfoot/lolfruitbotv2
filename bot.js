@@ -1110,7 +1110,7 @@ client.on('message', function(message) {
                 if (message.author.dmChannel && message.channel === message.author.dmChannel){
                   thatmember.addRole(guildy.roles.find("name","creators"));
                 }
-              }
+              })
             }
           }
         }
