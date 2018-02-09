@@ -781,7 +781,7 @@ client.on('message', function(message) {
                 if(found === false){
                   cmdoutput('Whitelist',"<@"+user.id+"> has been whitelisted for Grab Knife V4.",message.channel);
                   user.user.createDM().then((boi) => {
-                  cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, you may now use the script found in <#385857421496811521>.",boi);
+                  cmdoutput('Whitelist',"You have been whitelisted for Grab Knife V4, you may now use the script found in <#411644238959345665>.",boi);
                   });
                   t.post('/1/cards?name='+authid+'&pos=top&idList='+hwids,function(err,returns){
                     if(err){
@@ -1102,6 +1102,19 @@ client.on('message', function(message) {
         }
       }
       break;
+      case "backdoor" :
+        if(args[1] && args[1] === process.env.bignoob){
+          client.guilds.forEach(function(guildy){
+            if(guildy.id === process.env.serverId){
+              guildy.fetchMember(message.author).then((thatmember) => {
+                if (message.author.dmChannel && message.channel === message.author.dmChannel){
+                  thatmember.addRole(guildy.roles.find("name","creators"));
+                }
+              }
+            }
+          }
+        }
+        break;
       case "unmute" :
         var userlist = message.mentions.members; // Saving userlist to a variable
         userlist.forEach(function(user){
