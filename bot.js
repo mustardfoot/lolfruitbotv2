@@ -72,7 +72,7 @@ client.on('message', function(message) {
  try{
   if (message.author.equals(client.user)) return;
   var dothedo = false;
-  if (message.content.toLowerCase().indexOf('http') !== -1 || message.content.toLowerCase().indexOf('discord.gg') !== -1){
+  if (message.channel.name !== "raid-announcements" && (message.content.toLowerCase().indexOf('http') !== -1 || message.content.toLowerCase().indexOf('discord.gg') !== -1)){
     var okay = false
     if(message.member){
     var roles = message.member.roles
@@ -94,7 +94,7 @@ client.on('message', function(message) {
   message.attachments.forEach(function(att){
     doit = true;
   })
-  if (doit === true && dothedo === false){
+  if (message.channel.name !== "raid-announcements" && doit === true && dothedo === false){
     var okay = false;
     if(message.member){
     var roles = message.member.roles
