@@ -142,6 +142,24 @@ client.on('message', function(message) {
         })
       }
       break;
+      case "bangamenight" :
+        if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","administrators")) >= 0){
+          var userlist = message.mentions.members;
+          userlist.forEach(function(user){
+            cmdoutput('Success',"<@"+user.id+"> has been banned from participating in game night.",message.channel);
+            user.addRole(message.member.guild.roles.find("name","bannedfromgamenight"));
+          })
+        }
+        break;
+        case "unbangamenight" :
+        if (message.member && args[1] && message.member && message.member.highestRole.comparePositionTo(message.member.guild.roles.find("name","administrators")) >= 0){
+          var userlist = message.mentions.members;
+          userlist.forEach(function(user){
+            cmdoutput('Success',"<@"+user.id+"> has been unbanned from participating in game night.",message.channel);
+            user.removeRole(message.member.guild.roles.find("name","bannedfromgamenight"));
+          })
+        }
+        break;
   }
  }
  finally {
