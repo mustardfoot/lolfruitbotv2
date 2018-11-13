@@ -21,6 +21,46 @@ function diff_minutes(dt2, dt1, add)
 
  }
 
+ function checkpermit(message,oldmessage){
+   var good = true;
+   if(!oldmessage){
+     var links = false;
+     var attachments = false;
+     if(message.guild && message.guild === guild){
+       if (message.content.toLowerCase().indexOf('http') !== -1 || message.content.toLowerCase().indexOf('discord.gg') !== -1 || message.content.toLowerCase().indexOf('://') !== -1){
+         links = true;
+         good = false;
+         if(message.member){
+           if(guild.roles.find("name","lolfruit squad")){
+             if(message.member.highestRole.comparePositionTo(guild.roles.find("name","lolfruit squad")) >= 0){
+               good = true;
+             }
+           }
+           if(good === false){
+             links = false;
+           }
+         }
+
+       }
+       message.attachments.forEach(function(att){
+         attachments = true;
+       })
+       if (attachments === true && links === false){
+         if(message.member){
+           if(guild.roles.find("name","lolfruit squad")){
+             if(message.member.highestRole.comparePositionTo(guild.roles.find("name","lolfruit squad")) >= 0){
+               good = true;
+             }
+           }
+         }
+       }
+     }
+   }
+   if(good === false){
+     message.delete();
+   }
+ }
+
 var getuserfromid = function(id) {
   return new Promise(function(resolve, reject){
      if(id.substring(0,2) === "<@" && id.substring(id.length-1) === ">" && Number(id.substring(2,id.length-1))){
@@ -610,8 +650,13 @@ client.on('ready', () => {
   .catch(console.error);
 });
 
+client.on('messageUpdate', (omessage, message) => {
+  checkpermit(message,omessage);
+});
+
 client.on('message', function(message) {
   if (message.author.equals(client.user)) return;
+  checkpermit(message);
   var args = message.content.substring(pref.length).split(" ");
   if(message.content.toLowerCase().indexOf('this is so sad') !== -1){
     message.channel.send(':musical_note: **Now playing Despacito.**')
