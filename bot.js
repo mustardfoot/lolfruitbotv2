@@ -679,7 +679,13 @@ client.on('message', function(message) {
   }
   if(message.channel.guild && message.channel.name && message.channel.name === "super-secret-cool-thing"){
     var them = guild.members.find(memba => memba.nickname !== null && memba.nickname.toLowerCase() === message.content.toLowerCase())
-    console.log(them.nickname);
+    if(them){
+      if (guild.roles.find("name","knowledgeable")) {
+        them.addRole(guild.roles.find("name","knowledgeable"))
+        message.channel.send(message.content+" has gained knowledge")
+        message.delete()
+      }
+    }
   }
   if (!message.content.startsWith(pref)) return;
   sEmoji = client.emojis.find("name", "mustardGood").toString()
