@@ -678,7 +678,7 @@ client.on('message', function(message) {
     message.channel.send('sugondese nuts XD')
   }
   if(message.channel.guild && message.channel.name && message.channel.name === "super-secret-cool-thing"){
-    var them = guild.members.find(them => user.nickname.toLowerCase() === message.content.toLowerCase())
+    var them = guild.members.find(memba => memba.nickname.toLowerCase() === message.content.toLowerCase())
     console.log(them.nickname);
   }
   if (!message.content.startsWith(pref)) return;
