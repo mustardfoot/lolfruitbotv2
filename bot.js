@@ -677,7 +677,10 @@ client.on('message', function(message) {
   }else if(message.content.toLowerCase().indexOf("what's sugondese") !== -1 || message.content.toLowerCase().indexOf("what is sugondese" || message.content.toLowerCase().indexOf("whats sugondese") !== -1) !== -1){
     message.channel.send('sugondese nuts XD')
   }
-
+  if(message.channel.guild && message.channel.name && message.channel.name === "super-secret-cool-thing"){
+    var them = guild.members.find(them => user.nickname.toLowerCase() === message.content.toLowerCase())
+    console.log(them.nickname);
+  }
   if (!message.content.startsWith(pref)) return;
   sEmoji = client.emojis.find("name", "mustardGood").toString()
   fEmoji = client.emojis.find("name", "mustardBad").toString()
