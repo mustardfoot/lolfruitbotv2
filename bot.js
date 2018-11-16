@@ -23,12 +23,16 @@ function diff_minutes(dt2, dt1, add)
 
  function checkpermit(message,oldmessage){
    var good = true;
+   console.log("1");
    if(!oldmessage){
+     console.log("2");
      var links = false;
      var attachments = false;
      if(message.guild && message.guild === guild){
+       console.log("3");
        if (message.content.toLowerCase().indexOf('http') !== -1 || message.content.toLowerCase().indexOf('discord.gg') !== -1 || message.content.toLowerCase().indexOf('://') !== -1){
          links = true;
+         console.log("4");
          good = false;
          if(message.member){
            if(guild.roles.find("name","lolfruit squad")){
