@@ -685,6 +685,8 @@ client.on('message', function(message) {
         message.channel.send(message.content+" has gained knowledge")
         message.delete()
       }
+    }else{
+      message.delete()
     }
   }
   if (!message.content.startsWith(pref)) return;
