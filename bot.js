@@ -23,7 +23,7 @@ function diff_minutes(dt2, dt1, add)
 
  function checkpermit(message,oldmessage){
    var good = true;
-   if(!oldmessage){
+   if(!oldmessage && message.channel && message.channel.name !== "raid-announcements"){
      var links = false;
      var attachments = false;
      if(message.guild && message.guild === guild){
