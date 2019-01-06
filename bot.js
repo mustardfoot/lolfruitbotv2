@@ -999,6 +999,9 @@ var myInterval = setInterval(function() {
                 Noblox.groupPayout(groupid,firstcard.name,5,false,false)
                 .then(() => {
                   t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
+                .catch((err) => {
+                  console.log(err);
+                })
                 });
               }else{
                 t.del('1/cards/'+firstcard.id,function(err,returns){});
