@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const Trello = require("node-trello");
 const Axios = require("axios");
+const Noblox = require("noblox-js");
+const groupid = 3288652;
 const t = new Trello(process.env.T_KEY,process.env.T_TOKEN);
 const client = new Discord.Client();
 var pref = "!"
@@ -8,6 +10,7 @@ var sEmoji;
 var fEmoji;
 var guild;
 var commands = [];
+Noblox.cookieLogin("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_"+process.env.ROBLOSECURITY)
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -113,7 +116,6 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
           Axios.get("https://api.roblox.com/Users/"+args[2])
           .then((data) => {
             data = data["data"]
-            console.log(data);
             if(data["errors"] || !data["Username"]){
               message.channel.send("**"+fEmoji+" This user does not exist on roblox.**")
               .then((msg) => {
@@ -121,8 +123,50 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               });
               return;
             }
-            message.channel.send(data["Username"]+" is the user to be promoted");
-          })
+            if(data["Username"].substring(0,8).toLowerCase() !== "lolfruit"){
+              message.channel.send("**"+fEmoji+" This user's account does not start with *lolfruit*.**")
+              .then((msg) => {
+                msg.delete(3000);
+              });
+              return;
+            }
+            if(Noblox.getRankInGroup(groupid,args[2]) < 1){
+              message.channel.send("**"+fEmoji+" This user is not in the lolfruit group.**")
+              .then((msg) => {
+                msg.delete(3000);
+              });
+              return;
+            }else if(Noblox.getRankInGroup(groupid,args[2]) > 1){
+              if(!guild.roles.find("name","lolfruit squad")){
+                message.channel.send("**"+fEmoji+" There is no lolfruit squad rank in the Discord!**")
+                .then((msg) => {
+                  msg.delete(3000);
+                });
+                return;
+              }
+              if(mentionedmember.highestRole.comparePositionTo(guild.roles.find("name","lolfruit squad")) >= 0){
+                message.channel.send("**"+fEmoji+" This user is already ranked in the Discord and group!**")
+                .then((msg) => {
+                  msg.delete(3000);
+                });
+              }else{
+                mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
+                message.channel.send("**"+sEmoji+" This user was already ranked in the group, but has been ranked in the Discord.**")
+              }
+              return;
+            }
+            Noblox.setRank(groupid, args[2], 50)
+            .then(() => {
+              if(!guild.roles.find("name","lolfruit squad")){
+                message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
+                .then((msg) => {
+                  msg.delete(5000);
+                });
+                return;
+              }
+              mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
+              message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
+            });
         }else{
           message.channel.send("**"+fEmoji+" Please specify a roblox userid to accept.**")
           .then((msg) => {
