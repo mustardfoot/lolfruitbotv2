@@ -122,7 +122,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 msg.delete(3000);
               });
               return;
-            });
+            }
             if(data["Username"].substring(0,8).toLowerCase() !== "lolfruit"){
               message.channel.send("**"+fEmoji+" This user's account does not start with *lolfruit*.**")
               .then((msg) => {
@@ -167,6 +167,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
               message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
             });
+          });
         }else{
           message.channel.send("**"+fEmoji+" Please specify a roblox userid to accept.**")
           .then((msg) => {
