@@ -164,7 +164,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 }
               }
               var options = {group: 3288652, target: Number(args[2]), roleset: 22692309}
-              console.log('what the frick');
+              console.log(options["target"])
               Noblox.setRank(options)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
