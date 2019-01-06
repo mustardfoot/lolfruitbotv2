@@ -136,7 +136,6 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
             }
             Noblox.getRankInGroup(groupid,args[2])
             .then((ranking) => {
-              console.log('ok');
               if(ranking < 1){
                 message.channel.send("**"+fEmoji+" This user is not in the lolfruit group.**")
                 .then((msg) => {
@@ -163,8 +162,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 }
                 return;
               }
-              console.log('yeet?')
-              Noblox.setRank(groupid, args[2], 50)
+              Noblox.setRank(groupid, args[2], "Squad")
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
                   message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
