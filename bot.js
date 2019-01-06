@@ -110,12 +110,10 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
       var mentionedmember = getmemberfromid(args[1]);
       if(mentionedmember){
         if(args[2] && Number(args[2])){
-          console.log('1');
           Axios.get("https://api.roblox.com/Users/261")
           .then((data) => {
-            console.log('2');
+            console.log(data);
             if(data["errors"] || !data["Username"]){
-              console.log('3');
               message.channel.send("**"+fEmoji+" This user does not exist on roblox.**")
               .then((msg) => {
                 msg.delete(3000);
@@ -212,6 +210,7 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
 
 addcommand("ban",["bean"],"This command will ban someone from joining the server permanently.","moderator",function(args,message){
   if(message.guild && message.guild === guild){
+    message.delete()
     if(args[1]){
       var mentionedmember = getmemberfromid(args[1]);
       getuserfromid(args[1]).then((mentioneduser) => {
@@ -234,7 +233,6 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 boi.send('**You have been banned from the server for ['+reason+']**')
                 guild.ban(mentionedmember,{reason: reason})
                 message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been banned.**");
-                message.delete()
                 guild.channels.forEach(function(channel){
                   if(channel.name === "logs"){
                     channel.send({"embed": {
@@ -288,7 +286,6 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
             }
             guild.ban(mentioneduser,{reason: reason})
             message.channel.send(sEmoji+" **"+mentioneduser.tag+" has been banned.**");
-            message.delete()
             guild.channels.forEach(function(channel){
               if(channel.name === "logs"){
                 channel.send({"embed": {
@@ -332,6 +329,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
 
 addcommand("kick",[],"This command will kick someone out of the server.","moderator",function(args,message){
   if(message.guild && message.guild === guild){
+    message.delete()
     if(args[1]){
       var mentionedmember = getmemberfromid(args[1]);
       if (mentionedmember){
@@ -353,7 +351,6 @@ addcommand("kick",[],"This command will kick someone out of the server.","modera
               boi.send('**You have been kicked from the server for ['+reason+']**')
               mentionedmember.kick()
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been kicked.**");
-              message.delete()
               guild.channels.forEach(function(channel){
                 if(channel.name === "logs"){
                   channel.send({"embed": {
@@ -533,6 +530,7 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
 
 addcommand("unmute",[],"This command unmutes a user who was previously muted.","moderator",function(args,message){
   if(message.guild && message.guild === guild){
+    message.delete()
     if(args[1]){
       var mentionedmember = getmemberfromid(args[1]);
       if (mentionedmember){
@@ -585,7 +583,6 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
               }
             });
             message.channel.send("**"+sEmoji+" <@"+mentionedmember.id+"> has been unmuted.**")
-            message.delete()
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
             .then((msg) => {
@@ -610,6 +607,7 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
 
 addcommand("mute",[],"Prevents the specified user from speaking in text and voice channels until they're unmuted or their mute time is up.\n\n**Examples:**\n!mute [user] 50 (mutes for 50 minutes)\n!mute [user] 30s (mutes for 30 seconds)\n!mute [user] 5h (mutes for 5 hours)\n!mute [user] 2d (mutes for 2 days)\n!mute [user] 1w (mutes for 1 week)","moderator",function(args,message){
   if(message.guild && message.guild === guild){
+    message.delete()
     if(args[1]){
       var mentionedmember = getmemberfromid(args[1]);
       if (mentionedmember){
@@ -745,10 +743,8 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                           });
                           if(displaytime !== "forever"){
                             message.channel.send(sEmoji+" The user <@"+mentionedmember.id+"> has been muted for **"+displaytime+"**.")
-                            message.delete()
                           }else{
                             message.channel.send(sEmoji+" The user <@"+mentionedmember.id+"> has been muted **forever**.")
-                            message.delete()
                           }
                         }
                       });
