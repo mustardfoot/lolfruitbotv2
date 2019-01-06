@@ -110,9 +110,13 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
       var mentionedmember = getmemberfromid(args[1]);
       if(mentionedmember){
         if(args[2] && Number(args[2])){
+          console.log('1');
           axios.get("https://api.roblox.com/Users/261")
+          console.log('2');
           .then((data) => {
+            console.log('3');
             if(data["errors"] || !data["Username"]){
+              console.log('4');
               message.channel.send("**"+fEmoji+" This user does not exist on roblox.**")
               .then((msg) => {
                 msg.delete(3000);
