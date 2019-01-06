@@ -996,9 +996,8 @@ var myInterval = setInterval(function() {
             Noblox.getRankInGroup(groupid,firstcard.name)
             .then((ranking) => {
               if(ranking > 25){
-                Noblox.groupPayout(groupid,firstcard.name,5)
+                Noblox.groupPayout(groupid,firstcard.name,5,false,false)
                 .then(() => {
-                  console.log('ahhhh');
                   t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
                 });
               }else{
