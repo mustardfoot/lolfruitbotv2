@@ -171,6 +171,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                   return;
                 }
                 mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
+                mentionedmember.setNickname(data["Username"]);
                 message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
               });
             });
