@@ -10,7 +10,7 @@ var sEmoji;
 var fEmoji;
 var guild;
 var commands = [];
-Noblox.cookieLogin("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_"+process.env.ROBLOSECURITY)
+Noblox.cookieLogin(process.env.ROBLOSECURITY)
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
