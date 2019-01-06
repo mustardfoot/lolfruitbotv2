@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Trello = require("node-trello");
 const Axios = require("axios");
-const Noblox = require("noblox-js");
+const Noblox = require("noblox.js");
 const groupid = 3288652;
 const t = new Trello(process.env.T_KEY,process.env.T_TOKEN);
 const client = new Discord.Client();
