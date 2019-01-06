@@ -134,6 +134,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               });
               return;
             }
+            console.log('why');
             Noblox.getRankInGroup(groupid,args[2])
             .then((ranking) => {
               if(ranking < 1){
