@@ -995,10 +995,11 @@ var myInterval = setInterval(function() {
             var firstcard = cards[0];
             Noblox.getRankInGroup(groupid,firstcard.name)
             .then((ranking) => {
-              console.log(ranking);
               if(ranking > 25){
-                Noblox.groupPayout(groupid,Number(firstcard.name),5)
+                console.log('yeet')
+                Noblox.groupPayout(groupid,firstcard.name,5)
                 .then((returns) => {
+                  console.log('aa')
                   console.log(returns);
                   t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
                 });
