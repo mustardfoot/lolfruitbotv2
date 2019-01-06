@@ -110,7 +110,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
       var mentionedmember = getmemberfromid(args[1]);
       if(mentionedmember){
         if(args[2] && Number(args[2])){
-          Axios.get("https://api.roblox.com/Users/261")
+          Axios.get("https://api.roblox.com/Users/"+args[2])
           .then((data) => {
             data = data["data"]
             console.log(data);
