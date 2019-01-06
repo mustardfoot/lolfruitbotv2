@@ -164,6 +164,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 }
               }
               var options = {group: 3288652, target: args[2], roleset: 22692309}
+              console.log('what the frick');
               Noblox.changeRank(options)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
@@ -178,6 +179,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
               })
               .catch((err) => {
+                console.log('what the fuck');
                 message.channel.send('**'+fEmoji+" "+err+'**');
               })
             });
