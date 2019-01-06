@@ -141,7 +141,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                   msg.delete(3000);
                 });
                 return;
-              }else if(ranking > 1){
+              }else if(ranking > 50){
                 if(!guild.roles.find("name","lolfruit squad")){
                   message.channel.send("**"+fEmoji+" There is no lolfruit squad rank in the Discord!**")
                   .then((msg) => {
@@ -154,12 +154,14 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                   .then((msg) => {
                     msg.delete(3000);
                   });
+                  return;
                 }else{
-                  mentionedmember.setNickname(data["Username"]);
-                  mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
-                  message.channel.send("**"+sEmoji+" This user was already ranked in the group, but has been ranked in the Discord.**")
+                  message.channel.send("**"+fEmoji+" This user is already ranked in the group.**")
+                  .then((msg) => {
+                    msg.delete(3000);
+                  });
+                  return;
                 }
-                return;
               }
               Noblox.setRank(3288652, args[2], 50)
               .then(() => {
