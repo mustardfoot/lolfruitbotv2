@@ -165,7 +165,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               }
               var options = {group: 3288652, target: args[2], roleset: 22692309}
               console.log('what the frick');
-              Noblox.changeRank(options)
+              Noblox.setRank(options)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
                   message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
