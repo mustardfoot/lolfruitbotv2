@@ -1003,7 +1003,7 @@ var myInterval = setInterval(function() {
             Noblox.getRankInGroup(3288652,firstcard.name)
             .then((ranking) => {
               if(ranking > 25){
-                Noblox.groupPayout(3288652,firstcard.name,5,false,false)
+                Noblox.groupPayout(3288652,firstcard.name,5)
                 .then(() => {
                   t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
                 })
