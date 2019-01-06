@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const Trello = require("node-trello");
+const Axios = require("axios");
 const t = new Trello(process.env.T_KEY,process.env.T_TOKEN);
 const client = new Discord.Client();
 var pref = "!"
@@ -100,7 +101,110 @@ function addcommand(name,aliases,desc,minrank,does){
 }
 
 addcommand("test",["check"],"This command will respond if the bot is online. A simple test to make sure the bot isn't down.","",function(args,message){
-    message.channel.send(sEmoji+" **The bot is active!**");
+  message.channel.send(sEmoji+" **The bot is active!**");
+});
+
+addcommand("accept",["rank"],"This command will rank someone to squad in the group and the discord.","lolfruit owner",function(args,message){
+  if(message.guild && message.guild === guild){
+    if(args[1]){
+      var mentionedmember = getmemberfromid(args[1]);
+      if(mentionedmember){
+        if(args[2] && Number(args[2])){
+          axios.get("https://api.roblox.com/Users/261")
+          .then((data) => {
+            if(data["errors"] || !data["Username"]){
+              message.channel.send("**"+fEmoji+" This user does not exist on roblox.**")
+              .then((msg) => {
+                msg.delete(3000);
+              });
+              return;
+            }
+            message.channel.send(data["Username"]+" is the user to be promoted");
+          })
+        }else{
+          message.channel.send("**"+fEmoji+" Please specify a roblox userid to accept.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
+        }
+      }else{
+        message.channel.send("**"+fEmoji+" The specified user cannot be found.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
+      }
+    }else{
+      message.channel.send("**"+fEmoji+" Please specify a discord user to accept.**")
+      .then((msg) => {
+        msg.delete(3000);
+      });
+    }
+  }
+});
+
+var purgemsgs = [""," *The specified number was above the max of 100, so 100 messages were purged instead.*"," *The specified number was below the minumum of 2, so 2 messages were purged instead.*"]
+
+addcommand("purge",["bulkdelete"],"This command will delete the amount of messages specified in the channel the command was sent in.","moderator",function(args,message){
+  if(message.guild && message.guild === guild){
+    if(message.channel && message.channel.name !== "logs"){
+      if(args[1] && Number(args[1])){
+        args[1] = Math.round(args[1]);
+
+        var added = 0
+        if(args[1] > 100){
+          args[1] = 100
+          added = 1
+        }else if(args[1] < 2){
+          args[1] = 2
+          added = 2
+        }
+        message.delete()
+        .then(() => {
+          message.channel.fetchMessages({limit: args[1]})
+          .then((found) => {
+            message.channel.send("**"+found.size+"** " + "messages found, deleting...")
+            .then((msg) => {
+              message.channel.bulkDelete(found)
+              .then(() => {
+                msg.edit("**"+found.size+"** " + "messages have been purged."+purgemsgs[added])
+                msg.delete(5000);
+                guild.channels.forEach(function(channel){
+                  if(channel.name === "logs"){
+                    channel.send({"embed": {
+                      "description":"Purge",
+                      "timestamp": new Date(),
+                      "color": 13632027,
+                      "fields": [
+                        {
+                          "name": "Staff Member",
+                          "value": "<@"+message.author.id+">",
+                          "inline": true
+                        },
+                        {
+                          "name": "Channel",
+                          "value": "<#"+message.channel.id+">",
+                          "inline": true
+                        },
+                        {
+                          "name": "Amount of Messages",
+                          "value": found.size
+                        }
+                      ]
+                    }})
+                  }
+                });
+              });
+            });
+          });
+        });
+      }else{
+        message.channel.send("**"+fEmoji+" Please specify how many messages to delete.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
+      }
+    }
+  }
 });
 
 addcommand("ban",["bean"],"This command will ban someone from joining the server permanently.","moderator",function(args,message){
@@ -127,6 +231,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 boi.send('**You have been banned from the server for ['+reason+']**')
                 guild.ban(mentionedmember,{reason: reason})
                 message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been banned.**");
+                message.delete()
                 guild.channels.forEach(function(channel){
                   if(channel.name === "logs"){
                     channel.send({"embed": {
@@ -154,9 +259,15 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
               });
             }else{
               message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+              .then((msg) => {
+                msg.delete(3000);
+              });
             }
           }else{
             message.channel.send("**"+fEmoji+" You can't ban the bot.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else if(mentioneduser){
           if(mentioneduser !== client.user){
@@ -174,6 +285,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
             }
             guild.ban(mentioneduser,{reason: reason})
             message.channel.send(sEmoji+" **"+mentioneduser.tag+" has been banned.**");
+            message.delete()
             guild.channels.forEach(function(channel){
               if(channel.name === "logs"){
                 channel.send({"embed": {
@@ -200,10 +312,16 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
             });
           }else{
             message.channel.send("**"+fEmoji+" You can't ban the bot.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }
       }).catch(() => {
         message.channel.send(fEmoji+" **Sorry, I can't find that user!**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       });
     }
   }
@@ -232,6 +350,7 @@ addcommand("kick",[],"This command will kick someone out of the server.","modera
               boi.send('**You have been kicked from the server for ['+reason+']**')
               mentionedmember.kick()
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been kicked.**");
+              message.delete()
               guild.channels.forEach(function(channel){
                 if(channel.name === "logs"){
                   channel.send({"embed": {
@@ -259,9 +378,15 @@ addcommand("kick",[],"This command will kick someone out of the server.","modera
             });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else{
           message.channel.send("**"+fEmoji+" You can't kick the bot.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }
     }
@@ -347,6 +472,9 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
                       guild.fetchMember(message.author).then((theirmember) => {
                         if(!theirmember){
                           message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                          .then((msg) => {
+                            msg.delete(3000);
+                          });
                         }else{
                           if(theirmember.highestRole.comparePositionTo(guild.roles.find("name",command.minrank)) >= 0){
                             message.channel.send({"embed": {
@@ -368,14 +496,23 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
                             }})
                           }else{
                             message.channel.send(fEmoji+" **You're not a high enough role to see this command** (requires the *"+command.minrank+"* rank)")
+                            .then((msg) => {
+                              msg.delete(3000);
+                            });
                           }
                         }
                       })
                       .catch(() => {
                         message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                        .then((msg) => {
+                          msg.delete(3000);
+                        });
                       })
                     }else{
                       message.channel.send(fEmoji+" **Sorry, the required role** (*"+command.minrank+"*) **for this command doesn't exist!**")
+                      .then((msg) => {
+                        msg.delete(3000);
+                      });
                     }
                   }
                 }
@@ -385,6 +522,9 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
       }
     }else{
       message.channel.send("**"+fEmoji+" This command cannot be used in DMs.**")
+      .then((msg) => {
+        msg.delete(3000);
+      });
     }
 });
 
@@ -442,16 +582,26 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
               }
             });
             message.channel.send("**"+sEmoji+" <@"+mentionedmember.id+"> has been unmuted.**")
+            message.delete()
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }
       }else{
         message.channel.send("**"+fEmoji+" This is not a valid user.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       }
     }
   }else{
     message.channel.send("**"+fEmoji+" This command cannot be used in DMs.**")
+    .then((msg) => {
+      msg.delete(3000);
+    });
   }
 });
 
@@ -550,6 +700,9 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                       .catch(() => {
                         good = false;
                         message.channel.send("**"+fEmoji+" There has been an error giving the user the muted role. Please attempt to re-mute them.**")
+                        .then((msg) => {
+                          msg.delete(3000);
+                        });
                       }).then(() => {
                         mentionedmember.user.createDM().then((boi) => {
                           if(displaytime !== "forever"){
@@ -589,13 +742,18 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                           });
                           if(displaytime !== "forever"){
                             message.channel.send(sEmoji+" The user <@"+mentionedmember.id+"> has been muted for **"+displaytime+"**.")
+                            message.delete()
                           }else{
                             message.channel.send(sEmoji+" The user <@"+mentionedmember.id+"> has been muted **forever**.")
+                            message.delete()
                           }
                         }
                       });
                     }else{
                       message.channel.send(fEmoji+" **The muted role doesn't exist. Please contact mustardfoot to fix this.**")
+                      .then((msg) => {
+                        msg.delete(3000);
+                      });
                     }
                   });
                 });
@@ -605,16 +763,28 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
             });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else{
           message.channel.send("**"+fEmoji+" You can't mute the bot.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }else{
         message.channel.send("**"+fEmoji+" This is not a valid user.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       }
     }
   }else{
     message.channel.send("**"+fEmoji+" This command cannot be used in DMs.**")
+    .then((msg) => {
+      msg.delete(3000);
+    });
   }
 });
 
@@ -627,6 +797,9 @@ addcommand("verify",[],"This command is used only in the #verify channel and is 
           .catch(() => {
             good = false;
             message.channel.send("**"+fEmoji+" There has been an error verifying you,** <@"+message.author.id+">**. If this problem persists, please rejoin or contact mustardfoot.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }).then(() => {
             if(good === true){
               message.channel.send("**"+sEmoji+" You have been verified,** <@"+message.author.id+">**.**")
@@ -634,9 +807,15 @@ addcommand("verify",[],"This command is used only in the #verify channel and is 
           });
         }else{
           message.channel.send(fEmoji+" **The verified role doesn't exist. Please contact mustardfoot to fix this.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }else{
         message.channel.send("**"+fEmoji+" There has been an error verifying you,** <@"+message.author.id+">**. Please rejoin the server.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       }
     }
 });
@@ -711,19 +890,31 @@ client.on('message', function(message) {
                 guild.fetchMember(message.author).then((theirmember) => {
                   if(!theirmember){
                     message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                    .then((msg) => {
+                      msg.delete(3000);
+                    });
                   }else{
                     if(theirmember.highestRole.comparePositionTo(guild.roles.find("name",command.minrank)) >= 0){
                       command.does(args,message);
                     }else{
                       message.channel.send(fEmoji+" **You're not a high enough role to run this command** (requires the *"+command.minrank+"* rank)")
+                      .then((msg) => {
+                        msg.delete(3000);
+                      });
                     }
                   }
                 })
                 .catch(() => {
                   message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                  .then((msg) => {
+                    msg.delete(3000);
+                  });
                 })
               }else{
                 message.channel.send(fEmoji+" **Sorry, the required role** (*"+command.minrank+"*) **for this command doesn't exist!**")
+                .then((msg) => {
+                  msg.delete(3000);
+                });
               }
             }
           }
