@@ -156,6 +156,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                     msg.delete(3000);
                   });
                 }else{
+                  mentionedmember.setNickname(data["Username"]);
                   mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
                   message.channel.send("**"+sEmoji+" This user was already ranked in the group, but has been ranked in the Discord.**")
                 }
