@@ -133,42 +133,45 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               });
               return;
             }
-            if(Noblox.getRankInGroup(groupid,args[2]) < 1){
-              message.channel.send("**"+fEmoji+" This user is not in the lolfruit group.**")
-              .then((msg) => {
-                msg.delete(3000);
-              });
-              return;
-            }else if(Noblox.getRankInGroup(groupid,args[2]) > 1){
-              if(!guild.roles.find("name","lolfruit squad")){
-                message.channel.send("**"+fEmoji+" There is no lolfruit squad rank in the Discord!**")
+            Noblox.getRankInGroup(groupid,args[2])
+            .then((ranking) => {
+              if(ranking < 1){
+                message.channel.send("**"+fEmoji+" This user is not in the lolfruit group.**")
                 .then((msg) => {
                   msg.delete(3000);
                 });
                 return;
+              }else if(ranking > 1){
+                if(!guild.roles.find("name","lolfruit squad")){
+                  message.channel.send("**"+fEmoji+" There is no lolfruit squad rank in the Discord!**")
+                  .then((msg) => {
+                    msg.delete(3000);
+                  });
+                  return;
+                }
+                if(mentionedmember.highestRole.comparePositionTo(guild.roles.find("name","lolfruit squad")) >= 0){
+                  message.channel.send("**"+fEmoji+" This user is already ranked in the Discord and group!**")
+                  .then((msg) => {
+                    msg.delete(3000);
+                  });
+                }else{
+                  mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
+                  message.channel.send("**"+sEmoji+" This user was already ranked in the group, but has been ranked in the Discord.**")
+                }
+                return;
               }
-              if(mentionedmember.highestRole.comparePositionTo(guild.roles.find("name","lolfruit squad")) >= 0){
-                message.channel.send("**"+fEmoji+" This user is already ranked in the Discord and group!**")
-                .then((msg) => {
-                  msg.delete(3000);
-                });
-              }else{
+              Noblox.setRank(groupid, args[2], 50)
+              .then(() => {
+                if(!guild.roles.find("name","lolfruit squad")){
+                  message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
+                  .then((msg) => {
+                    msg.delete(5000);
+                  });
+                  return;
+                }
                 mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
-                message.channel.send("**"+sEmoji+" This user was already ranked in the group, but has been ranked in the Discord.**")
-              }
-              return;
-            }
-            Noblox.setRank(groupid, args[2], 50)
-            .then(() => {
-              if(!guild.roles.find("name","lolfruit squad")){
-                message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
-                .then((msg) => {
-                  msg.delete(5000);
-                });
-                return;
-              }
-              mentionedmember.addRole(guild.roles.find("name","lolfruit squad"))
-              message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
+                message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
+              });
             });
           });
         }else{
