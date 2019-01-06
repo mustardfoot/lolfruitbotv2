@@ -163,7 +163,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                   return;
                 }
               }
-              Noblox.setRank(3288652, args[2], 50)
+              Noblox.setRank(3288652, Number(args[2]), 50)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
                   message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
@@ -177,7 +177,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 message.channel.send("**"+sEmoji+" The user has been ranked in the group and Discord.**")
               })
               .catch((err) => {
-                console.log(err);
+                message.channel.send('```\n'+err+'\n```');
               })
             });
           });
