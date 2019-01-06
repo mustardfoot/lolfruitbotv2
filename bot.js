@@ -979,16 +979,19 @@ client.on('message', function(message) {
 
 var myInterval = setInterval(function() {
   t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
-    var requests
     var hwids
+    var requests
     if(datas){
       datas.forEach(function(data){
         if (data.name === "mutes"){
           hwids = data.id;
+          /*
         }else if (data.name === "Pending"){
           requests = data.id;
+          */
         }
       })
+      /*
       if(requests){
         t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
           if(cards.length > 0 && cards[0]){
@@ -1010,7 +1013,7 @@ var myInterval = setInterval(function() {
           }
         })
       }
-
+      */
     if(hwids){
       t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
         cards.forEach(function(card){
