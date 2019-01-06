@@ -993,7 +993,7 @@ var myInterval = setInterval(function() {
         t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
           if(cards.length > 0 && cards[0]){
             var firstcard = cards[0];
-            Noblox.getRankInGroup(groupid,firstcard)
+            Noblox.getRankInGroup(groupid,firstcard.name)
             .then((ranking) => {
               console.log(ranking);
               if(ranking > 25){
