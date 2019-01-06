@@ -112,6 +112,7 @@ addcommand("test",["check"],"This command will respond if the bot is online. A s
 
 addcommand("accept",["rank"],"This command will rank someone to squad in the group and the discord.","lolfruit owner",function(args,message){
   if(message.guild && message.guild === guild){
+    message.delete();
     if(args[1]){
       var mentionedmember = getmemberfromid(args[1]);
       if(mentionedmember){
