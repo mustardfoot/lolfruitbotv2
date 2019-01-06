@@ -141,7 +141,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                   msg.delete(3000);
                 });
                 return;
-              }else if(ranking > 50){
+              }else if(ranking > 25){
                 if(!guild.roles.find("name","lolfruit squad")){
                   message.channel.send("**"+fEmoji+" There is no lolfruit squad rank in the Discord!**")
                   .then((msg) => {
@@ -163,7 +163,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                   return;
                 }
               }
-              var options = {group: "3288652", target: args[2], roleset: "22692309"}
+              var options = {group: 3288652, target: args[2], roleset: 22692309}
               Noblox.changeRank(options)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
