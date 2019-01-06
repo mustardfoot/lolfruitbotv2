@@ -134,9 +134,9 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               });
               return;
             }
-            console.log('why');
             Noblox.getRankInGroup(groupid,args[2])
             .then((ranking) => {
+              console.log('ok');
               if(ranking < 1){
                 message.channel.send("**"+fEmoji+" This user is not in the lolfruit group.**")
                 .then((msg) => {
@@ -163,6 +163,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 }
                 return;
               }
+              console.log('yeet?')
               Noblox.setRank(groupid, args[2], 50)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
