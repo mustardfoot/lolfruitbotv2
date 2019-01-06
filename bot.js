@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const Trello = require("node-trello");
 const Axios = require("axios");
 const Noblox = require("noblox.js");
-const groupid = 3288652;
 const t = new Trello(process.env.T_KEY,process.env.T_TOKEN);
 const client = new Discord.Client();
 var pref = "!"
@@ -134,7 +133,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
               });
               return;
             }
-            Noblox.getRankInGroup(groupid,args[2])
+            Noblox.getRankInGroup(3288652,args[2])
             .then((ranking) => {
               if(ranking < 1){
                 message.channel.send("**"+fEmoji+" This user is not in the lolfruit group.**")
@@ -162,7 +161,7 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
                 }
                 return;
               }
-              Noblox.setRank(groupid, args[2], "Squad")
+              Noblox.setRank(3288652, args[2], 50)
               .then(() => {
                 if(!guild.roles.find("name","lolfruit squad")){
                   message.channel.send("**"+fEmoji+" User has been ranked in the group, but there is no lolfruit rank in the Discord.**")
@@ -996,10 +995,10 @@ var myInterval = setInterval(function() {
         t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
           if(cards.length > 0 && cards[0]){
             var firstcard = cards[0];
-            Noblox.getRankInGroup(groupid,firstcard.name)
+            Noblox.getRankInGroup(3288652,firstcard.name)
             .then((ranking) => {
               if(ranking > 25){
-                Noblox.groupPayout(groupid,firstcard.name,5,false,false)
+                Noblox.groupPayout(3288652,firstcard.name,5,false,false)
                 .then(() => {
                   t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
                 })
