@@ -112,6 +112,9 @@ addcommand("accept",["rank"],"This command will rank someone to squad in the gro
         if(args[2] && Number(args[2])){
           console.log('1');
           axios.get("https://api.roblox.com/Users/261")
+          .catch((err) => {
+            console.log(err);
+          }
           .then((data) => {
             console.log('2');
             if(data["errors"] || !data["Username"]){
