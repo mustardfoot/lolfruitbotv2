@@ -14,7 +14,7 @@ t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
   var gamermoment
   if(datas){
     datas.forEach(function(data){
-      if (date.name === "epic"){
+      if (data.name === "epic"){
         gamermoment = data.id
       }
     })
