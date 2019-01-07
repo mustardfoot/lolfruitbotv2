@@ -987,13 +987,10 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
         datas.forEach(function(data){
           if (data.name === "mutes"){
             hwids = data.id;
-            /*
           }else if (data.name === "Pending"){
             requests = data.id;
-            */
           }
         })
-        /*
         if(requests){
           t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
             if(cards.length > 0 && cards[0]){
@@ -1015,7 +1012,6 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
             }
           })
         }
-        */
       if(hwids){
         t.get("/1/lists/"+hwids+"/cards?fields=id,name,desc",function(err,cards){
           cards.forEach(function(card){
