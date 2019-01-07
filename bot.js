@@ -1017,7 +1017,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
                     t.del('1/cards/'+firstcard.id,function(err,returns){});
                   }
                 })
-              }
+              })
             }
           })
         }
