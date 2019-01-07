@@ -1095,5 +1095,5 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
 }, 10000);
 
   client.login(process.env.BOT_TOKEN);
-  let currentUser = await rbx.getCurrentUser()
+  console.log(Noblox.getSession())
 });
