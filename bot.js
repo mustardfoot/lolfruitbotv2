@@ -998,7 +998,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
           t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
             if(cards.length > 0 && cards[0]){
               var firstcard = cards[0];
-              Noblox.getAuditLog({group:3288652, page:{1,2}, action:34, username: "mustardfoot"})
+              Noblox.getAuditLog({group:3288652, page:[1,2], action:34, username: "mustardfoot"})
               .then((results) => {
                 console.log(results);
                 //switch (){}
