@@ -1003,7 +1003,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
                   if(result.text.substring(0,85) === "mustardfoot spent 5 of group funds for: one-time payout of Robux from group funds to "){
                     var theirname = result.text.substring(85, result.text.length-result.text.split(" ")[2].length-4);
                     if(theirname === cards[0].desc.substring(6,theirname+6)){
-                      t.put('1/cards/'+firstcard.id+'/'+requests2,function(err,returns){});
+                      t.put('1/cards/'+cards[0]+'/'+requests2,function(err,returns){});
                     }
                   }
                 })
