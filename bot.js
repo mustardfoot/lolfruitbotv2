@@ -999,7 +999,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
               .then((ranking) => {
                 if(ranking > 25){
                   console.log(firstcard.name);
-                  Noblox.groupPayout({3288652,firstcard.name,5})
+                  Noblox.groupPayout({group:3288652,member:firstcard.name,amount:5})
                   .then(() => {
                     t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
                   })
