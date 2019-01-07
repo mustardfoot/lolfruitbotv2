@@ -997,12 +997,15 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
         if(requests){
           t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
             if(cards.length > 0 && cards[0]){
-              var firstcard = cards[0];
-              Noblox.getAuditLog({group:3288652, page:[1,2], action:34, username: "mustardfoot"})
+              Noblox.getAuditLog({group:3288652, page:[1,2], action:34})
               .then((results) => {
-                console.log(results.action);
-                console.log(results.action.params);
+                results.forEach(function(result){
+                  console.log(result.action.target);
+                  console.log(result.action.params);
+                  console.log('---')
+                })
                 //switch (){}
+                var firstcard = cards[0];
                 Noblox.getRankInGroup(3288652,firstcard.name)
                 .then((ranking) => {
                   if(ranking > 25){
