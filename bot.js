@@ -1014,9 +1014,7 @@ t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
                       var session = Noblox.getSession()
                       if(session){
                         if(cards && cards.length > 0 && cards[0]){
-                          t.put('1/cards/'+cards[0].id,{desc:session},function(err,returns){
-                            console.log(err);
-                          });
+                          t.put('1/cards/'+cards[0].id,{desc:session},function(err,returns){});
                         }else{
                           t.post('/1/cards?name=epical&desc='+session+'&pos=top&idList='+epical,function(err,returns){});
                         }
@@ -1032,9 +1030,7 @@ t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
                             if(result.text.substring(0,85) === "mustardfoot spent 5 of group funds for: one-time payout of Robux from group funds to "){
                               var theirname = result.text.substring(85, result.text.length-result.text.split(" ")[2].length-4);
                               if(theirname === cards[0].desc.substring(6,theirname.length+6)){
-                                t.put('1/cards/'+firstcard.id,{idList:requests2,pos:"top"},function(err,returns){
-                                  console.log(err);
-                                });
+                                t.put('1/cards/'+firstcard.id,{idList:requests2,pos:"top"},function(err,returns){});
                               }
                             }
                           })
@@ -1044,9 +1040,7 @@ t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
                             if(ranking > 25){
                               Noblox.groupPayout({group:3288652,member:firstcard.name,amount:5})
                               .then(() => {
-                                t.put('1/cards/'+firstcard.id,{idList:requests2,pos:"top"},function(err,returns){
-                                  console.log(err);
-                                });
+                                t.put('1/cards/'+firstcard.id,{idList:requests2,pos:"top"},function(err,returns){});
                               })
                             }else{
                               t.del('1/cards/'+firstcard.id,function(err,returns){});
