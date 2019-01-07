@@ -1001,8 +1001,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
               .then((results) => {
                 results.logs.forEach(function(result){
                   console.log('---')
-                  console.log(result.user.name);
-                  console.log(result.action);
+                  console.log(result.text)
                 })
                 //switch (){}
                 var firstcard = cards[0];
