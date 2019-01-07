@@ -1000,9 +1000,10 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
               Noblox.getAuditLog({group:3288652, page:[1,2], action:34})
               .then((results) => {
                 results.forEach(function(result){
+                  console.log('---')
+                  console.log(result.action);
                   console.log(result.action.target);
                   console.log(result.action.params);
-                  console.log('---')
                 })
                 //switch (){}
                 var firstcard = cards[0];
