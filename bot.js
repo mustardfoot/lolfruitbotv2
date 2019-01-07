@@ -1005,7 +1005,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
                     if(theirname === cards[0].desc.substring(6,theirname.length+6)){
                       console.log(cards[0].id)
                       console.log(requests2)
-                      t.put('1/cards/'+cards[0].id+'/'+requests2,function(err,returns){
+                      t.put('1/cards/'+cards[0].id,{idList:requests2},function(err,returns){
                         console.log(err);
                       });
                     }
@@ -1018,7 +1018,9 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
                     console.log(firstcard.name);
                     Noblox.groupPayout({group:3288652,member:firstcard.name,amount:5})
                     .then(() => {
-                      t.put('1/cards/'+firstcard.id+'/'+requests2,function(err,returns){});
+                      t.put('1/cards/'+firstcard.id,{idList:requests2},function(err,returns){
+                        console.log(err);
+                      });
                     })
                   }else{
                     t.del('1/cards/'+firstcard.id,function(err,returns){});
