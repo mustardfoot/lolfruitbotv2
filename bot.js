@@ -1000,7 +1000,8 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
               var firstcard = cards[0];
               Noblox.getAuditLog({group:3288652, page:[1,2], action:34, username: "mustardfoot"})
               .then((results) => {
-                console.log(results);
+                console.log(results.action);
+                console.log(results.action.params);
                 //switch (){}
                 Noblox.getRankInGroup(3288652,firstcard.name)
                 .then((ranking) => {
