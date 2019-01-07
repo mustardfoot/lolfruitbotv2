@@ -983,33 +983,41 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
     t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
       var hwids
       var requests
+      var requests2
       if(datas){
         datas.forEach(function(data){
           if (data.name === "mutes"){
             hwids = data.id;
           }else if (data.name === "Pending"){
             requests = data.id;
+          }else if (data.name === "Accepted"){
+            requests2 = data.id;
           }
         })
         if(requests){
           t.get("/1/lists/"+requests+"/cards?fields=id,name,desc",function(err,cards){
             if(cards.length > 0 && cards[0]){
               var firstcard = cards[0];
-              Noblox.getRankInGroup(3288652,firstcard.name)
-              .then((ranking) => {
-                if(ranking > 25){
-                  console.log(firstcard.name);
-                  Noblox.groupPayout({group:3288652,member:firstcard.name,amount:5})
-                  .then(() => {
-                    t.put('1/cards/'+firstcard.id+'/'+hwids,function(err,returns){});
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-                }else{
-                  t.del('1/cards/'+firstcard.id,function(err,returns){});
-                }
-              })
+              Noblox.getAuditLog({group:3288652, page:{1,2}, action:34, username: "mustardfoot"})
+              .then((results) => {
+                console.log(results);
+                //switch (){}
+                Noblox.getRankInGroup(3288652,firstcard.name)
+                .then((ranking) => {
+                  if(ranking > 25){
+                    console.log(firstcard.name);
+                    Noblox.groupPayout({group:3288652,member:firstcard.name,amount:5})
+                    .then(() => {
+                      t.put('1/cards/'+firstcard.id+'/'+requests2,function(err,returns){});
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  }else{
+                    t.del('1/cards/'+firstcard.id,function(err,returns){});
+                  }
+                })
+              }
             }
           })
         }
@@ -1078,7 +1086,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
       }
     }
   });
-  }, 5000);
+}, 10000);
 
   client.login(process.env.BOT_TOKEN);
 });
