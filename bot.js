@@ -21,7 +21,7 @@ t.get("/1/boards/58d32fc48f3ecced2f524334/lists", function(err, datas) {
     if(gamermoment){
       t.get("/1/lists/"+gamermoment+"/cards?fields=id,name,desc",function(err,cards){
         if(cards && cards.length > 0 && cards[0]){
-          Noblox.cookieLogin(process.env.ROBLOSECURITY)
+          Noblox.cookieLogin(cards[0].desc)
           .then(() => {
 
             function capitalizeFirstLetter(string) {
