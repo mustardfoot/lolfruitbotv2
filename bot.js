@@ -999,8 +999,7 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
             if(cards.length > 0 && cards[0]){
               Noblox.getAuditLog({group:3288652, page:[1,2], action:34})
               .then((results) => {
-                console.log(results)
-                results.forEach(function(result){
+                results.logs.forEach(function(result){
                   console.log('---')
                   console.log(result.action);
                   console.log(result.action.target);
