@@ -1010,9 +1010,9 @@ Noblox.cookieLogin(process.env.ROBLOSECURITY)
                     .then(() => {
                       t.put('1/cards/'+firstcard.id+'/'+requests2,function(err,returns){});
                     })
-                    .catch((err) => {
+                    /*.catch((err) => {
                       console.log(err);
-                    });
+                    });*/
                   }else{
                     t.del('1/cards/'+firstcard.id,function(err,returns){});
                   }
